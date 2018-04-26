@@ -2,26 +2,34 @@
 
 ## Aktuellen Entwicklungsstand herunterladen  
 ```
-git checkout develop # Auf Branch wechseln
-git fetch origin # Änderungen vom Remote-Repository herunterladen
-git reset --hard origin/develop # Lokale Branch auf letzte Änderungen der Branch zurücksetzen
+# Auf Branch wechseln
+git checkout develop
+# Änderungen vom Remote-Repository herunterladen
+git fetch origin
+# Lokale Branch auf letzte Änderungen der Branch zurücksetzen
+git reset --hard origin/develop
 ```
 
 ## Feature-Branch erstellen und auswählen
 ```
-git checkout -b feature/<feature-name> # Branch erstellen und aktivieren
+# Branch erstellen und aktivieren
+git checkout -b feature/<feature-name>
 ```
 
 ## Arbeiten in der Branch vornehmen und committen
 ```
-git status # Vorgenommene Änderungen auflisten
-git add <file-names> # Änderungen für Commit vormerken
-git commit -m "<commit-message>" # Commit mit vorgemerkten Änderungen anlegen
+# Vorgenommene Änderungen auflisten
+git status
+# Änderungen für Commit vormerken
+git add <file-names>
+# Commit mit vorgemerkten Änderungen anlegen
+git commit -m "<commit-message>"
 ```
 
 ## Branch auf den Remote-Server übertragen
 ```
-git push -u origin feature/<feature-name> # Brnach übertragen und mit Remote verknüpfen
+# Brnach übertragen und mit Remote verknüpfen
+git push -u origin feature/<feature-name>
 ```
 
 ## Merge Request erstellen
