@@ -71,8 +71,8 @@ Vorteil gegenüber Promises? Cancel? Was hat das mit Lifecycle von React Compone
 ___
 
 ## Testen
-* [Framework](https://github.com/fluture-js/Fluture)
-* [React-Test-Bibliothek](https://medium.com/@avaq/broken-promises-2ae92780f33)
+* [Framework](https://facebook.github.io/jest/docs/en/getting-started.html)
+* [React-Test-Bibliothek](https://github.com/kentcdodds/react-testing-library)
 
 Unit-Tests. Integrationstest? React Component testen?
 ___
