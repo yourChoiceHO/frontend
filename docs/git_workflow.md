@@ -23,3 +23,7 @@ git commit -m "<commit-message>" # Commit mit vorgemerkten Änderungen anlegen
 ```
 git push -u origin feature/<feature-name> # Brnach übertragen und mit Remote verknüpfen
 ```
+
+## Merge Request erstellen
+
+Nach Fertigstellung des Features kann ein Merge-Request im GitHub-Repository erstellt werden. Des Weiteren können hier die Entwickler über das Feature diskutieren bis es schlussendlich reviewt und abgenommen wurde. Anschließend wird es in die develop-Branch germerged und somit freigegeben und übernommen.
