@@ -3,7 +3,7 @@
 ## Aktuellen Entwicklungsstand herunterladen  
 ```
 git checkout develop # Auf Branch wechseln
-git fetch origin '' # Änderungen vom Remote-Repository herunterladen
+git fetch origin # Änderungen vom Remote-Repository herunterladen
 git reset --hard origin/develop # Lokale Branch auf letzte Änderungen der Branch zurücksetzen
 ```
 
