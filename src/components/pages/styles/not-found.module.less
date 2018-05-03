@@ -1,0 +1,48 @@
+@import "~@/styles/themes/default.less";
+
+.not-found {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: @padding-lg !important;
+
+  @media only screen and (max-width: @screen-sm) {
+    padding: @padding-sm !important;
+  }
+}
+
+.question {
+  font-size: calc(1vmax * 12rem) !important;
+}
+
+.title {
+  margin: 0 0 @padding-md 0 !important;
+}
+
+.notice {
+  text-align: center !important;
+}
+
+.paragraph {
+  text-align: left !important;
+}
+
+.link {
+  padding: 0 @padding-xs !important;
+  color: @btn-primary-color !important;
+
+  &:hover {
+    color: @btn-primary-color !important;
+  }
+
+  &:active {
+    color: @btn-primary-color !important;
+  }
+
+  &:active,
+  &:hover {
+    text-decoration: none !important;
+  }
+}

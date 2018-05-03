@@ -1,0 +1,60 @@
+@import "~@/styles/themes/default.less";
+
+.header {
+  &:before {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: @layout-header-height !important;
+    content: "" !important;
+    display: block !important;
+    width: @padding-md !important;
+    background-image: linear-gradient(
+      #000000 33%,
+      #f40000 33%,
+      #f40000 66%,
+      #facb00 66%
+    ) !important;
+  }
+
+  position: relative !important;
+  padding: 0 @padding-xs !important;
+}
+
+.align-content-right {
+  text-align: right !important;
+}
+
+.menu {
+  color: contrast(@heading-color) !important;
+  height: @layout-header-height !important;
+  background: transparent !important;
+
+  &-button {
+    vertical-align: middle !important;
+    font-size: 1.5em !important;
+    border: none !important;
+  }
+}
+
+.title {
+  margin: 0 !important;
+  color: contrast(@heading-color) !important;
+  text-align: center !important;
+
+  &-link {
+    color: inherit !important;
+  }
+
+  &-text {
+    display: inline !important;
+
+    @media only screen and (max-width: @screen-sm) {
+      display: none !important;
+    }
+  }
+}
+
+.user-label {
+  color: contrast(@heading-color) !important;
+}

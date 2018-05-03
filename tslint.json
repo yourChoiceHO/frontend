@@ -1,0 +1,26 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:latest",
+    "tslint-react",
+    "tslint-eslint-rules",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "eofline": false,
+    "no-implicit-dependencies": false,
+    "no-submodule-imports": [
+      true,
+      "classnames/bind",
+      "@/__mocks__",
+      "@/__tests__",
+      "@/components",
+      "@/constants",
+      "@/containers",
+      "@/lib",
+      "@/types",
+      "@/scenes",
+      "@/utils"
+    ]
+  }
+}
