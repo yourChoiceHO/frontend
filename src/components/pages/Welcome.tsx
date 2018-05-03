@@ -42,7 +42,7 @@ const WelcomePage: SFC<{}> = () => {
         </Col>
         <Col span={12}>
           <h2>Mitarbeiter</h2>
-          <LinkList />0
+          <LinkList />
         </Col>
       </Row>
     </PageTemplate>
