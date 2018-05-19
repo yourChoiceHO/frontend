@@ -106,6 +106,9 @@ module.exports = {
     overlay: {
       warnings: true,
       errors: true
+    },
+    proxy: {
+      "/api": "http://localhost:3001"
     }
   },
   resolve: {
