@@ -27,7 +27,7 @@ const LinkList = () => (
       <Link to="/wahl/entfernen">Wahl löschen</Link>
     </li>
     <li>
-      <Link to="/wahl/wählen">Stimme abgeben</Link>
+      <Link to="/wahl/0/wählen">Stimme abgeben</Link>
     </li>
   </ul>
 );
