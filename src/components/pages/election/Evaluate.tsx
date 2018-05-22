@@ -1,9 +1,10 @@
 import { Radio } from "antd";
-import React, { Component } from "react";
+import { Cancel } from "fluture";
+import { isEmpty, pathOr } from "ramda";
+import React, { Component, Fragment } from "react";
 import { Bar, Doughnut } from "react-chartjs-2";
 
-import Header from "@/components/organisms/Header";
-import PageTemplate from "@/components/templates/Page";
+import ElectionContainer, { withElection } from "@/containers/Election";
 
 const data = {
   datasets: [
@@ -49,27 +50,43 @@ const options = {
 const doughnut = <Doughnut data={data} options={options} />;
 const bar = <Bar data={data} options={options} />;
 
-class ElectionEvaluate extends Component {
+class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
   public state = {
     diagram: doughnut
   };
+
+  public componentDidMount() {
+    this.cancel = this.props.election.get(this.props.computedMatch.params.id);
+  }
+
+  public componentWillUnmount() {
+    this.cancel();
+  }
 
   public handleDiagramChange = e => {
     this.setState({ diagram: e.target.value });
   };
 
   public render() {
+    const election = pathOr({}, ["state", "election", 0], this.props.election);
+
+    if (isEmpty(election)) {
+      return <div />;
+    }
+
     return (
-      <PageTemplate header={<Header />}>
+      <Fragment>
         <div>Wahl Auswertung</div>
         <Radio.Group onChange={this.handleDiagramChange}>
           <Radio.Button value={doughnut}> Kuchen-Diagramm </Radio.Button>
           <Radio.Button value={bar}>Balken-Diagramm</Radio.Button>
         </Radio.Group>
         <div>{this.state.diagram}</div>
-      </PageTemplate>
+      </Fragment>
     );
   }
+
+  private cancel: Cancel = () => {};
 }
 
-export default ElectionEvaluate;
+export default withElection(ElectionEvaluate);
