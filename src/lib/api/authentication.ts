@@ -5,7 +5,7 @@ import { IRequestError } from "@/types/error";
 import { IUserEntity } from "@/types/model";
 
 export function login(credentials: any) {
-  return http.post<IUserEntity>("/auth/login", credentials);
+  return http.post<IUserEntity>("/user/authenticate", credentials);
 }
 
 export function logout(): Future<IRequestError, {}> {

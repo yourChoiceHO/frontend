@@ -31,11 +31,11 @@ class Container<State extends object> extends UnstatedContainer<State> {
   private [LOG_STATE](state: Partial<State>) {
     const getColor = getColorFactory(COLORS);
     const name = pathOr("Container", ["constructor", "name"], this);
-    const differences = detailedDiff(super.state, state);
+    const differences = detailedDiff(this.state, state);
 
     console.groupCollapsed(`%c action ${name}`, getColor("title"));
 
-    console.log("%c prev state\n", getColor("prevState"), super.state);
+    console.log("%c prev state\n", getColor("prevState"), this.state);
 
     console.groupCollapsed("%c differences", getColor("differences"));
 

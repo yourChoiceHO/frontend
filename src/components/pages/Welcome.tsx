@@ -1,4 +1,5 @@
-import { Col, Row } from "antd";
+import { Card, Col, Row } from "antd";
+import { AccountCircleIcon, LockIcon } from "mdi-react";
 import React, { SFC } from "react";
 import { Link } from "react-router-dom";
 
@@ -11,13 +12,13 @@ const LinkList = () => (
       <Link to="/wahl/neu">Wahl erstellen</Link>
     </li>
     <li>
-      <Link to="/wahl/detail">Wahl inspizieren</Link>
+      <Link to="/wahl/0/detail">Wahl inspizieren</Link>
     </li>
     <li>
-      <Link to="/wahl/bearbeiten">Wahl bearbeiten</Link>
+      <Link to="/wahl/0/bearbeiten">Wahl bearbeiten</Link>
     </li>
     <li>
-      <Link to="/wahl/auswerten">Wahl auswerten</Link>
+      <Link to="/wahl/0/auswerten">Wahl auswerten</Link>
     </li>
     <li>
       <Link to="/wahl">Wahlen Übersicht</Link>
@@ -37,12 +38,20 @@ const WelcomePage: SFC<{}> = () => {
       <h1>Welcome</h1>
       <Row>
         <Col span={12}>
-          <h2>Wähler</h2>
-          <LinkList />
+          <Card>
+            <AccountCircleIcon />
+            <h2>Wähler</h2>
+            <Link to="/wähler/anmeldung">Anmeldung</Link>
+            <LinkList />
+          </Card>
         </Col>
         <Col span={12}>
-          <h2>Mitarbeiter</h2>
-          <LinkList />
+          <Card>
+            <LockIcon />
+            <h2>Mitarbeiter</h2>
+            <Link to="/mitarbeiter/anmeldung">Anmeldung</Link>
+            <LinkList />
+          </Card>
         </Col>
       </Row>
     </PageTemplate>

@@ -1,4 +1,4 @@
-import { AbilityBuilder } from "@casl/ability";
+import { Ability, AbilityBuilder } from "@casl/ability";
 import { propOr } from "ramda";
 
 import { IUserEntity, Role } from "@/types/model";
@@ -11,32 +11,49 @@ type AbilityBuilderFunction = (
 const abilities = {
   [Role.Unauthorized]: AbilityBuilder.define(
     (can: AbilityBuilderFunction, cannot: AbilityBuilderFunction) => {
-      can("vote", "Election");
+      cannot("vote", "Election");
+      cannot("view", "Election");
+      cannot("edit", "Election");
+      cannot("create", "Election");
+      cannot("delete", "Election");
+      cannot("evaluate", "Election");
     }
   ),
   [Role.Voter]: AbilityBuilder.define(
     (can: AbilityBuilderFunction, cannot: AbilityBuilderFunction) => {
+      can("access", "Election");
       can("vote", "Election");
+      cannot("view", "Election");
+      cannot("edit", "Election");
+      cannot("create", "Election");
+      cannot("delete", "Election");
+      cannot("evaluate", "Election");
     }
   ),
   [Role.Moderator]: AbilityBuilder.define(
     (can: AbilityBuilderFunction, cannot: AbilityBuilderFunction) => {
+      can("access", "Election");
+      cannot("vote", "Election");
       can("view", "Election");
       can("edit", "Election");
+      can("create", "Election");
       can("delete", "Election");
+      cannot("evaluate", "Election");
     }
   ),
   [Role.Supervisor]: AbilityBuilder.define(
     (can: AbilityBuilderFunction, cannot: AbilityBuilderFunction) => {
+      can("access", "Election");
+      cannot("vote", "Election");
       can("view", "Election");
       can("edit", "Election");
+      can("create", "Election");
       can("delete", "Election");
       can("evaluate", "Election");
     }
   )
 };
 
-export function getAbility(user: IUserEntity) {
-  const role: Role = propOr(Role.Unauthorized, "role", user);
+export function getAbility(role: Role) {
   return abilities[role];
 }

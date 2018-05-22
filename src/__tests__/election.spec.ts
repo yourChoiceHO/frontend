@@ -1,4 +1,3 @@
-import { elections } from "@/__mocks__/election";
 import * as election from "@/lib/api/election";
 
 describe("Election REST API", () => {
@@ -6,7 +5,7 @@ describe("Election REST API", () => {
     expect.assertions(1);
     return election
       .getAll()
-      .promise().then(result => expect(result).toEqual(elections));
+      .promise().then(result => expect(result).toEqual({}));
     });
   });
 
@@ -14,7 +13,7 @@ describe("Election REST API", () => {
     expect.assertions(1);
     return election
       .get(0)
-      .promise().then(result => expect(result).toEqual(elections[0]));
+      .promise().then(result => expect(result).toEqual({}));
     });
   });
 

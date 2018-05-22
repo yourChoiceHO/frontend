@@ -7,6 +7,7 @@ export interface IAuthenticationContext {
 }
 
 export interface IElectionsContext {
+  election: Partial<IElectionEntity>;
   error: object;
   pending: boolean;
   elections: Partial<IElectionEntity[]>;

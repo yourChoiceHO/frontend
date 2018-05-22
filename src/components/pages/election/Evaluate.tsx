@@ -1,14 +1,7 @@
 import React, { SFC } from "react";
 
-import Header from "@/components/organisms/Header";
-import PageTemplate from "@/components/templates/Page";
-
-const ElectionEvaluatePage: SFC<{}> = () => {
-  return (
-    <PageTemplate header={<Header />}>
-      <div>Wahl Auswertung</div>
-    </PageTemplate>
-  );
+const ElectionEvaluate: SFC<{}> = () => {
+  return <div>Wahl Auswertung</div>;
 };
 
-export default ElectionEvaluatePage;
+export default ElectionEvaluate;

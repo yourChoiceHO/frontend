@@ -3,8 +3,8 @@ import { Moment } from "moment";
 export enum Role {
   Moderator = 3,
   Supervisor = 2,
-  Unauthorized = 1,
-  Voter = 0
+  Unauthorized = 0,
+  Voter = 1
 }
 
 export interface IPartyEntity {

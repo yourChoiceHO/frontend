@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/organisms/Header";
 import PageTemplate from "@/components/templates/Page";
 
-import * as styles from "./styles/not-found.module.less";
+import styles from "./styles/not-found.module.less";
 
 const cx = classNames.bind(styles);
 
@@ -27,11 +27,11 @@ const NotFoundPage: SFC<{}> = () => {
             <br />
             Vielen Dank für Ihr Verständnis.
           </p>
-          <Button icon="home" type="primary">
-            <Link className={cx("link")} to="/">
+          <Link className={cx("link")} to="/">
+            <Button icon="home" type="primary">
               Zurück zur Startseite
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </div>
       </div>
     </PageTemplate>

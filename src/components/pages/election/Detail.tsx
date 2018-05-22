@@ -1,14 +1,22 @@
-import React, { SFC } from "react";
+import { Cancel } from "fluture";
+import React, { Component } from "react";
 
-import Header from "@/components/organisms/Header";
-import PageTemplate from "@/components/templates/Page";
+import ElectionContainer, { withElection } from "@/containers/Election";
 
-const ElectionDetailPage: SFC<{}> = () => {
-  return (
-    <PageTemplate header={<Header />}>
-      <div>Wahl Details</div>
-    </PageTemplate>
-  );
-};
+class ElectionDetail extends Component<{ election: ElectionContainer }> {
+  public componentDidMount() {
+    this.cancel = this.props.election.get(this.props.computedMatch.params.id);
+  }
 
-export default ElectionDetailPage;
+  public componentWillUnmount() {
+    this.cancel();
+  }
+
+  public render() {
+    return <div>Wahl Details</div>;
+  }
+
+  private cancel: Cancel = () => {};
+}
+
+export default withElection(ElectionDetail);

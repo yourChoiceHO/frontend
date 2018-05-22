@@ -14,7 +14,9 @@ export function getAll() {
 }
 
 export function get(id: number) {
-  return http.get<IElectionEntity>(`/election/${id}`);
+  return http.get<IElectionEntity>(`/election`, {
+    params: { id_election: id }
+  });
 }
 
 export function update(id: number, updates: Partial<IElectionEntity> = {}) {

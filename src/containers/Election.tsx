@@ -1,9 +1,14 @@
+import hoistNonReactStatics from "hoist-non-react-statics";
+import React from "react";
+import { Subscribe } from "unstated";
+
 import Container from "@/containers/Container";
 import api from "@/lib/api";
 import { IElectionsContext } from "@/types/context";
 
 class ElectionContainer extends Container<IElectionsContext> {
   public state: IElectionsContext = {
+    election: {},
     elections: [],
     error: {},
     pending: false
@@ -18,6 +23,30 @@ class ElectionContainer extends Container<IElectionsContext> {
         elections => this.setState({ elections, pending: false, error: {} })
       );
   };
+
+  public get = (id: number) => {
+    return api.election
+      .get(id)
+      .fork(
+        error => this.setState({ error, pending: false }),
+        election => this.setState({ election, pending: false, error: {} })
+      );
+  };
 }
+
+export const withElection = UnwrappedComponent => {
+  const Wrapper = (props, ref) => (
+    <Subscribe to={[ElectionContainer]}>
+      {election => {
+        return <UnwrappedComponent {...props} election={election} ref={ref} />;
+      }}
+    </Subscribe>
+  );
+
+  const name = UnwrappedComponent.displayName || UnwrappedComponent.name;
+  Wrapper.displayName = `withElection(${name})`;
+
+  return hoistNonReactStatics(React.forwardRef(Wrapper), UnwrappedComponent);
+};
 
 export default ElectionContainer;
