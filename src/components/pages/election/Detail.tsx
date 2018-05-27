@@ -4,7 +4,8 @@ import moment from "moment";
 import { isEmpty, pathOr } from "ramda";
 import React, { Component, Fragment } from "react";
 
-import ElectionContainer, { withElection } from "@/containers/Election";
+import connect from "@/containers/connect";
+import ElectionContainer from "@/containers/Election";
 
 const ButtonGroup = Button.Group;
 
@@ -27,7 +28,7 @@ class ElectionDetail extends Component<{ election: ElectionContainer }> {
     return (
       <Fragment>
         <div style={{ background: "#ECECEC", padding: "30px" }}>
-          <Card title={election.type} bordered={true} style={{ width: 300 }}>
+          <Card title={election.type} bordered={true}>
             <p>{election.text}</p>
             <p>Wahl ID: {election.id_election}</p>
             <p>Client ID: {election.client_id}</p>
@@ -50,4 +51,6 @@ class ElectionDetail extends Component<{ election: ElectionContainer }> {
   private cancel: Cancel = () => {};
 }
 
-export default withElection(ElectionDetail);
+export default connect({
+  election: ElectionContainer
+})(ElectionDetail);

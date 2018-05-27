@@ -7,10 +7,10 @@ import {
   RouteComponentProps
 } from "react-router-dom";
 
-import AuthenticationContainer, {
-  withAuthentication
-} from "@/containers/Authentication";
+import AuthenticationContainer from "@/containers/Authentication";
 import { Role } from "@/types/model";
+
+import connect from "@/containers/connect";
 
 interface IProtectedRouteProps {
   authentication: AuthenticationContainer;
@@ -41,4 +41,6 @@ const ProtectedRoute: SFC<RouteComponentProps<{}> & IProtectedRouteProps> = ({
   return <Route render={renderRoute} />;
 };
 
-export default withAuthentication(ProtectedRoute);
+export default connect({
+  authentication: AuthenticationContainer
+})(ProtectedRoute);

@@ -1,5 +1,6 @@
+import { Button } from "antd";
 import React, { SFC } from "react";
-import { Redirect, Switch } from "react-router-dom";
+import { Link, Redirect, Switch } from "react-router-dom";
 
 import Header from "@/components/organisms/Header";
 import PageTemplate from "@/components/templates/Page";
@@ -16,8 +17,13 @@ import ElectionVote from "@/components/pages/election/Vote";
 
 import { Role } from "@/types/model";
 
-const ElectionPage: SFC<{}> = () => (
+const ElectionPage: SFC<{}> = ({ match }) => (
   <PageTemplate header={<Header />}>
+    {!match.isExact && (
+      <Link to={match.path}>
+        <Button type="primary">Zurück</Button>
+      </Link>
+    )}
     <Switch>
       <ProtectedRoute
         exact={true}
@@ -74,7 +80,7 @@ const ElectionPage: SFC<{}> = () => (
         path="/wahl/:id/wählen"
         component={ElectionVote}
         redirectProps={{ to: "/wähler/anmeldung" }}
-        roles={[Role.Voter]}
+        roles={[Role.Voter, Role.Supervisor]}
       />
 
       <Redirect to="/seite-nicht-gefunden" />

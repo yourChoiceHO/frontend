@@ -1,10 +1,20 @@
 import { Moment } from "moment";
 
 export enum Role {
-  Moderator = 3,
-  Supervisor = 2,
-  Unauthorized = 0,
-  Voter = 1
+  Admin = 0,
+  Moderator = 2,
+  Supervisor = 1,
+  Unauthorized = -1,
+  Voter = 3
+}
+
+export enum ElectionTypes {
+  Europawahl = "Europawahl",
+  Bundestagswahl = "Bundestagswahl",
+  Landtagswahl = "Landtagswahl",
+  Buergermeisterwahl = "Buergermeisterwahl",
+  Referendum = "Referendum",
+  Kommunalwahl = "Kommunalwahl"
 }
 
 export interface IPartyEntity {

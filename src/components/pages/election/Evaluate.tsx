@@ -4,7 +4,8 @@ import { isEmpty, pathOr } from "ramda";
 import React, { Component, Fragment } from "react";
 import { Bar, Doughnut } from "react-chartjs-2";
 
-import ElectionContainer, { withElection } from "@/containers/Election";
+import connect from "@/containers/connect";
+import ElectionContainer from "@/containers/Election";
 
 const data = {
   datasets: [
@@ -89,4 +90,6 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
   private cancel: Cancel = () => {};
 }
 
-export default withElection(ElectionEvaluate);
+export default connect({
+  election: ElectionContainer
+})(ElectionEvaluate);

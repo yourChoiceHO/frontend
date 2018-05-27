@@ -3,9 +3,8 @@ import classNames from "classnames/bind";
 import React, { SFC } from "react";
 import { Link } from "react-router-dom";
 
-import AuthenticationContainer, {
-  withAuthentication
-} from "@/containers/Authentication";
+import AuthenticationContainer from "@/containers/Authentication";
+import connect from "@/containers/connect";
 
 import styles from "./styles/header.module.less";
 
@@ -32,4 +31,6 @@ const PageHeader: SFC<{ authentication: AuthenticationContainer }> = ({
   );
 };
 
-export default withAuthentication(PageHeader);
+export default connect({
+  authentication: AuthenticationContainer
+})(PageHeader);

@@ -34,19 +34,4 @@ class ElectionContainer extends Container<IElectionsContext> {
   };
 }
 
-export const withElection = UnwrappedComponent => {
-  const Wrapper = (props, ref) => (
-    <Subscribe to={[ElectionContainer]}>
-      {election => {
-        return <UnwrappedComponent {...props} election={election} ref={ref} />;
-      }}
-    </Subscribe>
-  );
-
-  const name = UnwrappedComponent.displayName || UnwrappedComponent.name;
-  Wrapper.displayName = `withElection(${name})`;
-
-  return hoistNonReactStatics(React.forwardRef(Wrapper), UnwrappedComponent);
-};
-
 export default ElectionContainer;

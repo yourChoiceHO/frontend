@@ -4,10 +4,9 @@ import { FormComponentProps } from "antd/lib/form";
 
 import Header from "@/components/organisms/Header";
 import PageTemplate from "@/components/templates/Page";
-import AuthenticationContainer, {
-  withAuthentication
-} from "@/containers/Authentication";
+import AuthenticationContainer from "@/containers/Authentication";
 import { Redirect } from "react-router";
+import connect from "@/containers/connect";
 
 const FormItem = Form.Item;
 
@@ -32,7 +31,8 @@ class UserForm extends React.Component<IUserFormProps, any> {
             ]
           })(
             <Input
-              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
+              prefix={<Icon type="user" />}
+              type="text"
               placeholder="Username"
             />
           )}
@@ -42,7 +42,7 @@ class UserForm extends React.Component<IUserFormProps, any> {
             rules: [{ required: true, message: "Please input your Password!" }]
           })(
             <Input
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+              prefix={<Icon type="lock" />}
               type="password"
               placeholder="Password"
             />
@@ -57,7 +57,7 @@ class UserForm extends React.Component<IUserFormProps, any> {
     );
   }
 
-  private handleSubmit = (event: MouseEvent<HTMLElement>) => {
+  private handleSubmit = event => {
     event.preventDefault();
 
     this.props.form.validateFields((error, values) => {
@@ -75,7 +75,7 @@ const AdminLoginPage: SFC<{ authentication: AuthenticationContainer }> = ({
     if (error) {
       authentication.setError(error);
     } else {
-      authentication.login(values);
+      authentication.loginUser(values);
     }
   };
 
@@ -91,4 +91,6 @@ const AdminLoginPage: SFC<{ authentication: AuthenticationContainer }> = ({
   );
 };
 
-export default withAuthentication(AdminLoginPage);
+export default connect({
+  authentication: AuthenticationContainer
+})(AdminLoginPage);

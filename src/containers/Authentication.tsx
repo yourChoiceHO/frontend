@@ -1,7 +1,4 @@
-import hoistNonReactStatics from "hoist-non-react-statics";
 import { complement, equals, pathOr } from "ramda";
-import React from "react";
-import { Subscribe } from "unstated";
 
 import Container from "@/containers/Container";
 import api from "@/lib/api";
@@ -25,10 +22,10 @@ class AuthenticationContainer extends Container<IAuthenticationContext> {
     return complement(equals)(Role.Unauthorized, role);
   };
 
-  public login = (credentials: any) => {
+  public loginUser = (credentials: any) => {
     this.setState({ pending: true });
     return api.authentication
-      .login(credentials)
+      .loginUser(credentials)
       .fork(
         error => this.setState({ error, pending: false }),
         ({ user }) => this.setState({ user, error: {}, pending: false })
@@ -47,24 +44,5 @@ class AuthenticationContainer extends Container<IAuthenticationContext> {
 
   public setError = error => this.setState({ error });
 }
-
-export const withAuthentication = UnwrappedComponent => {
-  const Wrapper = (props, ref) => (
-    <Subscribe to={[AuthenticationContainer]}>
-      {authentication => (
-        <UnwrappedComponent
-          {...props}
-          authentication={authentication}
-          ref={ref}
-        />
-      )}
-    </Subscribe>
-  );
-
-  const name = UnwrappedComponent.displayName || UnwrappedComponent.name;
-  Wrapper.displayName = `withAuthentication(${name})`;
-
-  return hoistNonReactStatics(React.forwardRef(Wrapper), UnwrappedComponent);
-};
 
 export default AuthenticationContainer;
