@@ -144,9 +144,9 @@
   "vote": [],
   "election": [
     {
-      "id_election": "0",
+      "id_election": "2",
       "client_id": "0",
-      "type": "0",
+      "type": "Bundestagswahl",
       "text": "Wahl 1",
       "start_date": "2018-05-01T12:00:00.000Z",
       "end_date": "2018-06-29T18:00:00.000Z",
@@ -496,6 +496,46 @@
       "vote": "0",
       "election_id": "0",
       "id_candidate": "19"
+    },
+    {
+      "last_name": "Gauland",
+      "first_name": "Alexander",
+      "party": "AFD",
+      "constituency": "2",
+      "vote": "0",
+      "election_id": "2",
+      "id_candidate": "60",
+      "party_id": "50"
+    },
+    {
+      "last_name": "Kramp-Karrenbauer",
+      "first_name": "Annegret",
+      "party": "CDU",
+      "constituency": "4",
+      "vote": "0",
+      "election_id": "2",
+      "id_candidate": "61",
+      "party_id": "51"
+    },
+    {
+      "last_name": "Nahles",
+      "first_name": "Andrea",
+      "party": "SPD",
+      "constituency": "4",
+      "vote": "0",
+      "election_id": "2",
+      "id_candidate": "62",
+      "party_id": "52"
+    },
+    {
+      "last_name": "Lindner",
+      "first_name": "Christian",
+      "party": "FDP",
+      "constituency": "4",
+      "vote": "0",
+      "election_id": "2",
+      "id_candidate": "63",
+      "party_id": "53"
     }
   ],
   "party": [
@@ -659,6 +699,38 @@
       "id_party": "19",
       "election_id": "0",
       "vote": "0"
+    },
+    {
+      "text": "Alternative für Deutschland",
+      "constituency": "2",
+      "id_party": "50",
+      "election_id": "2",
+      "vote": "0",
+      "name_1": "AFD"
+    },
+    {
+      "text": "Christlich Demokratische Union Deutschlands",
+      "constituency": "4",
+      "id_party": "51",
+      "election_id": "2",
+      "vote": "0",
+      "name_1": "CDU"
+    },
+    {
+      "text": "Sozialdemokratische Partei Deutschlands",
+      "constituency": "4",
+      "id_party": "52",
+      "election_id": "2",
+      "vote": "0",
+      "name_1": "SPD"
+    },
+    {
+      "text": "Freie Demokratische Partei",
+      "constituency": "4",
+      "id_party": "53",
+      "election_id": "2",
+      "vote": "0",
+      "name_1": "FDP"
     }
   ],
   "client": [
@@ -671,14 +743,14 @@
       "client_id": "0",
       "username": "moderator",
       "password": "password",
-      "role": 2
+      "role": "2"
     },
     {
       "id_user": "1",
       "client_id": "1",
       "username": "supervisor",
       "password": "password",
-      "role": 3
+      "role": "3"
     }
   ]
 }

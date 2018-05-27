@@ -12,13 +12,13 @@ const LinkList = () => (
       <Link to="/wahl/neu">Wahl erstellen</Link>
     </li>
     <li>
-      <Link to="/wahl/0/detail">Wahl inspizieren</Link>
+      <Link to="/wahl/2/detail">Wahl inspizieren</Link>
     </li>
     <li>
-      <Link to="/wahl/0/bearbeiten">Wahl bearbeiten</Link>
+      <Link to="/wahl/2/bearbeiten">Wahl bearbeiten</Link>
     </li>
     <li>
-      <Link to="/wahl/0/auswerten">Wahl auswerten</Link>
+      <Link to="/wahl/2/auswerten">Wahl auswerten</Link>
     </li>
     <li>
       <Link to="/wahl">Wahlen Übersicht</Link>
@@ -27,7 +27,7 @@ const LinkList = () => (
       <Link to="/wahl/entfernen">Wahl löschen</Link>
     </li>
     <li>
-      <Link to="/wahl/0/wählen">Stimme abgeben</Link>
+      <Link to="/wahl/2/wählen">Stimme abgeben</Link>
     </li>
   </ul>
 );
