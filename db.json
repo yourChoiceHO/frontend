@@ -151,6 +151,15 @@
       "start_date": "2018-05-01T12:00:00.000Z",
       "end_date": "2018-06-29T18:00:00.000Z",
       "state": "0"
+    },
+    {
+      "id_election": "3",
+      "client_id": "0",
+      "type": "Europawahl",
+      "text": "Wahl 2",
+      "start_date": "2018-05-01T12:00:00.000Z",
+      "end_date": "2018-06-29T18:00:00.000Z",
+      "state": "3"
     }
   ],
   "referendum": [
@@ -536,6 +545,46 @@
       "election_id": "2",
       "id_candidate": "63",
       "party_id": "53"
+    },
+    {
+      "last_name": "Gauland",
+      "first_name": "Alexander",
+      "party": "AFD",
+      "constituency": "2",
+      "vote": "0",
+      "election_id": "3",
+      "id_candidate": "60",
+      "party_id": "50"
+    },
+    {
+      "last_name": "Kramp-Karrenbauer",
+      "first_name": "Annegret",
+      "party": "CDU",
+      "constituency": "4",
+      "vote": "0",
+      "election_id": "3",
+      "id_candidate": "61",
+      "party_id": "51"
+    },
+    {
+      "last_name": "Nahles",
+      "first_name": "Andrea",
+      "party": "SPD",
+      "constituency": "4",
+      "vote": "0",
+      "election_id": "3",
+      "id_candidate": "62",
+      "party_id": "52"
+    },
+    {
+      "last_name": "Lindner",
+      "first_name": "Christian",
+      "party": "FDP",
+      "constituency": "4",
+      "vote": "0",
+      "election_id": "3",
+      "id_candidate": "63",
+      "party_id": "53"
     }
   ],
   "party": [
@@ -729,6 +778,38 @@
       "constituency": "4",
       "id_party": "53",
       "election_id": "2",
+      "vote": "0",
+      "name_1": "FDP"
+    },
+    {
+      "text": "Alternative für Deutschland",
+      "constituency": "2",
+      "id_party": "50",
+      "election_id": "3",
+      "vote": "0",
+      "name_1": "AFD"
+    },
+    {
+      "text": "Christlich Demokratische Union Deutschlands",
+      "constituency": "4",
+      "id_party": "51",
+      "election_id": "3",
+      "vote": "0",
+      "name_1": "CDU"
+    },
+    {
+      "text": "Sozialdemokratische Partei Deutschlands",
+      "constituency": "4",
+      "id_party": "52",
+      "election_id": "3",
+      "vote": "0",
+      "name_1": "SPD"
+    },
+    {
+      "text": "Freie Demokratische Partei",
+      "constituency": "4",
+      "id_party": "53",
+      "election_id": "3",
       "vote": "0",
       "name_1": "FDP"
     }

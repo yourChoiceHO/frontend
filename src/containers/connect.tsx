@@ -10,8 +10,7 @@ const connect = containersAsProps => UnwrappedComponent => {
     <Subscribe to={values(containersAsProps)}>
       {(...contexts) => {
         const injectedProps = zipObj(names, contexts);
-        // return <UnwrappedComponent {...props} {...injectedProps} ref={ref} />;
-        return <UnwrappedComponent {...props} {...injectedProps} />;
+        return <UnwrappedComponent {...props} {...injectedProps} ref={ref} />;
       }}
     </Subscribe>
   );
@@ -19,8 +18,7 @@ const connect = containersAsProps => UnwrappedComponent => {
   const name = UnwrappedComponent.displayName || UnwrappedComponent.name;
   Wrapper.displayName = `connect([${names.join(",")}])(${name})`;
 
-  // return hoistNonReactStatics(React.forwardRef(Wrapper), UnwrappedComponent);
-  return hoistNonReactStatics(Wrapper, UnwrappedComponent);
+  return hoistNonReactStatics(React.forwardRef(Wrapper), UnwrappedComponent);
 };
 
 export default connect;
