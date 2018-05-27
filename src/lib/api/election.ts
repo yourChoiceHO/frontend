@@ -6,7 +6,9 @@ export function create(election: Partial<IElectionEntity>) {
 }
 
 export function remove(id: number) {
-  return http.del<IElectionEntity>(`/election/${id}`);
+  return http.del<IElectionEntity>(`/election`, {
+    params: { id_election: id }
+  });
 }
 
 export function getAll() {
@@ -20,5 +22,7 @@ export function get(id: number) {
 }
 
 export function update(id: number, updates: Partial<IElectionEntity> = {}) {
-  return http.put<IElectionEntity>(`/election/${id}`, updates);
+  return http.put<IElectionEntity>(`/election`, updates, {
+    params: { id_election: id }
+  });
 }
