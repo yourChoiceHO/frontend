@@ -9,7 +9,7 @@ class AuthenticationContainer extends Container<IAuthenticationContext> {
   public state: IAuthenticationContext = {
     error: {},
     pending: false,
-    user: {}
+    user: { role: Role.Supervisor }
   };
 
   public getRole = (): Role => {
