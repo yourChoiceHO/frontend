@@ -12,6 +12,7 @@
     "no-submodule-imports": [
       true,
       "classnames/bind",
+      "antd/lib/form",
       "@/__mocks__",
       "@/__tests__",
       "@/components",
