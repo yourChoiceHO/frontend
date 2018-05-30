@@ -13,6 +13,8 @@
       true,
       "classnames/bind",
       "antd/lib/form",
+      "antd/lib/radio",
+      "antd/lib/table",
       "@/__mocks__",
       "@/__tests__",
       "@/components",

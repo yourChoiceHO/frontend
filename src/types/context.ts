@@ -1,3 +1,5 @@
+import { IRequestError } from "@/types/error";
+
 import {
   ICandidateEntity,
   IElectionEntity,
@@ -6,7 +8,7 @@ import {
 } from "@/types/model";
 
 export interface IAuthenticationContext {
-  error: object;
+  error: IRequestError;
   pending: boolean;
   user: Partial<IUserEntity>;
 }

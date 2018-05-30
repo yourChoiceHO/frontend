@@ -327,186 +327,6 @@
   ],
   "candidate": [
     {
-      "last_name": "Simenel",
-      "first_name": "Nolly",
-      "party": "Stiedemann, Blanda and McClure",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "0"
-    },
-    {
-      "last_name": "MacCrosson",
-      "first_name": "Alf",
-      "party": "Barrows Inc",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "1"
-    },
-    {
-      "last_name": "Stitcher",
-      "first_name": "Libbey",
-      "party": "Nolan Inc",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "2"
-    },
-    {
-      "last_name": "Doucette",
-      "first_name": "Franchot",
-      "party": "Howell-Wilkinson",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "3"
-    },
-    {
-      "last_name": "Phillot",
-      "first_name": "Catie",
-      "party": "Hermiston LLC",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "4"
-    },
-    {
-      "last_name": "Lewknor",
-      "first_name": "Maryjo",
-      "party": "Cole-Hansen",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "5"
-    },
-    {
-      "last_name": "Ginty",
-      "first_name": "Helaina",
-      "party": "Doyle, Morar and Schuster",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "6"
-    },
-    {
-      "last_name": "Pittle",
-      "first_name": "Dorella",
-      "party": "Rosenbaum Inc",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "7"
-    },
-    {
-      "last_name": "McDermot",
-      "first_name": "Idaline",
-      "party": "Denesik and Sons",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "8"
-    },
-    {
-      "last_name": "Fairfull",
-      "first_name": "Tallie",
-      "party": "Terry, Harvey and Batz",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "9"
-    },
-    {
-      "last_name": "Adolfsen",
-      "first_name": "Raynard",
-      "party": "Welch, Daniel and Brown",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "10"
-    },
-    {
-      "last_name": "Janaway",
-      "first_name": "Rose",
-      "party": "Koch-Robel",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "11"
-    },
-    {
-      "last_name": "Dullingham",
-      "first_name": "Betsy",
-      "party": "Mertz and Sons",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "12"
-    },
-    {
-      "last_name": "Dooher",
-      "first_name": "Fielding",
-      "party": "Batz, Murphy and Lubowitz",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "13"
-    },
-    {
-      "last_name": "Levay",
-      "first_name": "Raquel",
-      "party": "Reilly-Schimmel",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "14"
-    },
-    {
-      "last_name": "Moorwood",
-      "first_name": "Corabelle",
-      "party": "Will-Cassin",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "15"
-    },
-    {
-      "last_name": "Antonich",
-      "first_name": "Maddi",
-      "party": "Hackett-Hagenes",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "16"
-    },
-    {
-      "last_name": "Englishby",
-      "first_name": "Malia",
-      "party": "Nicolas LLC",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "17"
-    },
-    {
-      "last_name": "Huson",
-      "first_name": "Haslett",
-      "party": "Flatley, Schaefer and King",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "18"
-    },
-    {
-      "last_name": "Dedenham",
-      "first_name": "Clive",
-      "party": "Cronin, Rempel and Baumbach",
-      "constituency": "55",
-      "vote": "0",
-      "election_id": "0",
-      "id_candidate": "19"
-    },
-    {
       "last_name": "Gauland",
       "first_name": "Alexander",
       "party": "AFD",
@@ -589,229 +409,68 @@
   ],
   "party": [
     {
-      "name": "Romaguera Inc",
-      "text": "Teloschistes Norman",
-      "constituency": "55",
-      "id_party": "0",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Stiedemann-Dach",
-      "text": "Agrostis perennans (Walter) Tuck.",
-      "constituency": "55",
-      "id_party": "1",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Boehm LLC",
-      "text": "Ravenia urbanii Engl. ex Urb.",
-      "constituency": "55",
-      "id_party": "2",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Weimann, Streich and Goldner",
-      "text": "Juncus brevicaudatus (Engelm.) Fernald",
-      "constituency": "55",
-      "id_party": "3",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Deckow-Kuvalis",
-      "text": "Phlox colubrina Wherry & Constance",
-      "constituency": "55",
-      "id_party": "4",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Wilderman, Koelpin and Lehner",
-      "text": "Townsendia glabella A. Gray",
-      "constituency": "55",
-      "id_party": "5",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Turcotte Group",
-      "text": "Diarrhena americana P. Beauv.",
-      "constituency": "55",
-      "id_party": "6",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Goodwin, Kassulke and Harris",
-      "text": "Rumex acetosella L.",
-      "constituency": "55",
-      "id_party": "7",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Collier-Ortiz",
-      "text": "Polycnemum arvense L.",
-      "constituency": "55",
-      "id_party": "8",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Lubowitz, Emmerich and King",
-      "text": "Carex blanda Dewey",
-      "constituency": "55",
-      "id_party": "9",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Gusikowski-Gleason",
-      "text": "Umbilicaria havaasii Llano",
-      "constituency": "55",
-      "id_party": "10",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Prosacco, Kiehn and Metz",
-      "text": "Eriogonum hoffmannii S. Stokes var. hoffmannii",
-      "constituency": "55",
-      "id_party": "11",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Predovic, Zulauf and Schaden",
-      "text":
-        "Juncus alpinoarticulatus Chaix ssp. nodulosus (Wahlenb.) Hämet-Ahti",
-      "constituency": "55",
-      "id_party": "12",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Reilly and Sons",
-      "text": "Lathyrus sylvestris L.",
-      "constituency": "55",
-      "id_party": "13",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Heaney LLC",
-      "text": "Lotus scoparius (Nutt.) Ottley var. brevialatus Ottley",
-      "constituency": "55",
-      "id_party": "14",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Sawayn, Skiles and Haley",
-      "text": "Salix humboldtiana Willd.",
-      "constituency": "55",
-      "id_party": "15",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Swift Inc",
-      "text": "Muehlenbeckia Meisn.",
-      "constituency": "55",
-      "id_party": "16",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Hansen-Klocko",
-      "text": "Scutellaria ovata Hill ssp. rugosa (Alph. Wood) Epling",
-      "constituency": "55",
-      "id_party": "17",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Heller, Kris and Walter",
-      "text": "Baccharis plummerae A. Gray",
-      "constituency": "55",
-      "id_party": "18",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
-      "name": "Kshlerin-Boyle",
-      "text": "Navarretia intertexta (Benth.) Hook.",
-      "constituency": "55",
-      "id_party": "19",
-      "election_id": "0",
-      "vote": "0"
-    },
-    {
+      "name": "AFD",
       "text": "Alternative für Deutschland",
       "constituency": "2",
       "id_party": "50",
       "election_id": "2",
-      "vote": "0",
-      "name_1": "AFD"
+      "vote": "0"
     },
     {
+      "name": "CDU",
       "text": "Christlich Demokratische Union Deutschlands",
       "constituency": "4",
       "id_party": "51",
       "election_id": "2",
-      "vote": "0",
-      "name_1": "CDU"
+      "vote": "0"
     },
     {
+      "name": "SPD",
       "text": "Sozialdemokratische Partei Deutschlands",
       "constituency": "4",
       "id_party": "52",
       "election_id": "2",
-      "vote": "0",
-      "name_1": "SPD"
+      "vote": "0"
     },
     {
+      "name": "FDP",
       "text": "Freie Demokratische Partei",
       "constituency": "4",
       "id_party": "53",
       "election_id": "2",
-      "vote": "0",
-      "name_1": "FDP"
+      "vote": "0"
     },
     {
+      "name": "AFD",
       "text": "Alternative für Deutschland",
       "constituency": "2",
       "id_party": "50",
       "election_id": "3",
-      "vote": "0",
-      "name_1": "AFD"
+      "vote": "0"
     },
     {
+      "name": "CDU",
       "text": "Christlich Demokratische Union Deutschlands",
       "constituency": "4",
       "id_party": "51",
       "election_id": "3",
-      "vote": "0",
-      "name_1": "CDU"
+      "vote": "0"
     },
     {
+      "name": "SPD",
       "text": "Sozialdemokratische Partei Deutschlands",
       "constituency": "4",
       "id_party": "52",
       "election_id": "3",
-      "vote": "0",
-      "name_1": "SPD"
+      "vote": "0"
     },
     {
+      "name": "FDP",
       "text": "Freie Demokratische Partei",
       "constituency": "4",
       "id_party": "53",
       "election_id": "3",
-      "vote": "0",
-      "name_1": "FDP"
+      "vote": "0"
     }
   ],
   "client": [
@@ -831,7 +490,14 @@
       "client_id": "1",
       "username": "supervisor",
       "password": "password",
-      "role": "3"
+      "role": "1"
+    },
+    {
+      "id_user": "2",
+      "client_id": "2",
+      "username": "admin",
+      "password": "password",
+      "role": "0"
     }
   ]
 }

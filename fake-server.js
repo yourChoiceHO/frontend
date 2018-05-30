@@ -1,3 +1,4 @@
+const R = require("ramda");
 const jsonServer = require("json-server");
 const server = jsonServer.create();
 const router = jsonServer.router("db.json");
@@ -19,21 +20,29 @@ server.get("/echo", (req, res) => {
 });
 
 server.post("/user/authenticate", (req, res) => {
-  res.jsonp({
-    user: router.db
-      .get("user")
-      .find({ username: req.body.username, password: req.body.password })
-      .value()
-  });
+  const user = router.db
+    .get("user")
+    .find({ username: req.body.username, password: req.body.password })
+    .value();
+
+  if (R.isNil(user) || R.isEmpty(user)) {
+    res.sendStatus(404);
+  } else {
+    res.jsonp({ user });
+  }
 });
 
 server.post("/voter/authenticate", (req, res) => {
-  res.jsonp({
-    user: router.db
-      .get("voter")
-      .find({ hash: req.body.hash })
-      .value()
-  });
+  const voter = router.db
+    .get("voter")
+    .find({ hash: req.body.hash })
+    .value();
+
+  if (R.isNil(voter) || R.isEmpty(voter)) {
+    res.sendStatus(404);
+  } else {
+    res.jsonp({ voter });
+  }
 });
 
 server.use(router);

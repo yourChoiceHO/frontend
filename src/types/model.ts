@@ -83,4 +83,5 @@ export interface IVoterEntity {
   hash: string;
   id_voter: number;
   last_name: string;
+  password: string;
 }
