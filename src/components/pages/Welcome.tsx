@@ -32,30 +32,28 @@ const LinkList = () => (
   </ul>
 );
 
-const WelcomePage: SFC<{}> = () => {
-  return (
-    <PageTemplate header={<Header />}>
-      <h1>Welcome</h1>
-      <Row>
-        <Col span={12}>
-          <Card>
-            <AccountCircleIcon />
-            <h2>Wähler</h2>
-            <Link to="/wähler/anmeldung">Anmeldung</Link>
-            <LinkList />
-          </Card>
-        </Col>
-        <Col span={12}>
-          <Card>
-            <LockIcon />
-            <h2>Mitarbeiter</h2>
-            <Link to="/mitarbeiter/anmeldung">Anmeldung</Link>
-            <LinkList />
-          </Card>
-        </Col>
-      </Row>
-    </PageTemplate>
-  );
-};
+const WelcomePage: SFC<{}> = () => (
+  <PageTemplate header={<Header />}>
+    <h1>Willkommen</h1>
+    <Row>
+      <Col span={12}>
+        <Card>
+          <AccountCircleIcon />
+          <h2>Wähler</h2>
+          <Link to="/wähler/anmelden">Login</Link>
+          <LinkList />
+        </Card>
+      </Col>
+      <Col span={12}>
+        <Card>
+          <LockIcon />
+          <h2>Mitarbeiter</h2>
+          <Link to="/mitarbeiter/anmelden">Login</Link>
+          <LinkList />
+        </Card>
+      </Col>
+    </Row>
+  </PageTemplate>
+);
 
 export default WelcomePage;

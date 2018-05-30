@@ -1,14 +1,21 @@
 import { Icon, Table } from "antd";
+import { ColumnProps } from "antd/lib/table";
 import { Cancel } from "fluture";
 import moment from "moment";
 import { isEmpty, pathOr } from "ramda";
 import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
+import { IElectionEntity } from "@/types/model";
+import { noop } from "@/utils";
 
-class ElectionOverview extends Component<{ election: ElectionContainer }> {
+class ElectionOverview extends Component<
+  RouteComponentProps<{}> & { election: ElectionContainer }
+> {
+  private cancel: Cancel = noop;
+
   public componentDidMount() {
     this.cancel = this.props.election.getAll();
   }
@@ -19,7 +26,7 @@ class ElectionOverview extends Component<{ election: ElectionContainer }> {
 
   public render() {
     const elections = pathOr({}, ["state", "elections"], this.props.election);
-    const pending = pathOr({}, ["state", "pending"], this.props.election);
+    // const pending = pathOr({}, ["state", "pending"], this.props.election);
 
     if (isEmpty(elections)) {
       return "Wahl wurde nicht gefunden";
@@ -34,10 +41,10 @@ class ElectionOverview extends Component<{ election: ElectionContainer }> {
     );
   }
 
-  private renderDateRow = (text, record) =>
+  private renderDateRow = (text: string, record: IElectionEntity) =>
     moment(text).format("MMMM Do YYYY, h:mm:ss a");
 
-  private renderActionsRow = (text, record) => {
+  private renderActionsRow = (text: string, record: IElectionEntity) => {
     const uri = `${this.props.match.path}/${record.id_election}`;
 
     return (
@@ -61,7 +68,7 @@ class ElectionOverview extends Component<{ election: ElectionContainer }> {
     );
   };
 
-  private getColumns = () => [
+  private getColumns: () => Array<ColumnProps<IElectionEntity>> = () => [
     {
       dataIndex: "id_election",
       key: "id",
@@ -100,8 +107,6 @@ class ElectionOverview extends Component<{ election: ElectionContainer }> {
       title: "Aktion"
     }
   ];
-
-  private cancel: Cancel = () => {};
 }
 
 export default connect({

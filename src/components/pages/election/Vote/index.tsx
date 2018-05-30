@@ -1,11 +1,10 @@
 import { Button, Checkbox, Form, Modal } from "antd";
 import { Cancel } from "fluture";
 import { isEmpty, pathOr } from "ramda";
-import React, { Component, Fragment, SFC } from "react";
+import React, { Component, forwardRef } from "react";
 
 import ElectionContainer from "@/containers/Election";
 import { ElectionTypes } from "@/types/model";
-import { IVoteProps } from "@/types/props";
 
 import Buergermeisterwahl from "@/components/pages/election/Vote/Buergermeisterwahl";
 import Bundestagswahl from "@/components/pages/election/Vote/Bundestagswahl";
@@ -16,8 +15,9 @@ import Referendum from "@/components/pages/election/Vote/Referendum";
 import { FormComponentProps } from "antd/lib/form";
 
 import connect from "@/containers/connect";
+import { noop } from "@/utils";
 
-const Vote = React.forwardRef(({ election }, ref) => {
+const Vote = forwardRef(({ election }, ref) => {
   let VoteComponent;
 
   switch (election.type) {
@@ -58,6 +58,7 @@ class ElectionVote extends Component<
   { election: ElectionContainer } & FormComponentProps
 > {
   private formRef;
+  private cancel: Cancel = noop;
 
   public componentDidMount() {
     this.cancel = this.props.election.get(this.props.computedMatch.params.id);
@@ -137,8 +138,6 @@ class ElectionVote extends Component<
       });
     });
   }
-
-  private cancel: Cancel = () => {};
 }
 
 export default connect({

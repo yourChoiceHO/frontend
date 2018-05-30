@@ -8,7 +8,7 @@ import PageTemplate from "@/components/templates/Page";
 
 const { TabPane } = Tabs;
 
-const TermsPage: SFC<RouteComponentProps<any>> = ({ match }) => {
+const TermsPage: SFC<RouteComponentProps<{ tab: string }>> = ({ match }) => {
   const tab = pathOr("bedingungen", ["params", "tab"], match);
 
   return (

@@ -1,7 +1,3 @@
-import hoistNonReactStatics from "hoist-non-react-statics";
-import React from "react";
-import { Subscribe } from "unstated";
-
 import Container from "@/containers/Container";
 import api from "@/lib/api";
 import { IElectionsContext } from "@/types/context";

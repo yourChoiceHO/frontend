@@ -1,7 +1,7 @@
 import { Col, Form, Radio, Row, Table } from "antd";
 import { FormComponentProps } from "antd/lib/form";
 import { Cancel } from "fluture";
-import { find, isEmpty, path, propEq, propOr } from "ramda";
+import { find, isEmpty, pathOr, propEq, propOr } from "ramda";
 import React, { Component } from "react";
 
 import { ICandidateEntity, IPartyEntity } from "@/types/model";
@@ -10,6 +10,7 @@ import { IVoteProps } from "@/types/props";
 import CandidateContainer from "@/containers/Candidate";
 import connect from "@/containers/connect";
 import PartyContainer from "@/containers/Party";
+import { noop } from "@/utils";
 
 const columnsFirst = [
   {
@@ -44,7 +45,7 @@ const getCandidatesDatasource = (
   candidates.map(({ party_id, last_name, first_name, id_candidate }) => {
     const partyName = propOr(
       "N/A",
-      "name_1",
+      "name",
       find(propEq("id_party", party_id), parties)
     );
 
@@ -62,11 +63,11 @@ const getCandidatesDatasource = (
   });
 
 const getPartiesDatasource = (parties: IPartyEntity[]) =>
-  parties.map(({ id_party, name_1, text }) => ({
+  parties.map(({ id_party, name, text }) => ({
     key: id_party,
     partyName: (
       <span>
-        {name_1}
+        {name}
         <br />
         <small> ({text})</small>
       </span>
@@ -76,7 +77,17 @@ const getPartiesDatasource = (parties: IPartyEntity[]) =>
 
 const FormItem = Form.Item;
 
-class Bundestagswahl extends Component<IVoteProps & FormComponentProps, {}> {
+class Bundestagswahl extends Component<
+  IVoteProps &
+    FormComponentProps & {
+      parties: PartyContainer;
+      candidates: CandidateContainer;
+    },
+  {}
+> {
+  private cancelCandidate: Cancel = noop;
+  private cancelParty: Cancel = noop;
+
   public componentDidMount() {
     this.cancelCandidate = this.props.candidates.getByElection(
       this.props.election.id_election
@@ -92,8 +103,16 @@ class Bundestagswahl extends Component<IVoteProps & FormComponentProps, {}> {
   }
 
   public render() {
-    const candidates = path(["state", "candidates"], this.props.candidates);
-    const parties = path(["state", "parties"], this.props.parties);
+    const candidates = pathOr<ICandidateEntity[]>(
+      [],
+      ["state", "candidates"],
+      this.props.candidates
+    );
+    const parties = pathOr<IPartyEntity[]>(
+      [],
+      ["state", "parties"],
+      this.props.parties
+    );
 
     const { getFieldDecorator } = this.props.form;
 
@@ -138,9 +157,6 @@ class Bundestagswahl extends Component<IVoteProps & FormComponentProps, {}> {
       </Form>
     );
   }
-
-  private cancelCandidate: Cancel = () => {};
-  private cancelParty: Cancel = () => {};
 }
 
 export default connect({

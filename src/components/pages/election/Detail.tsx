@@ -6,10 +6,13 @@ import React, { Component, Fragment } from "react";
 
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
+import { noop } from "@/utils";
 
 const ButtonGroup = Button.Group;
 
 class ElectionDetail extends Component<{ election: ElectionContainer }> {
+  private cancel: Cancel = noop;
+
   public componentDidMount() {
     this.cancel = this.props.election.get(this.props.computedMatch.params.id);
   }
@@ -47,8 +50,6 @@ class ElectionDetail extends Component<{ election: ElectionContainer }> {
       </Fragment>
     );
   }
-
-  private cancel: Cancel = () => {};
 }
 
 export default connect({

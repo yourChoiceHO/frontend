@@ -1,15 +1,11 @@
-import hoistNonReactStatics from "hoist-non-react-statics";
-import React from "react";
-import { Subscribe } from "unstated";
-
 import Container from "@/containers/Container";
 import api from "@/lib/api";
 import { ICandidateContext } from "@/types/context";
 
 class CandidateContainer extends Container<ICandidateContext> {
   public state: ICandidateContext = {
-    error: {},
     candidates: [],
+    error: {},
     pending: false
   };
 

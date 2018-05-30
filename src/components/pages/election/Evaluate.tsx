@@ -1,4 +1,5 @@
 import { Radio } from "antd";
+import { RadioChangeEvent } from "antd/lib/radio";
 import { Cancel } from "fluture";
 import { isEmpty, pathOr } from "ramda";
 import React, { Component, Fragment } from "react";
@@ -6,6 +7,7 @@ import { Bar, Doughnut } from "react-chartjs-2";
 
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
+import { noop } from "@/utils";
 
 const data = {
   datasets: [
@@ -56,6 +58,8 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
     diagram: doughnut
   };
 
+  private cancel: Cancel = noop;
+
   public componentDidMount() {
     this.cancel = this.props.election.get(this.props.computedMatch.params.id);
   }
@@ -64,8 +68,8 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
     this.cancel();
   }
 
-  public handleDiagramChange = e => {
-    this.setState({ diagram: e.target.value });
+  public handleDiagramChange = (event: RadioChangeEvent) => {
+    this.setState({ diagram: event.target.value });
   };
 
   public render() {
@@ -86,8 +90,6 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
       </Fragment>
     );
   }
-
-  private cancel: Cancel = () => {};
 }
 
 export default connect({
