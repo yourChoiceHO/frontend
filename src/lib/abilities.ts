@@ -1,7 +1,6 @@
-import { Ability, AbilityBuilder } from "@casl/ability";
-import { propOr } from "ramda";
+import { AbilityBuilder } from "@casl/ability";
 
-import { IUserEntity, Role } from "@/types/model";
+import { Role } from "@/types/model";
 
 type AbilityBuilderFunction = (
   action: string | string[],
@@ -42,6 +41,17 @@ const abilities = {
     }
   ),
   [Role.Supervisor]: AbilityBuilder.define(
+    (can: AbilityBuilderFunction, cannot: AbilityBuilderFunction) => {
+      can("access", "Election");
+      cannot("vote", "Election");
+      can("view", "Election");
+      can("edit", "Election");
+      can("create", "Election");
+      can("delete", "Election");
+      can("evaluate", "Election");
+    }
+  ),
+  [Role.Admin]: AbilityBuilder.define(
     (can: AbilityBuilderFunction, cannot: AbilityBuilderFunction) => {
       can("access", "Election");
       cannot("vote", "Election");

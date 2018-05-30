@@ -1,6 +1,6 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
 import { keys, values, zipObj } from "ramda";
-import React from "react";
+import React, { forwardRef } from "react";
 import { Subscribe } from "unstated";
 
 const connect = containersAsProps => UnwrappedComponent => {
@@ -16,9 +16,9 @@ const connect = containersAsProps => UnwrappedComponent => {
   );
 
   const name = UnwrappedComponent.displayName || UnwrappedComponent.name;
-  Wrapper.displayName = `connect([${names.join(",")}])(${name})`;
+  Wrapper.displayName = `connect([${names.join(", ")}])(${name})`;
 
-  return hoistNonReactStatics(React.forwardRef(Wrapper), UnwrappedComponent);
+  return hoistNonReactStatics(forwardRef(Wrapper), UnwrappedComponent);
 };
 
 export default connect;

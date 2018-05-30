@@ -20,12 +20,12 @@ const getColorFactory = (colors: object) => (key: string): string =>
   pathOr("initial", [key], colors);
 
 class Container<State extends object> extends UnstatedContainer<State> {
-  public setState(state: Partial<State>) {
+  public setState(state: Partial<State>, callback?: () => void) {
     if (process.env.DEBUG === "yes") {
       this[LOG_STATE](state);
     }
 
-    super.setState(state);
+    return super.setState(state, callback);
   }
 
   private [LOG_STATE](state: Partial<State>) {
