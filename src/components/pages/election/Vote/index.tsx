@@ -18,8 +18,8 @@ import { FormComponentProps } from "antd/lib/form";
 import connect from "@/containers/connect";
 
 const Vote = React.forwardRef(({ election }, ref) => {
-  let VoteComponent;
-
+  let VoteComponent ;
+  
   switch (election.type) {
     case ElectionTypes.Buergermeisterwahl:
       VoteComponent = Buergermeisterwahl;
