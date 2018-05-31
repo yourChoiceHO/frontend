@@ -21,13 +21,13 @@ const columnsFirst = [
     dataIndex: "voteOne",
     key: "voteOne",
     title: "1 Stimme"
-  },
+  }
   ,
   {
     dataIndex: "voteTwo",
     key: "voteTwo",
     title: "2 Stimmen"
-  },
+  }
   ,
   {
     dataIndex: "voteThree",
@@ -67,11 +67,13 @@ const getCandidatesDatasource = (
           <br />
           <small> ({partyName})</small>
         </span>
-      ), 
+      ),
+      key: id_candidate,
       voteOne: <Radio value={id_candidate} />,
-      voteTwo: <Radio value={id_candidate} />,
       voteThree: <Radio value={id_candidate} />,
-      key: id_candidate
+      voteTwo: <Radio value={id_candidate} />,
+
+
     };
   });
 
@@ -153,8 +155,8 @@ class Kommunalwahl extends Component<IVoteProps & FormComponentProps, {}> {
     );
   }
 
-  private cancelCandidate: Cancel = () => {};
-  private cancelParty: Cancel = () => {};
+  private cancelCandidate: Cancel = () => { };
+  private cancelParty: Cancel = () => { };
 }
 
 export default connect({

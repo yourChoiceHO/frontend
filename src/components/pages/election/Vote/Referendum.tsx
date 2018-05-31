@@ -1,10 +1,8 @@
 import React, { SFC } from "react";
 
+import { IElectionEntity } from "@/types/model";
 import { IVoteProps } from "@/types/props";
-import Header from "@/components/organisms/Header";
-import PageTemplate from "@/components/templates/Page";
-import { ICandidateEntity, IElectionEntity, IPartyEntity } from "@/types/model";
-import { Button, Checkbox, Col, Radio, Row, Table } from 'antd';
+import { Button, Checkbox, Col, Radio, Row } from 'antd';
 import moment from 'moment';
 
 const election: IElectionEntity = {
@@ -19,7 +17,7 @@ const election: IElectionEntity = {
 const Referendum: SFC<IVoteProps> = () => {
 
   return (
-    <PageTemplate >
+    <div >
 
       <h2>Interaktiver Stimmzettel
           das Referendum
@@ -42,7 +40,7 @@ const Referendum: SFC<IVoteProps> = () => {
         </Row>
       </div>
 
-    </PageTemplate >
+    </div >
   );
 };
 

@@ -2,8 +2,6 @@ import React, { SFC } from "react";
 
 import { IVoteProps } from "@/types/props";
 
-import Header from "@/components/organisms/Header";
-import PageTemplate from "@/components/templates/Page";
 import { ICandidateEntity, IElectionEntity, IPartyEntity } from "@/types/model";
 import { Button, Checkbox, Col, Radio, Row, Table } from 'antd';
 import moment from 'moment';
@@ -89,27 +87,26 @@ const parties: IPartyEntity[] = [
 
 const columnsParties = [
   {
-  dataIndex: 'candidatess',
-  key: 'candidatess',
-  title: 'Kandidaten',
-},
+    dataIndex: 'candidatess',
+    key: 'candidatess',
+    title: 'Kandidaten',
+  },
   {
-  dataIndex: 'partyName',
-  key: 'partyName',
-  title: 'Partei',
-}, 
-{
-  dataIndex: 'vote',
-  key: 'vote',
-  title: 'Stimme',
-}
+    dataIndex: 'partyName',
+    key: 'partyName',
+    title: 'Partei',
+  },
+  {
+    dataIndex: 'vote',
+    key: 'vote',
+    title: 'Stimme',
+  }
 ];
 
 const Buergermeisterwahl: SFC<IVoteProps> = () => {
 
   return (
-    <PageTemplate >
-
+    <div>
       <h2>Interaktiver Stimmzettel
           für die Wahl der / des Bürgermeisterin / Bürgermeisters
           am {election.end_date.format("DD.MM.YYYY")} der {election.text}
@@ -144,7 +141,7 @@ const Buergermeisterwahl: SFC<IVoteProps> = () => {
         </Row>
       </div>
 
-    </PageTemplate >
+    </div >
   );
 };
 

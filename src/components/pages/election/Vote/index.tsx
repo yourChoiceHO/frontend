@@ -18,8 +18,7 @@ import { FormComponentProps } from "antd/lib/form";
 import connect from "@/containers/connect";
 
 const Vote = React.forwardRef(({ election }, ref) => {
-  let VoteComponent ;
-  
+  let VoteComponent;
   switch (election.type) {
     case ElectionTypes.Buergermeisterwahl:
       VoteComponent = Buergermeisterwahl;
@@ -56,7 +55,7 @@ const FormItem = Form.Item;
 
 class ElectionVote extends Component<
   { election: ElectionContainer } & FormComponentProps
-> {
+  > {
   private formRef;
 
   public componentDidMount() {
@@ -138,7 +137,7 @@ class ElectionVote extends Component<
     });
   }
 
-  private cancel: Cancel = () => {};
+  private cancel: Cancel = () => { };
 }
 
 export default connect({

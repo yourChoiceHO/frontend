@@ -55,7 +55,7 @@ const getCandidatesDatasource = (
           <br />
           <small> ({partyName})</small>
         </span>
-      ), 
+      ),
       firstVote: <Radio value={id_candidate} />,
       key: id_candidate
     };
@@ -139,8 +139,8 @@ class Landtagswahl extends Component<IVoteProps & FormComponentProps, {}> {
     );
   }
 
-  private cancelCandidate: Cancel = () => {};
-  private cancelParty: Cancel = () => {};
+  private cancelCandidate: Cancel = () => { };
+  private cancelParty: Cancel = () => { };
 }
 
 export default connect({

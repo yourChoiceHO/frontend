@@ -1,7 +1,7 @@
 import { Form, Radio, Table } from "antd";
 import { FormComponentProps } from "antd/lib/form";
 import { Cancel } from "fluture";
-import { find, isEmpty, path, propEq, propOr } from "ramda";
+import { isEmpty, path } from "ramda";
 import React, { Component } from "react";
 
 import CandidateContainer from "@/containers/Candidate";
@@ -96,8 +96,8 @@ class Europawahl extends Component<IVoteProps & FormComponentProps, {}> {
     );
   }
 
-  private cancelCandidate: Cancel = () => {};
-  private cancelParty: Cancel = () => {};
+  private cancelCandidate: Cancel = () => { };
+  private cancelParty: Cancel = () => { };
 }
 
 export default connect({
