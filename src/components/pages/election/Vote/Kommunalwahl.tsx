@@ -11,6 +11,12 @@ import CandidateContainer from "@/containers/Candidate";
 import connect from "@/containers/connect";
 import PartyContainer from "@/containers/Party";
 
+const radioStyle = {
+  display: "block",
+  height: "30px",
+  lineHeight: "30px"
+};
+
 const columnsFirst = [
   {
     dataIndex: "candidate",
@@ -20,19 +26,7 @@ const columnsFirst = [
   {
     dataIndex: "voteOne",
     key: "voteOne",
-    title: "1 Stimme"
-  }
-  ,
-  {
-    dataIndex: "voteTwo",
-    key: "voteTwo",
-    title: "2 Stimmen"
-  }
-  ,
-  {
-    dataIndex: "voteThree",
-    key: "voteThree",
-    title: "3 Stimmen"
+    title: "Stimme(n)"
   }
 ];
 
@@ -56,7 +50,7 @@ const getCandidatesDatasource = (
   candidates.map(({ party_id, last_name, first_name, id_candidate }) => {
     const partyName = propOr(
       "N/A",
-      "name_1",
+      "name",
       find(propEq("id_party", party_id), parties)
     );
 
@@ -69,20 +63,28 @@ const getCandidatesDatasource = (
         </span>
       ),
       key: id_candidate,
-      voteOne: <Radio value={id_candidate} />,
-      voteThree: <Radio value={id_candidate} />,
-      voteTwo: <Radio value={id_candidate} />,
-
-
+      voteOne: (
+        <Radio.Group>
+          <Radio style={radioStyle} value={`${id_candidate}_1`}>
+            1
+          </Radio>
+          <Radio style={radioStyle} value={`${id_candidate}_2`}>
+            2
+          </Radio>
+          <Radio style={radioStyle} value={`${id_candidate}_3`}>
+            3
+          </Radio>
+        </Radio.Group>
+      )
     };
   });
 
 const getPartiesDatasource = (parties: IPartyEntity[]) =>
-  parties.map(({ id_party, name_1, text }) => ({
+  parties.map(({ id_party, name, text }) => ({
     key: id_party,
     partyName: (
       <span>
-        {name_1}
+        {name}
         <br />
         <small> ({text})</small>
       </span>
@@ -124,7 +126,7 @@ class Kommunalwahl extends Component<IVoteProps & FormComponentProps, {}> {
           <Col span={12}>
             <FormItem>
               {getFieldDecorator("first-vote")(
-                <Radio.Group id="radiovoteOne">
+                <Radio.Group>
                   <Table
                     bordered={true}
                     columns={columnsFirst}
@@ -139,7 +141,7 @@ class Kommunalwahl extends Component<IVoteProps & FormComponentProps, {}> {
           <Col span={12}>
             <FormItem>
               {getFieldDecorator("second-vote")(
-                <Radio.Group id="radioSecondVote">
+                <Radio.Group>
                   <Table
                     bordered={true}
                     columns={columnsSecond}
@@ -155,8 +157,8 @@ class Kommunalwahl extends Component<IVoteProps & FormComponentProps, {}> {
     );
   }
 
-  private cancelCandidate: Cancel = () => { };
-  private cancelParty: Cancel = () => { };
+  private cancelCandidate: Cancel = () => {};
+  private cancelParty: Cancel = () => {};
 }
 
 export default connect({
