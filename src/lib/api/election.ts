@@ -21,7 +21,7 @@ export function get(id: number) {
   });
 }
 
-export function update(id: number, updates: Partial<IElectionEntity> = {}) {
+export function update(id: number, updates: Partial<IElectionEntity>) {
   return http.put<IElectionEntity>(`/election`, updates, {
     params: { id_election: id }
   });
