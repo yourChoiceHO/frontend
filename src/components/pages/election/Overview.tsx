@@ -6,6 +6,7 @@ import { isEmpty, pathOr } from "ramda";
 import React, { Component, Fragment } from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
 
+import Can from "@/components/atoms/Can";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
 import { IElectionEntity } from "@/types/model";
@@ -49,64 +50,92 @@ class ElectionOverview extends Component<
 
     return (
       <Fragment>
-        <Link to={uri}>
-          <Icon type="search" />
-        </Link>
-        <Link to={`${uri}/bearbeiten`}>
-          <Icon type="edit" />
-        </Link>
-        <Link to={`${uri}/entfernen`}>
-          <Icon type="delete" />
-        </Link>
-        <Link to={`${uri}/auswerten`}>
-          <Icon type="area-chart" />
-        </Link>
-        <Link to={`${uri}/wählen`}>
-          <Icon type="form" />
-        </Link>
+        <Can do="view" on="Election">
+          {() => (
+            <Link to={uri}>
+              <Icon type="search" />
+            </Link>
+          )}
+        </Can>
+
+        <Can do="edit" on="Election">
+          {() => (
+            <Link to={`${uri}/bearbeiten`}>
+              <Icon type="edit" />
+            </Link>
+          )}
+        </Can>
+
+        <Can do="delete" on="Election">
+          {() => (
+            <Link to={`${uri}/entfernen`}>
+              <Icon type="delete" />
+            </Link>
+          )}
+        </Can>
+
+        <Can do="evaluate" on="Election">
+          {() => (
+            <Link to={`${uri}/auswerten`}>
+              <Icon type="area-chart" />
+            </Link>
+          )}
+        </Can>
+
+        <Can do="vote" on="Election">
+          {() => (
+            <Link to={`${uri}/wählen`}>
+              <Icon type="form" />
+            </Link>
+          )}
+        </Can>
       </Fragment>
     );
   };
 
-  private getColumns: () => Array<ColumnProps<IElectionEntity>> = () => [
-    {
-      dataIndex: "id_election",
-      key: "id",
-      title: "ID"
-    },
-    {
-      dataIndex: "type",
-      key: "type",
-      title: "Art"
-    },
-    {
-      dataIndex: "start_date",
-      key: "start_date",
-      render: this.renderDateRow,
-      title: "Startzeitpunkt"
-    },
-    {
-      dataIndex: "end_date",
-      key: "end_date",
-      render: this.renderDateRow,
-      title: "Endzeitpunkt"
-    },
-    {
-      dataIndex: "state",
-      key: "state",
-      title: "status"
-    },
-    {
-      dataIndex: "text",
-      key: "text",
-      title: "Beschreibung"
-    },
-    {
-      key: "action",
-      render: this.renderActionsRow,
-      title: "Aktion"
-    }
-  ];
+  private getColumns: () => Array<ColumnProps<IElectionEntity>> = () => {
+    const columns = [
+      {
+        dataIndex: "id_election",
+        key: "id",
+        title: "ID"
+      },
+      {
+        dataIndex: "type",
+        key: "type",
+        title: "Art"
+      },
+      {
+        dataIndex: "start_date",
+        key: "start_date",
+        render: this.renderDateRow,
+        title: "Startzeitpunkt"
+      },
+      {
+        dataIndex: "end_date",
+        key: "end_date",
+        render: this.renderDateRow,
+        title: "Endzeitpunkt"
+      },
+      {
+        dataIndex: "state",
+        key: "state",
+        title: "Status"
+      },
+      {
+        dataIndex: "text",
+        key: "text",
+        title: "Beschreibung"
+      },
+      {
+        key: "action",
+        render: this.renderActionsRow,
+        title: "Aktion"
+      }
+    ];
+
+    return columns;
+  };
 }
 
 export default connect({
