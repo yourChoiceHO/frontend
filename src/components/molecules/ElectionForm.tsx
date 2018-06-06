@@ -183,62 +183,68 @@ class ElectionForm extends Component<IUserFormProps> {
               </FormItem>
             </Col>
             <Col span={8}>
-              <FormItem className={cx({ hide: hidePartyList })}>
-                <Card.Grid className={cx("grid")}>
-                  {getFieldDecorator("parties", {
-                    rules: [
-                      {
-                        message: "Bitte Parteienliste importieren!",
-                        required: true
-                      }
-                    ]
-                  })(
-                    <Upload>
-                      <Button>
-                        <Icon type="upload" /> Parteienliste importieren
-                      </Button>
-                    </Upload>
-                  )}
-                </Card.Grid>
-              </FormItem>
+              {!hidePartyList && (
+                <FormItem>
+                  <Card.Grid className={cx("grid")}>
+                    {getFieldDecorator("parties", {
+                      rules: [
+                        {
+                          message: "Bitte Parteienliste importieren!",
+                          required: true
+                        }
+                      ]
+                    })(
+                      <Upload>
+                        <Button>
+                          <Icon type="upload" /> Parteienliste importieren
+                        </Button>
+                      </Upload>
+                    )}
+                  </Card.Grid>
+                </FormItem>
+              )}
             </Col>
             <Col span={8}>
-              <FormItem className={cx({ hide: hideCandidateList })}>
-                <Card.Grid className={cx("grid")}>
-                  {getFieldDecorator("candidates", {
-                    rules: [
-                      {
-                        message: "Bitte Kandidatenliste importieren!",
-                        required: true
-                      }
-                    ]
-                  })(
-                    <Upload>
-                      <Button>
-                        <Icon type="upload" /> Kandidatenliste importieren
-                      </Button>
-                    </Upload>
-                  )}
-                </Card.Grid>
-              </FormItem>
-              <FormItem className={cx({ hide: hideTopicList })}>
-                <Card.Grid className={cx("grid")}>
-                  {getFieldDecorator("topic", {
-                    rules: [
-                      {
-                        message: "Bitte Themenliste importieren!",
-                        required: true
-                      }
-                    ]
-                  })(
-                    <Upload>
-                      <Button>
-                        <Icon type="upload" />Themenliste importieren
-                      </Button>
-                    </Upload>
-                  )}
-                </Card.Grid>
-              </FormItem>
+              {!hideCandidateList && (
+                <FormItem>
+                  <Card.Grid className={cx("grid")}>
+                    {getFieldDecorator("candidates", {
+                      rules: [
+                        {
+                          message: "Bitte Kandidatenliste importieren!",
+                          required: true
+                        }
+                      ]
+                    })(
+                      <Upload>
+                        <Button>
+                          <Icon type="upload" /> Kandidatenliste importieren
+                        </Button>
+                      </Upload>
+                    )}
+                  </Card.Grid>
+                </FormItem>
+              )}
+              {!hideTopicList && (
+                <FormItem>
+                  <Card.Grid className={cx("grid")}>
+                    {getFieldDecorator("topic", {
+                      rules: [
+                        {
+                          message: "Bitte Themenliste importieren!",
+                          required: true
+                        }
+                      ]
+                    })(
+                      <Upload>
+                        <Button>
+                          <Icon type="upload" />Themenliste importieren
+                        </Button>
+                      </Upload>
+                    )}
+                  </Card.Grid>
+                </FormItem>
+              )}
             </Col>
           </Row>
           <Row>
@@ -288,24 +294,3 @@ export default Form.create({
     };
   }
 })(ElectionForm);
-
-/* <Radio.Group>
-<Radio style={radioStyle} value={0}>
-  Europawahl
-</Radio>
-<Radio style={radioStyle} value={1}>
-  Bundestagswahl
-</Radio>
-<Radio style={radioStyle} value={2}>
-  Landtagswahl
-</Radio>
-<Radio style={radioStyle} value={3}>
-  Bürgerentscheid
-</Radio>
-<Radio style={radioStyle} value={4}>
-  Bürgermeisterwahl
-</Radio>
-<Radio style={radioStyle} value={5}>
-  Gemeinderatswahl
-</Radio>
-</Radio.Group> */
