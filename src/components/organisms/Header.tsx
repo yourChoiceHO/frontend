@@ -28,16 +28,17 @@ const PageHeader: SFC<{ authentication: AuthenticationContainer }> = ({
 }) => {
   return (
     <Header className={cx("header")}>
+      <a className={cx("secret")} href="/mitarbeiter/anmelden">
+        &nbsp;
+      </a>
       <Row className={cx("header-row")}>
         <Col span={9}>
           {authentication.isLoggedIn() && (
-            <Button
-              type="primary"
-              icon="home"
-              onClick={() => history.push("/wahl")}
-            >
-              Wahlübersicht
-            </Button>
+            <Link to="/wahl">
+              <Button icon="home" type="primary">
+                Wahlübersicht
+              </Button>
+            </Link>
           )}
         </Col>
         <Col span={6}>
