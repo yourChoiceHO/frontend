@@ -1,59 +1,6 @@
-import { Card, Col, Row } from "antd";
-import { AccountCircleIcon, LockIcon } from "mdi-react";
 import React, { SFC } from "react";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
-import Header from "@/components/organisms/Header";
-import PageTemplate from "@/components/templates/Page";
-
-const LinkList = () => (
-  <ul>
-    <li>
-      <Link to="/wahl/neu">Wahl erstellen</Link>
-    </li>
-    <li>
-      <Link to="/wahl/2/detail">Wahl inspizieren</Link>
-    </li>
-    <li>
-      <Link to="/wahl/2/bearbeiten">Wahl bearbeiten</Link>
-    </li>
-    <li>
-      <Link to="/wahl/2/auswerten">Wahl auswerten</Link>
-    </li>
-    <li>
-      <Link to="/wahl">Wahlen Übersicht</Link>
-    </li>
-    <li>
-      <Link to="/wahl/entfernen">Wahl löschen</Link>
-    </li>
-    <li>
-      <Link to="/wahl/2/wählen">Stimme abgeben</Link>
-    </li>
-  </ul>
-);
-
-const WelcomePage: SFC<{}> = () => (
-  <PageTemplate header={<Header />}>
-    <h1>Willkommen</h1>
-    <Row>
-      <Col span={12}>
-        <Card>
-          <AccountCircleIcon />
-          <h2>Wähler</h2>
-          <Link to="/wähler/anmelden">Login</Link>
-          <LinkList />
-        </Card>
-      </Col>
-      <Col span={12}>
-        <Card>
-          <LockIcon />
-          <h2>Mitarbeiter</h2>
-          <Link to="/mitarbeiter/anmelden">Login</Link>
-          <LinkList />
-        </Card>
-      </Col>
-    </Row>
-  </PageTemplate>
-);
+const WelcomePage: SFC<{}> = () => <Redirect to="/wähler/anmelden" />;
 
 export default WelcomePage;
