@@ -1,4 +1,4 @@
-import { Icon, Table } from "antd";
+import { Button, Icon, Table } from "antd";
 import { ColumnProps } from "antd/lib/table";
 import { Cancel } from "fluture";
 import moment from "moment";
@@ -34,11 +34,20 @@ class ElectionOverview extends Component<
     }
 
     return (
-      <Table
-        rowKey="id_election"
-        dataSource={elections}
-        columns={this.getColumns()}
-      />
+      <Fragment>
+        <Can do="create" on="Election">
+          {() => (
+            <Link to="/wahl/erstellen">
+              <Button type="primary">Neue Wahl erstellen</Button>
+            </Link>
+          )}
+        </Can>
+        <Table
+          rowKey="id_election"
+          dataSource={elections}
+          columns={this.getColumns()}
+        />
+      </Fragment>
     );
   }
 
