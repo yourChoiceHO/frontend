@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "node export.js"
+  },
+  "dependencies": {
+    "xlsx": "^0.12.12"
+  }
+}
