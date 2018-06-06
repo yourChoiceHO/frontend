@@ -20,7 +20,7 @@ const UserLoginPage: SFC<{ authentication: AuthenticationContainer }> = ({
   };
 
   if (authentication.isLoggedIn()) {
-    return <Redirect to="/" />;
+    return <Redirect to="/wahl" />;
   }
 
   return (
