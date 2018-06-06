@@ -3,12 +3,12 @@ import { Cancel } from "fluture";
 import moment from "moment";
 import { isEmpty, pathOr } from "ramda";
 import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
 
+import Can from "@/components/atoms/Can";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
 import { noop } from "@/utils";
-
-const ButtonGroup = Button.Group;
 
 class ElectionDetail extends Component<{ election: ElectionContainer }> {
   private cancel: Cancel = noop;
@@ -41,11 +41,25 @@ class ElectionDetail extends Component<{ election: ElectionContainer }> {
           </Card>
         </div>
         <div>
-          <Button>Bearbeiten</Button>
-          <ButtonGroup style={{ padding: "30px" }}>
-            <Button>Speichern</Button>
-            <Button>Abbrechen</Button>
-          </ButtonGroup>
+          <Can do="edit" on="Election">
+            {() => (
+              <Link to={`/wahl/${election.id_election}/bearbeiten`}>
+                <Button icon="edit" type="primary">
+                  Bearbeiten
+                </Button>
+              </Link>
+            )}
+          </Can>
+
+          <Can do="delete" on="Election">
+            {() => (
+              <Link to={`/wahl/${election.id_election}/entfernen`}>
+                <Button icon="delete" type="primary">
+                  Löschen
+                </Button>
+              </Link>
+            )}
+          </Can>
         </div>
       </Fragment>
     );
