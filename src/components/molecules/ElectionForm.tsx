@@ -5,13 +5,11 @@ import {
   DatePicker,
   Form,
   Icon,
+  Input,
   Radio,
   Row,
-  Upload,
-  Input
+  Upload
 } from "antd";
-
-import { Role } from "@/types/model";
 
 import connect from "@/containers/connect";
 
@@ -24,7 +22,6 @@ import { not, or, reduce } from "ramda";
 import React, { Component } from "react";
 
 import Styles from "@/components/pages/styles/hide.less";
-import { loginUser } from "@/lib/api/authentication";
 
 const cx = classNames.bind(Styles);
 const FormItem = Form.Item;
@@ -47,6 +44,16 @@ const reduceWithOr = reduce<boolean, boolean>(or, false);
 class ElectionForm extends Component<IUserFormProps> {
   public handleSubmit = (event: any) => {
     event.preventDefault();
+    const role = this.props.authentication.getRole();
+    if (role === 1) {
+      this.props.form.setFieldsValue({
+        state: 2
+      });
+    } else if (role === 2) {
+      this.props.form.setFieldsValue({
+        state: 1
+      });
+    }
 
     this.props.form.validateFields((err, values) => {
       console.log({ err, values });
@@ -272,7 +279,7 @@ class ElectionForm extends Component<IUserFormProps> {
                 initialValue: this.props.state,
                 rules: [
                   {
-                    required: true
+                    required: false
                   }
                 ]
               })(<Input type="hidden" />)}

@@ -34,7 +34,7 @@ const ElectionPage: SFC<RouteComponentProps<{}>> = ({ match }) => (
       />
 
       <ProtectedRoute
-        path="/wahl/neu"
+        path="/wahl/erstellen"
         component={ElectionNew}
         redirectProps={{ to: "/mitarbeiter/anmelden" }}
         roles={[Role.Supervisor, Role.Moderator]}
