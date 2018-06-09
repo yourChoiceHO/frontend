@@ -1,4 +1,4 @@
-import { message, Popconfirm } from "antd";
+import { Button, message, Popconfirm } from "antd";
 import { Cancel } from "fluture";
 import { isEmpty, pathOr } from "ramda";
 import React, { Component, Fragment } from "react";
@@ -19,14 +19,14 @@ class ElectionRemove extends Component<{ election: ElectionContainer }> {
     this.cancel();
   }
 
-  public confirmPop(e: any) {
-    const electionId = this.props.Match.params.id;
-    // const electionId = this.props.computedMatch.params.id;
+  public confirmPop = (e: any) => {
+    // const electionId = this.props.Match.params.id;
+    const electionId = this.props.computedMatch.params.id;
 
     message.success("Wahl gelöscht: " + electionId); //electionID only for debug purposes
     // console.log(electionId);
     this.props.election.remove(electionId);
-  }
+  };
 
   public cancelPop(e: any) {
     message.warning("Vorgang abgebrochen");
@@ -46,7 +46,9 @@ class ElectionRemove extends Component<{ election: ElectionContainer }> {
         okText="Ja"
         cancelText="Nein"
       >
-        <a href="#">Löschen</a>
+        <Button type="primary" href="#">
+          Löschen
+        </Button>
       </Popconfirm>
     );
   }
