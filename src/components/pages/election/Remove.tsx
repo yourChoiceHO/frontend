@@ -20,12 +20,12 @@ class ElectionRemove extends Component<{ election: ElectionContainer }> {
   }
 
   public confirmPop(e: any) {
-    const election = pathOr({}, ["state", "election", 0], this.props.election);
+    const electionId = this.props.Match.params.id;
+    // const electionId = this.props.computedMatch.params.id;
 
-    console.log(election);
-    // this.props.election.remove(election.id_election);
-    // election.remove(election.id_election);
-    message.success("Wahl gelöscht");
+    message.success("Wahl gelöscht: " + electionId); //electionID only for debug purposes
+    // console.log(electionId);
+    this.props.election.remove(electionId);
   }
 
   public cancelPop(e: any) {
