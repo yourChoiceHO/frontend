@@ -8,8 +8,9 @@ import {
 } from "@/types/model";
 
 export interface IAuthenticationContext {
-  error: IRequestError;
+  error: IRequestError | {};
   pending: boolean;
+  token: string;
   user: Partial<IUserEntity>;
 }
 

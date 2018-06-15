@@ -11,6 +11,7 @@ class AuthenticationContainer extends Container<IAuthenticationContext> {
   public state: IAuthenticationContext = {
     error: {},
     pending: false,
+    token: "",
     user: {}
   };
 
