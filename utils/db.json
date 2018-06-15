@@ -1,0 +1,797 @@
+{
+  "voter": [
+    {
+      "last_name": "Havock",
+      "first_name": "Nichole",
+      "hash": "12WDc4ohydY2VDTx8Ju6Vzq2FVCNJ37bad",
+      "constituency": "55",
+      "id_voter": "0"
+    },
+    {
+      "last_name": "Triggs",
+      "first_name": "Maurita",
+      "hash": "1PLUzQgHNazsmcs3SiVj18BqhGR8enJWMZ",
+      "constituency": "55",
+      "id_voter": "1"
+    },
+    {
+      "last_name": "Geleman",
+      "first_name": "Faber",
+      "hash": "19SYhfzBKz2r9WpMiH4iHTLFAzWHADnHaF",
+      "constituency": "55",
+      "id_voter": "2"
+    },
+    {
+      "last_name": "Chinnick",
+      "first_name": "Rubetta",
+      "hash": "18kaiYRiib35wzkTRDRaMqaQDTHdykxwEG",
+      "constituency": "55",
+      "id_voter": "3"
+    },
+    {
+      "last_name": "Robardey",
+      "first_name": "Sydelle",
+      "hash": "1M37NcSVvBTRJHhSVVqT5uBnMxbJWXXzNy",
+      "constituency": "55",
+      "id_voter": "4"
+    },
+    {
+      "last_name": "Dyne",
+      "first_name": "Perl",
+      "hash": "1HU9n6Kj2fqfErcvvXxSm2wS6YAFqsdXW2",
+      "constituency": "55",
+      "id_voter": "5"
+    },
+    {
+      "last_name": "Ghilks",
+      "first_name": "Greer",
+      "hash": "1AB1XBQHo1aDRYacdPz4vYawPaEYNAQN5B",
+      "constituency": "55",
+      "id_voter": "6"
+    },
+    {
+      "last_name": "Crookes",
+      "first_name": "Marian",
+      "hash": "148UFmwKWKpHqxds7DrEcEKZiB987CNtpd",
+      "constituency": "55",
+      "id_voter": "7"
+    },
+    {
+      "last_name": "Furze",
+      "first_name": "Herbie",
+      "hash": "1JuJ1nQ633TSg2wL6DbUrAhckvkgms8TNs",
+      "constituency": "55",
+      "id_voter": "8"
+    },
+    {
+      "last_name": "Stairmand",
+      "first_name": "Kori",
+      "hash": "1LByktzdj7CNaQjMXjnRC5uxj5pArwHxnM",
+      "constituency": "55",
+      "id_voter": "9"
+    },
+    {
+      "last_name": "Osmant",
+      "first_name": "Ed",
+      "hash": "134qoaYZ254HnY9bZtM8vgD1h9KhVoWPf2",
+      "constituency": "55",
+      "id_voter": "10"
+    },
+    {
+      "last_name": "Swigg",
+      "first_name": "Quintina",
+      "hash": "1HaK1YP7epmzDd13s7kuqrqHoyDfbPq3YW",
+      "constituency": "55",
+      "id_voter": "11"
+    },
+    {
+      "last_name": "Maffia",
+      "first_name": "Luciano",
+      "hash": "15ERCbAMcGCWaeqQQBo4wJ6fiuecC3vNvD",
+      "constituency": "55",
+      "id_voter": "12"
+    },
+    {
+      "last_name": "End",
+      "first_name": "Rae",
+      "hash": "15o1koVTSwis1UuqgMMzRnZBL4henYkCWf",
+      "constituency": "55",
+      "id_voter": "13"
+    },
+    {
+      "last_name": "Caban",
+      "first_name": "Wayland",
+      "hash": "1H3xKbVbuXbtV71pLY3gD8amQhcewNAtgM",
+      "constituency": "55",
+      "id_voter": "14"
+    },
+    {
+      "last_name": "Meddick",
+      "first_name": "Theressa",
+      "hash": "1Mw68oDWTaoDfK9vb1VtacXbdDT6TPHWrW",
+      "constituency": "55",
+      "id_voter": "15"
+    },
+    {
+      "last_name": "Neumann",
+      "first_name": "Terrell",
+      "hash": "1EnyWgxecTeX8v5iF6RofVa2jTxMabUEJH",
+      "constituency": "55",
+      "id_voter": "16"
+    },
+    {
+      "last_name": "MacShirie",
+      "first_name": "Scotty",
+      "hash": "14ipWH2izUdPY6UPsT3dEkMC1YWxxVrTat",
+      "constituency": "55",
+      "id_voter": "17"
+    },
+    {
+      "last_name": "Kirkbright",
+      "first_name": "Tate",
+      "hash": "1LhE3LmwxgcHJwXpvTMkwgk1hdGYYRXD2b",
+      "constituency": "55",
+      "id_voter": "18"
+    },
+    {
+      "last_name": "Guwer",
+      "first_name": "Fayre",
+      "hash": "17s2SU4qYKrRcWGjqKwE3VAshs2nRdvQzh",
+      "constituency": "55",
+      "id_voter": "19"
+    },
+    {
+      "last_name": "Nikolaropoulos",
+      "first_name": "Evangelos",
+      "hash": "3754085",
+      "constituency": "55",
+      "id_voter": "20"
+    },
+    {
+      "last_name": "Josua",
+      "first_name": "Weber",
+      "hash": "3756206",
+      "constituency": "55",
+      "id_voter": "21"
+    },
+    {
+      "last_name": "Jonas",
+      "first_name": "Hauss",
+      "hash": "3765388",
+      "constituency": "55",
+      "id_voter": "22"
+    },
+    {
+      "last_name": "Tobin",
+      "first_name": "Choinowski",
+      "hash": "3813034",
+      "constituency": "55",
+      "id_voter": "23"
+    },
+    {
+      "last_name": "Tarik",
+      "first_name": "Bozdemir",
+      "hash": "3873915",
+      "constituency": "55",
+      "id_voter": "24"
+    }
+  ],
+  "vote": [],
+  "election": [
+    {
+      "id_election": "2",
+      "client_id": "0",
+      "type": "Bundestagswahl",
+      "text": "Wahl 1",
+      "start_date": "2018-05-01T12:00:00.000Z",
+      "end_date": "2018-06-29T18:00:00.000Z",
+      "state": "0"
+    },
+    {
+      "id_election": "3",
+      "client_id": "0",
+      "type": "Europawahl",
+      "text": "Wahl 2",
+      "start_date": "2018-05-01T12:00:00.000Z",
+      "end_date": "2018-06-29T18:00:00.000Z",
+      "state": "1"
+    },
+    {
+      "id_election": "0",
+      "client_id": "0",
+      "type": "Kommunalwahl",
+      "text": "Wahl 3",
+      "start_date": "2018-05-05T12:00:00.000Z",
+      "end_date": "2018-07-03T18:00:00.000Z",
+      "state": "0"
+    },
+    {
+      "id_election": "1",
+      "client_id": "0",
+      "type": "Buergermeisterwahl",
+      "text": "Wahl 4",
+      "start_date": "2018-05-30T12:00:00.000Z",
+      "end_date": "2018-07-28T18:00:00.000Z",
+      "state": "1"
+    },
+    {
+      "id_election": "4",
+      "client_id": "0",
+      "type": "Landtagswahl",
+      "text": "Wahl 5",
+      "start_date": "2018-05-01T12:00:00.000Z",
+      "end_date": "2018-06-29T18:00:00.000Z",
+      "state": "0"
+    },
+    {
+      "id_election": "5",
+      "client_id": "0",
+      "type": "Referendum",
+      "text": "Wahl 6",
+      "start_date": "2018-05-01T12:00:00.000Z",
+      "end_date": "2018-06-29T18:00:00.000Z",
+      "state": "1"
+    }
+  ],
+  "referendum": [
+    {
+      "text": "Polytrichum pallidisetum Funck",
+      "constituency": "55",
+      "id_referendum": "0",
+      "election_id": "6",
+      "yes": "0",
+      "no": "1"
+    },
+    {
+      "text": "Lagerstroemia indica L.",
+      "constituency": "55",
+      "id_referendum": "1",
+      "election_id": "6",
+      "yes": "1",
+      "no": "0"
+    }
+  ],
+  "candidate": [
+    {
+      "last_name": "Gauland",
+      "first_name": "Alexander",
+      "party": "AFD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "2",
+      "id_candidate": "60",
+      "party_id": "50"
+    },
+    {
+      "last_name": "Kramp-Karrenbauer",
+      "first_name": "Annegret",
+      "party": "CDU",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "2",
+      "id_candidate": "61",
+      "party_id": "51"
+    },
+    {
+      "last_name": "Nahles",
+      "first_name": "Andrea",
+      "party": "SPD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "2",
+      "id_candidate": "62",
+      "party_id": "52"
+    },
+    {
+      "last_name": "Lindner",
+      "first_name": "Christian",
+      "party": "FDP",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "2",
+      "id_candidate": "63",
+      "party_id": "53"
+    },
+    {
+      "last_name": "Gauland",
+      "first_name": "Alexander",
+      "party": "AFD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "3",
+      "id_candidate": "60",
+      "party_id": "50"
+    },
+    {
+      "last_name": "Kramp-Karrenbauer",
+      "first_name": "Annegret",
+      "party": "CDU",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "3",
+      "id_candidate": "61",
+      "party_id": "51"
+    },
+    {
+      "last_name": "Nahles",
+      "first_name": "Andrea",
+      "party": "SPD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "3",
+      "id_candidate": "62",
+      "party_id": "52"
+    },
+    {
+      "last_name": "Lindner",
+      "first_name": "Christian",
+      "party": "FDP",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "3",
+      "id_candidate": "63",
+      "party_id": "53"
+    },
+    {
+      "last_name": "Gauland",
+      "first_name": "Alexander",
+      "party": "AFD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "0",
+      "id_candidate": "60",
+      "party_id": "50"
+    },
+    {
+      "last_name": "Kramp-Karrenbauer",
+      "first_name": "Annegret",
+      "party": "CDU",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "0",
+      "id_candidate": "61",
+      "party_id": "51"
+    },
+    {
+      "last_name": "Nahles",
+      "first_name": "Andrea",
+      "party": "SPD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "0",
+      "id_candidate": "62",
+      "party_id": "52"
+    },
+    {
+      "last_name": "Lindner",
+      "first_name": "Christian",
+      "party": "FDP",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "0",
+      "id_candidate": "63",
+      "party_id": "53"
+    },
+    {
+      "last_name": "Gauland",
+      "first_name": "Alexander",
+      "party": "AFD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "1",
+      "id_candidate": "60",
+      "party_id": "50"
+    },
+    {
+      "last_name": "Kramp-Karrenbauer",
+      "first_name": "Annegret",
+      "party": "CDU",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "1",
+      "id_candidate": "61",
+      "party_id": "51"
+    },
+    {
+      "last_name": "Nahles",
+      "first_name": "Andrea",
+      "party": "SPD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "1",
+      "id_candidate": "62",
+      "party_id": "52"
+    },
+    {
+      "last_name": "Lindner",
+      "first_name": "Christian",
+      "party": "FDP",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "1",
+      "id_candidate": "63",
+      "party_id": "53"
+    },
+    {
+      "last_name": "Gauland",
+      "first_name": "Alexander",
+      "party": "AFD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "4",
+      "id_candidate": "60",
+      "party_id": "50"
+    },
+    {
+      "last_name": "Kramp-Karrenbauer",
+      "first_name": "Annegret",
+      "party": "CDU",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "4",
+      "id_candidate": "61",
+      "party_id": "51"
+    },
+    {
+      "last_name": "Nahles",
+      "first_name": "Andrea",
+      "party": "SPD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "4",
+      "id_candidate": "62",
+      "party_id": "52"
+    },
+    {
+      "last_name": "Lindner",
+      "first_name": "Christian",
+      "party": "FDP",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "4",
+      "id_candidate": "63",
+      "party_id": "53"
+    },
+    {
+      "last_name": "Gauland",
+      "first_name": "Alexander",
+      "party": "AFD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "5",
+      "id_candidate": "60",
+      "party_id": "50"
+    },
+    {
+      "last_name": "Kramp-Karrenbauer",
+      "first_name": "Annegret",
+      "party": "CDU",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "5",
+      "id_candidate": "61",
+      "party_id": "51"
+    },
+    {
+      "last_name": "Nahles",
+      "first_name": "Andrea",
+      "party": "SPD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "5",
+      "id_candidate": "62",
+      "party_id": "52"
+    },
+    {
+      "last_name": "Lindner",
+      "first_name": "Christian",
+      "party": "FDP",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "5",
+      "id_candidate": "63",
+      "party_id": "53"
+    },
+    {
+      "last_name": "Walters",
+      "first_name": "William",
+      "party": "AFD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "0",
+      "id_candidate": "60",
+      "party_id": "50"
+    },
+    {
+      "last_name": "John",
+      "first_name": "Richard ",
+      "party": "CDU",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "0",
+      "id_candidate": "61",
+      "party_id": "51"
+    },
+    {
+      "last_name": "Ball",
+      "first_name": "Robert ",
+      "party": "SPD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "0",
+      "id_candidate": "62",
+      "party_id": "52"
+    },
+    {
+      "last_name": "Martin",
+      "first_name": "Michael ",
+      "party": "FDP",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "0",
+      "id_candidate": "63",
+      "party_id": "53"
+    },
+    {
+      "last_name": "Hall",
+      "first_name": "Thomas",
+      "party": "AFD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "0",
+      "id_candidate": "60",
+      "party_id": "50"
+    },
+    {
+      "last_name": "Barber",
+      "first_name": "David ",
+      "party": "CDU",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "0",
+      "id_candidate": "61",
+      "party_id": "51"
+    },
+    {
+      "last_name": "Hart",
+      "first_name": "Daniel ",
+      "party": "SPD",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "0",
+      "id_candidate": "62",
+      "party_id": "52"
+    },
+    {
+      "last_name": "Ross",
+      "first_name": "Paul",
+      "party": "FDP",
+      "constituency": "55",
+      "vote": "0",
+      "election_id": "0",
+      "id_candidate": "63",
+      "party_id": "53"
+    }
+  ],
+  "party": [
+    {
+      "name": "AFD",
+      "text": "Alternative für Deutschland",
+      "constituency": "55",
+      "id_party": "50",
+      "election_id": "2",
+      "vote": "0"
+    },
+    {
+      "name": "CDU",
+      "text": "Christlich Demokratische Union Deutschlands",
+      "constituency": "55",
+      "id_party": "51",
+      "election_id": "2",
+      "vote": "0"
+    },
+    {
+      "name": "SPD",
+      "text": "Sozialdemokratische Partei Deutschlands",
+      "constituency": "55",
+      "id_party": "52",
+      "election_id": "2",
+      "vote": "0"
+    },
+    {
+      "name": "FDP",
+      "text": "Freie Demokratische Partei",
+      "constituency": "55",
+      "id_party": "53",
+      "election_id": "2",
+      "vote": "0"
+    },
+    {
+      "name": "AFD",
+      "text": "Alternative für Deutschland",
+      "constituency": "55",
+      "id_party": "50",
+      "election_id": "3",
+      "vote": "0"
+    },
+    {
+      "name": "CDU",
+      "text": "Christlich Demokratische Union Deutschlands",
+      "constituency": "55",
+      "id_party": "51",
+      "election_id": "3",
+      "vote": "0"
+    },
+    {
+      "name": "SPD",
+      "text": "Sozialdemokratische Partei Deutschlands",
+      "constituency": "55",
+      "id_party": "52",
+      "election_id": "3",
+      "vote": "0"
+    },
+    {
+      "name": "FDP",
+      "text": "Freie Demokratische Partei",
+      "constituency": "55",
+      "id_party": "53",
+      "election_id": "3",
+      "vote": "0"
+    },
+    {
+      "name": "AFD",
+      "text": "Alternative für Deutschland",
+      "constituency": "55",
+      "id_party": "50",
+      "election_id": "4",
+      "vote": "0"
+    },
+    {
+      "name": "CDU",
+      "text": "Christlich Demokratische Union Deutschlands",
+      "constituency": "55",
+      "id_party": "51",
+      "election_id": "4",
+      "vote": "0"
+    },
+    {
+      "name": "SPD",
+      "text": "Sozialdemokratische Partei Deutschlands",
+      "constituency": "55",
+      "id_party": "52",
+      "election_id": "4",
+      "vote": "0"
+    },
+    {
+      "name": "FDP",
+      "text": "Freie Demokratische Partei",
+      "constituency": "55",
+      "id_party": "53",
+      "election_id": "4",
+      "vote": "0"
+    },
+    {
+      "name": "AFD",
+      "text": "Alternative für Deutschland",
+      "constituency": "55",
+      "id_party": "50",
+      "election_id": "5",
+      "vote": "0"
+    },
+    {
+      "name": "CDU",
+      "text": "Christlich Demokratische Union Deutschlands",
+      "constituency": "55",
+      "id_party": "51",
+      "election_id": "5",
+      "vote": "0"
+    },
+    {
+      "name": "SPD",
+      "text": "Sozialdemokratische Partei Deutschlands",
+      "constituency": "55",
+      "id_party": "52",
+      "election_id": "5",
+      "vote": "0"
+    },
+    {
+      "name": "FDP",
+      "text": "Freie Demokratische Partei",
+      "constituency": "55",
+      "id_party": "53",
+      "election_id": "5",
+      "vote": "0"
+    },
+    {
+      "name": "AFD",
+      "text": "Alternative für Deutschland",
+      "constituency": "55",
+      "id_party": "50",
+      "election_id": "0",
+      "vote": "0"
+    },
+    {
+      "name": "CDU",
+      "text": "Christlich Demokratische Union Deutschlands",
+      "constituency": "55",
+      "id_party": "51",
+      "election_id": "0",
+      "vote": "0"
+    },
+    {
+      "name": "SPD",
+      "text": "Sozialdemokratische Partei Deutschlands",
+      "constituency": "55",
+      "id_party": "52",
+      "election_id": "0",
+      "vote": "0"
+    },
+    {
+      "name": "FDP",
+      "text": "Freie Demokratische Partei",
+      "constituency": "55",
+      "id_party": "53",
+      "election_id": "0",
+      "vote": "0"
+    },
+    {
+      "name": "AFD",
+      "text": "Alternative für Deutschland",
+      "constituency": "55",
+      "id_party": "50",
+      "election_id": "1",
+      "vote": "0"
+    },
+    {
+      "name": "CDU",
+      "text": "Christlich Demokratische Union Deutschlands",
+      "constituency": "55",
+      "id_party": "51",
+      "election_id": "1",
+      "vote": "0"
+    },
+    {
+      "name": "SPD",
+      "text": "Sozialdemokratische Partei Deutschlands",
+      "constituency": "55",
+      "id_party": "52",
+      "election_id": "1",
+      "vote": "0"
+    },
+    {
+      "name": "FDP",
+      "text": "Freie Demokratische Partei",
+      "constituency": "55",
+      "id_party": "53",
+      "election_id": "1",
+      "vote": "0"
+    }
+  ],
+  "client": [
+    { "id_client": "0", "type": "10" },
+    { "id_client": "1", "type": "11" }
+  ],
+  "user": [
+    {
+      "id_user": "0",
+      "client_id": "0",
+      "username": "moderator",
+      "password": "password",
+      "role": "2"
+    },
+    {
+      "id_user": "1",
+      "client_id": "1",
+      "username": "supervisor",
+      "password": "password",
+      "role": "1"
+    },
+    {
+      "id_user": "2",
+      "client_id": "2",
+      "username": "admin",
+      "password": "password",
+      "role": "0"
+    }
+  ]
+}
