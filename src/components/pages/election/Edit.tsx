@@ -41,6 +41,7 @@ class ElectionEdit extends Component {
       start_date: { value: null },
       topic: { value: null },
       type: { value: "Bundestagswahl" },
+      text: { value: "" },
       voters: { value: null }
     },
     previousId: Infinity

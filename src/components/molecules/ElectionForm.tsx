@@ -321,6 +321,7 @@ const MyComponentToInjectAuth = Form.create({
         ...props.start_date,
         value: props.start_date.value
       }),
+      text: Form.createFormField({ ...props.text, value: props.text.value }),
       topic: Form.createFormField({ ...props.topic, value: props.topic.value }),
       type: Form.createFormField({ ...props.type, value: props.type.value }),
       voters: Form.createFormField({

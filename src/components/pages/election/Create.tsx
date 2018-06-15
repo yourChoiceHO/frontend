@@ -14,6 +14,7 @@ class ElectionCreate extends Component {
       start_date: { value: moment() },
       topic: { value: null },
       type: { value: "Bundestagswahl" },
+      text: { value: "" },
       voters: { value: null }
     }
   };
