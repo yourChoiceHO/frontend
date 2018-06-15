@@ -5,10 +5,16 @@ import {
   DatePicker,
   Form,
   Icon,
+  Input,
   Radio,
   Row,
   Upload
 } from "antd";
+
+import connect from "@/containers/connect";
+
+import AuthenticationContainer from "@/containers/Authentication";
+
 import { FormComponentProps } from "antd/lib/form";
 import classNames from "classnames/bind";
 import Moment from "moment";
@@ -21,10 +27,11 @@ const cx = classNames.bind(Styles);
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const format = "HH:mm";
+// const Role: Role;
 
 interface IUserFormProps extends FormComponentProps {
   client_id: number;
-  // end_date: Moment.format;
+  // end_date: Moment;
   id_election: number;
   // start_date: Moment;
   state: number;
@@ -37,6 +44,16 @@ const reduceWithOr = reduce<boolean, boolean>(or, false);
 class ElectionForm extends Component<IUserFormProps> {
   public handleSubmit = (event: any) => {
     event.preventDefault();
+    const role = this.props.authentication.getRole();
+    if (role === 1) {
+      this.props.form.setFieldsValue({
+        state: 2
+      });
+    } else if (role === 2) {
+      this.props.form.setFieldsValue({
+        state: 1
+      });
+    }
 
     this.props.form.validateFields((err, values) => {
       console.log({ err, values });
@@ -248,6 +265,25 @@ class ElectionForm extends Component<IUserFormProps> {
             </Col>
           </Row>
           <Row>
+            <FormItem>
+              <Card.Grid className={cx("grid")}>
+                {getFieldDecorator("text", {})(
+                  <Input placeholder="Weitere Informationen zur Wahl" />
+                )}
+              </Card.Grid>
+            </FormItem>
+          </Row>
+          <Row>
+            <FormItem>
+              {getFieldDecorator("state", {
+                initialValue: this.props.state,
+                rules: [
+                  {
+                    required: false
+                  }
+                ]
+              })(<Input type="hidden" />)}
+            </FormItem>
             <Col push={16} span={8}>
               <Button type="dashed" htmlType="reset">
                 Abbrechen
@@ -263,11 +299,11 @@ class ElectionForm extends Component<IUserFormProps> {
   }
 }
 
-export default Form.create({
-  onFieldsChange(props, changedFields) {
+const MyComponentToInjectAuth = Form.create({
+  onFieldsChange(props: any, changedFields: any) {
     props.onChange(changedFields);
   },
-  mapPropsToFields(props) {
+  mapPropsToFields(props: any) {
     return {
       candidates: Form.createFormField({
         ...props.candidates,
@@ -294,3 +330,7 @@ export default Form.create({
     };
   }
 })(ElectionForm);
+
+export default connect({
+  authentication: AuthenticationContainer
+})(MyComponentToInjectAuth);

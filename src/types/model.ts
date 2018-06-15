@@ -84,3 +84,8 @@ export interface IVoterEntity {
   last_name: string;
   password: string;
 }
+export enum State {
+  Bearbeitung = 0,
+  Pruefung = 1,
+  Freigegeben = 2
+}
