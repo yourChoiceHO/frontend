@@ -1,7 +1,6 @@
 import { Moment } from "moment";
 
 export enum Role {
-  Admin = 0,
   Moderator = 2,
   Supervisor = 1,
   Unauthorized = -1,

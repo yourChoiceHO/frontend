@@ -50,17 +50,6 @@ const abilities = {
       can("delete", "Election");
       can("evaluate", "Election");
     }
-  ),
-  [Role.Admin]: AbilityBuilder.define(
-    (can: AbilityBuilderFunction, cannot: AbilityBuilderFunction) => {
-      can("access", "Election");
-      cannot("vote", "Election");
-      can("view", "Election");
-      can("edit", "Election");
-      can("create", "Election");
-      can("delete", "Election");
-      can("evaluate", "Election");
-    }
   )
 };
 

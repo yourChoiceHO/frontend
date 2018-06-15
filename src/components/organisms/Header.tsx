@@ -14,7 +14,6 @@ const { Header } = Layout;
 const cx = classNames.bind(styles);
 
 const labels: { [role: number]: string } = {
-  [Role.Admin]: "Administrator abmelden",
   [Role.Moderator]: "Moderator abmelden",
   [Role.Supervisor]: "Wahlleiter abmelden",
   [Role.Voter]: "Abmelden"
