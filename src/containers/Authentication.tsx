@@ -2,10 +2,10 @@ import { complement, equals, pathOr } from "ramda";
 
 import Container from "@/containers/Container";
 import api from "@/lib/api";
+import TokenStore from "@/store/token";
 import { IAuthenticationContext } from "@/types/context";
 import { IRequestError } from "@/types/error";
 import { Role } from "@/types/model";
-import { noop } from "@/utils";
 
 class AuthenticationContainer extends Container<IAuthenticationContext> {
   public state: IAuthenticationContext = {
@@ -28,65 +28,43 @@ class AuthenticationContainer extends Container<IAuthenticationContext> {
   public loginUser = (credentials: any) => {
     this.setState({ pending: true });
 
-    let cancel = noop;
-    const notifier = new Promise((resolve, reject) => {
-      cancel = api.authentication.loginUser(credentials).fork(
-        error => {
-          this.setState({ error, pending: false }, reject);
-        },
-        ({ user }) => {
-          this.setState({ user, error: {}, pending: false }, resolve);
-        }
-      );
-    });
-
-    return {
-      cancel,
-      notifier
-    };
+    return api.authentication.loginUser(credentials).fork(
+      error => {
+        this.setState({ error, pending: false });
+      },
+      ({ token, role }) => {
+        this.setState({ user: { role }, token, error: {}, pending: false });
+        TokenStore.set(token);
+      }
+    );
   };
 
   public loginVoter = (credentials: any) => {
     this.setState({ pending: true });
     return api.authentication
       .loginVoter(credentials)
-      .fork(this.setError, ({ voter }) =>
+      .fork(this.setError, ({ token, role }) => {
         this.setState({
           error: {},
           pending: false,
-          user: { role: Role.Voter, ...voter }
-        })
-      );
+          user: { role },
+          token
+        });
+        TokenStore.set(token);
+      });
   };
-
-  // public logout = () => {
-  //   this.setState({ pending: true });
-  //   return api.authentication
-  //     .logout()
-  //     .fork(this.setError, user =>
-  //       this.setState({ user, error: {}, pending: false })
-  //     );
-  // };
 
   public logout = () => {
     this.setState({ pending: true });
-
-    let cancel = noop;
-    const notifier = new Promise((resolve, reject) => {
-      cancel = api.authentication.logout().fork(
-        error => {
-          this.setState({ error, pending: false }, reject);
-        },
-        user => {
-          this.setState({ user, error: {}, pending: false }, resolve);
-        }
-      );
-    });
-
-    return {
-      cancel,
-      notifier
-    };
+    return api.authentication.logout().fork(
+      error => {
+        this.setState({ error, pending: false });
+      },
+      user => {
+        this.setState({ user, error: {}, pending: false });
+        TokenStore.set("");
+      }
+    );
   };
 
   public setError = (error: IRequestError) =>
