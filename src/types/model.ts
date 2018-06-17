@@ -13,7 +13,9 @@ export enum ElectionTypes {
   Landtagswahl = "Landtagswahl",
   Buergermeisterwahl = "Buergermeisterwahl",
   Referendum = "Referendum",
-  Kommunalwahl = "Kommunalwahl"
+  Kommunalwahl = "Kommunalwahl",
+  LandtagswahlBW = "LandtagswahlBW",
+  LandtagswahlSL = "LandtagswahlSL"
 }
 
 export interface IPartyEntity {
