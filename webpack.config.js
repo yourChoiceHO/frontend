@@ -108,7 +108,7 @@ module.exports = {
       errors: true
     },
     proxy: {
-      "/api": "http://localhost:3001"
+      "/api": "http://yourchoice.local"
     }
   },
   resolve: {
