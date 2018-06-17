@@ -24,6 +24,7 @@ export interface ICandidateContext {
 export interface IElectionsContext {
   election: Partial<IElectionEntity>;
   error: object;
+  evaluation: object;
   pending: boolean;
   elections: Partial<IElectionEntity[]>;
 }
