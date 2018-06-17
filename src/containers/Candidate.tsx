@@ -10,6 +10,7 @@ class CandidateContainer extends Container<ICandidateContext> {
   };
 
   public getByElection = (id: number) => {
+    this.setState({ pending: true, candidates: [] });
     return api.candidate
       .getByElection(id)
       .fork(

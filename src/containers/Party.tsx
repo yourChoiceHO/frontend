@@ -10,6 +10,7 @@ class PartyContainer extends Container<IPartyContext> {
   };
 
   public getByElection = (id: number) => {
+    this.setState({ pending: true, parties: [] });
     return api.party
       .getByElection(id)
       .fork(

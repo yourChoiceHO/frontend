@@ -8,6 +8,7 @@ class ElectionContainer extends Container<IElectionsContext> {
     election: {},
     elections: [],
     error: {},
+    evaluation: {},
     pending: false
   };
 
@@ -22,6 +23,7 @@ class ElectionContainer extends Container<IElectionsContext> {
   };
 
   public get = (id: number) => {
+    this.setState({ pending: true, election: {} });
     return api.election
       .get(id)
       .fork(
@@ -31,6 +33,7 @@ class ElectionContainer extends Container<IElectionsContext> {
   };
 
   public remove = (id: number) => {
+    this.setState({ pending: true });
     return api.election
       .remove(id)
       .fork(
@@ -40,11 +43,22 @@ class ElectionContainer extends Container<IElectionsContext> {
   };
 
   public update = (id: number, updates: Partial<IElectionEntity>) => {
+    this.setState({ pending: true });
     return api.election
       .update(id, updates)
       .fork(
         error => this.setState({ error, pending: false }),
         election => this.setState({ election, pending: false, error: {} })
+      );
+  };
+
+  public evaluate = (id: number) => {
+    this.setState({ pending: true, evaluation: {} });
+    return api.election
+      .evaluate(id)
+      .fork(
+        error => this.setState({ error, pending: false }),
+        evaluation => this.setState({ evaluation, pending: false, error: {} })
       );
   };
 }

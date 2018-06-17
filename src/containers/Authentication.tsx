@@ -27,7 +27,6 @@ class AuthenticationContainer extends Container<IAuthenticationContext> {
 
   public loginUser = (credentials: any) => {
     this.setState({ pending: true });
-
     return api.authentication.loginUser(credentials).fork(
       error => {
         this.setState({ error, pending: false });
