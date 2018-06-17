@@ -64,35 +64,33 @@ class ElectionForm extends Component<IUserFormProps> {
 
   public render() {
     const { getFieldDecorator } = this.props.form;
+    const type = this.props.typ.value;
 
-    // const isEuropawahl = this.props.typ.value === "1";
-    // const isBundestagswahl = this.props.typ.value === "Bundestagswahl";
-    // const isLandtagswahl = this.props.typ.value === "3";
-    // const isLandratswahl = this.props.typ.value === "4";
-    // const isBürgerentscheid = this.props.typ.value === "5";
-    // const isGemeinderatswahl = this.props.typ.value === "6";
-    // const isBürgermeisterwahl = this.props.typ.value === "7";
-
-    const isEuropawahl = this.props.typ.value === "Europawahl";
-    const isBundestagswahl = this.props.typ.value === "Bundestagswahl";
-    const isLandtagswahl = this.props.typ.value === "Landtagswahl";
-    const isBuergermeisterwahl = this.props.typ.value === "Buergermeisterwahl";
-    const isReferendum = this.props.typ.value === "Referendum";
-    const isKommunalwahl = this.props.typ.value === "Kommunalwahl";
-    const isLandtagswahlBW = this.props.typ.value === "LandtagswahlBW";
-    const isLandtagswahlSL = this.props.typ.value === "LandtagswahlSL";
+    const isEuropawahl = type === ElectionTypes.Europawahl;
+    const isBundestagswahl = type === ElectionTypes.Bundestagswahl;
+    const isLandtagswahl = type === ElectionTypes.Landtagswahl;
+    const isBuergermeisterwahl = type === ElectionTypes.Buergermeisterwahl;
+    const isReferendum = type === ElectionTypes.Referendum;
+    const isKommunalwahl = type === ElectionTypes.Kommunalwahl;
+    const isLandtagswahlBW = type === ElectionTypes.LandtagswahlBW;
+    const isLandtagswahlSL = type === ElectionTypes.LandtagswahlSL;
 
     const hidePartyList = not(
-      reduceWithOr([isEuropawahl, isBundestagswahl, isLandtagswahl])
+      reduceWithOr([
+        isEuropawahl,
+        isBundestagswahl,
+        isLandtagswahl,
+        isLandtagswahlSL
+      ])
     );
 
     const hideCandidateList = not(
       reduceWithOr([
         isBundestagswahl,
         isLandtagswahl,
-        // isLandratswahl,
         isKommunalwahl,
-        isBuergermeisterwahl
+        isBuergermeisterwahl,
+        isLandtagswahlBW
       ])
     );
 
