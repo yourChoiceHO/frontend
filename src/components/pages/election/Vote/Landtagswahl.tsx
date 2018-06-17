@@ -44,7 +44,7 @@ const getCandidatesDatasource = (
   candidates.map(({ party_id, last_name, first_name, id_candidate }) => {
     const partyName = propOr(
       "N/A",
-      "name_1",
+      "name",
       find(propEq("id_party", party_id), parties)
     );
 
