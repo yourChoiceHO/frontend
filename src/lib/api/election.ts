@@ -1,26 +1,32 @@
 import * as http from "@/lib/http";
+import TokenStore from "@/store/token";
 import { IElectionEntity } from "@/types/model";
 
 export function create(election: Partial<IElectionEntity>) {
-  return http.post<IElectionEntity>("/election", election);
+  const token = TokenStore.get();
+  return http.post<IElectionEntity>("/election", election, {
+    params: { token }
+  });
 }
 
 export function remove(id: number) {
-  return http.del<IElectionEntity>(`/election`, {
-    params: { id_election: id }
-  });
+  const token = TokenStore.get();
+  return http.del<IElectionEntity>(`/election/${id}`, { params: { token } });
 }
 
 export function getAll() {
-  return http.get<IElectionEntity[]>("/election");
+  const token = TokenStore.get();
+  return http.get<IElectionEntity[]>("/election", { params: { token } });
 }
 
 export function get(id: number) {
-  return http.get<IElectionEntity>(`/election`, {
-    params: { id_election: id }
-  });
+  const token = TokenStore.get();
+  return http.get<IElectionEntity>(`/election/${id}`, { params: { token } });
 }
 
 export function update(id: number, updates: Partial<IElectionEntity>) {
-  return http.put<IElectionEntity>(`/election${id}`, updates);
+  const token = TokenStore.get();
+  return http.put<IElectionEntity>(`/election/${id}`, updates, {
+    params: { token }
+  });
 }
