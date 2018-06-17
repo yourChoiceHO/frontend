@@ -61,7 +61,9 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
   private cancel: Cancel = noop;
 
   public componentDidMount() {
-    this.cancel = this.props.election.get(this.props.computedMatch.params.id);
+    this.cancel = this.props.election.evaluate(
+      this.props.computedMatch.params.id
+    );
   }
 
   public componentWillUnmount() {
@@ -74,6 +76,13 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
 
   public render() {
     const election = pathOr({}, ["state", "election"], this.props.election);
+    const pending = pathOr({}, ["state", "pending"], this.props.election);
+
+    if (pending) {
+      return "";
+    }
+
+    console.log(this.props.election);
 
     if (isEmpty(election)) {
       return <div />;

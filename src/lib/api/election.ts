@@ -30,3 +30,10 @@ export function update(id: number, updates: Partial<IElectionEntity>) {
     params: { token }
   });
 }
+
+export function evaluate(id: number) {
+  const token = TokenStore.get();
+  return http.get(`/election/${id}/evalute`, {
+    params: { token }
+  });
+}
