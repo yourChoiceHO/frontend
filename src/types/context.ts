@@ -4,6 +4,7 @@ import {
   ICandidateEntity,
   IElectionEntity,
   IPartyEntity,
+  IReferendumEntity,
   IUserEntity
 } from "@/types/model";
 
@@ -31,4 +32,10 @@ export interface IPartyContext {
   error: object;
   pending: boolean;
   parties: Partial<IPartyEntity[]>;
+}
+
+export interface IReferendumContext {
+  error: object;
+  pending: boolean;
+  referendums: Partial<IReferendumEntity[]>;
 }
