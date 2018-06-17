@@ -1,47 +1,58 @@
-import React, { SFC } from "react";
+import { Form, Radio, Row } from "antd";
+import { isEmpty, pathOr } from "ramda";
+import React, { Component } from "react";
 
-import { IElectionEntity } from "@/types/model";
+import { IReferendumEntity } from "@/types/model";
 import { IVoteProps } from "@/types/props";
-import { Button, Checkbox, Col, Radio, Row } from 'antd';
-import moment from 'moment';
 
-const election: IElectionEntity = {
-  client_id: 1,
-  end_date: moment("2014-05-25"),
-  id_election: 1,
-  start_date: moment("2014-05-20"),
-  state: 2,
-  text: "Stadt Offenburg",
-  type: "Referendum"
-};
-const Referendum: SFC<IVoteProps> = () => {
+import connect from "@/containers/connect";
+import ReferendumContainer from "@/containers/Referendum";
+import { noop } from "@/utils";
 
-  return (
-    <div >
+class Referendum extends Component<IVoteProps, {}> {
+  private cancel = noop;
 
-      <h2>Interaktiver Stimmzettel
-          das Referendum
-          am {election.end_date.format("DD.MM.YYYY")} in der {election.text}
-      </h2 >
-      <div>
-        <Row >
-          <Radio.Group id="radiovote">
-            <Radio value={1}>Ja</Radio>
-            <Radio value={2}>Nein</Radio>
-          </Radio.Group>
-        </Row>
+  public componentDidMount() {
+    this.cancel = this.props.referendums.getByElection(
+      this.props.election.id_election
+    );
+  }
+
+  public componentWillUnmount() {
+    this.cancel();
+  }
+
+  public render() {
+    const { getFieldDecorator } = this.props.form;
+
+    const referendum = pathOr<IReferendumEntity>(
+      {},
+      ["state", "referendums", 0],
+      this.props.referendums
+    );
+
+    if (isEmpty(referendum)) {
+      return <div />;
+    }
+
+    return (
+      <Form>
+        <h2>Referendum</h2>
+        <h3>{referendum.text}</h3>
+        {/* <h4>{election.text}</h4> */}
         <Row>
-          <Checkbox>Stimme ungültig machen.</Checkbox>
+          {getFieldDecorator("first-vote")(
+            <Radio.Group id="radiovote">
+              <Radio value={true}>Ja</Radio>
+              <Radio value={false}>Nein</Radio>
+            </Radio.Group>
+          )}
         </Row>
-        <Row>
-          <Col>
-            <Button type="primary" >Stimme abgeben!</Button>
-          </Col>
-        </Row>
-      </div>
+      </Form>
+    );
+  }
+}
 
-    </div >
-  );
-};
-
-export default Referendum;
+export default connect({
+  referendums: ReferendumContainer
+})(Form.create()(Referendum));

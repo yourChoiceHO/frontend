@@ -1,10 +1,10 @@
 import { Button, Checkbox, Form, Modal } from "antd";
 import { Cancel } from "fluture";
 import { isEmpty, pathOr } from "ramda";
-import React, { Component, forwardRef } from "react";
+import React, { Component, forwardRef, Fragment } from "react";
 
 import ElectionContainer from "@/containers/Election";
-import { ElectionTypes } from "@/types/model";
+import { ElectionTypes, IElectionEntity } from "@/types/model";
 
 import Buergermeisterwahl from "@/components/pages/election/Vote/Buergermeisterwahl";
 import Bundestagswahl from "@/components/pages/election/Vote/Bundestagswahl";
@@ -70,7 +70,17 @@ class ElectionVote extends Component<
   }
 
   public onVote({ error, values }) {
-    console.log({ error, values });
+    // const election = pathOr<IElectionEntity>(
+    //   {},
+    //   ["state", "election"],
+    //   this.props.election
+    // );
+
+    if (isEmpty(error)) {
+      console.log(values);
+    } else {
+      console.log(error);
+    }
   }
 
   public onSubmit = event => {
@@ -78,12 +88,13 @@ class ElectionVote extends Component<
 
     this.showWarning()
       .then(() => {
-        this.formRef.current.validateFields((error, values) =>
-          this.onVote({ error, values })
-        );
-
-        this.props.form.validateFields((error, values) =>
-          this.onVote({ error, values })
+        this.formRef.current.validateFields((baseErrors, baseValues) =>
+          this.props.form.validateFields((errors, values) =>
+            this.onVote({
+              error: { ...baseErrors, ...errors },
+              values: { ...baseValues, ...values }
+            })
+          )
         );
       })
       .catch(err => {
@@ -101,22 +112,21 @@ class ElectionVote extends Component<
     }
 
     return (
-      <div>
+      <Fragment>
+        <h2>{election.typ}</h2>
+        <h3>{election.text}</h3>
+        <Vote ref={this.formRef} election={election} onSubmit={this.onVote} />
         <Form onSubmit={this.onSubmit}>
-          <h2>
-            Interaktiver Stimmzettel für die {election.type} im {election.text}
-          </h2>
+          <Button type="primary" htmlType="submit">
+            Abstimmen
+          </Button>
           <FormItem>
-            {getFieldDecorator("invalidate")(
-              <Checkbox>Stimme ungültig machen.</Checkbox>
+            {getFieldDecorator("valid", { initialValue: true })(
+              <Checkbox>Stimme ungültig machen</Checkbox>
             )}
           </FormItem>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
         </Form>
-        <Vote ref={this.formRef} election={election} onSubmit={this.onVote} />
-      </div>
+      </Fragment>
     );
   }
 
@@ -124,7 +134,7 @@ class ElectionVote extends Component<
     return new Promise((resolve, reject) => {
       const modal = Modal.confirm({
         cancelText: "Nein",
-        content: "Bitte...",
+        content: "Bitte bestätigen Sie die Abgabe Ihrer Stimme",
         okText: "Ja",
         onCancel: () => {
           reject();
