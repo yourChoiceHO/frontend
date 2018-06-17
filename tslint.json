@@ -23,6 +23,7 @@
       "@/lib",
       "@/types",
       "@/scenes",
+      "@/store",
       "@/utils"
     ]
   }
