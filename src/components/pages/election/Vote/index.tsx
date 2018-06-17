@@ -20,7 +20,7 @@ import { noop } from "@/utils";
 const Vote = forwardRef(({ election }, ref) => {
   let VoteComponent;
 
-  switch (election.type) {
+  switch (election.typ) {
     case ElectionTypes.Buergermeisterwahl:
       VoteComponent = Buergermeisterwahl;
       break;
@@ -94,7 +94,7 @@ class ElectionVote extends Component<
   public render() {
     const { getFieldDecorator } = this.props.form;
 
-    const election = pathOr({}, ["state", "election", 0], this.props.election);
+    const election = pathOr({}, ["state", "election"], this.props.election);
 
     if (isEmpty(election)) {
       return null;

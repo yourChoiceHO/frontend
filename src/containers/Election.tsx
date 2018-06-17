@@ -12,7 +12,7 @@ class ElectionContainer extends Container<IElectionsContext> {
   };
 
   public getAll = () => {
-    this.setState({ pending: true });
+    this.setState({ pending: true, elections: [] });
     return api.election
       .getAll()
       .fork(

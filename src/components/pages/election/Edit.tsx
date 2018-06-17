@@ -9,13 +9,13 @@ import { noop } from "@/utils";
 
 class ElectionEdit extends Component {
   public static getDerivedStateFromProps(props, state) {
-    const election = pathOr({}, ["state", "election", 0], props.election);
+    const election = pathOr({}, ["state", "election"], props.election);
     const id = pathOr(Infinity, ["id_election"], election);
 
     if (!isEmpty(election) && state.previousId !== id) {
       return {
         fields: mapObjIndexed((field, name) => {
-          let value = props.election.state.election[0][name];
+          let value = props.election.state.election[name];
 
           if (name === "start_date" || name === "end_date") {
             value = moment(value);
@@ -39,9 +39,9 @@ class ElectionEdit extends Component {
       end_date: { value: null },
       parties: { value: null },
       start_date: { value: null },
-      topic: { value: null },
-      type: { value: "Bundestagswahl" },
       text: { value: "" },
+      topic: { value: null },
+      typ: { value: "Bundestagswahl" },
       voters: { value: null }
     },
     previousId: Infinity
@@ -64,7 +64,7 @@ class ElectionEdit extends Component {
   };
 
   public render() {
-    const election = pathOr({}, ["state", "election", 0], this.props.election);
+    const election = pathOr({}, ["state", "election"], this.props.election);
 
     if (isEmpty(election)) {
       return <div />;

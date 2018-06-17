@@ -22,7 +22,7 @@ class ElectionDetail extends Component<{ election: ElectionContainer }> {
   }
 
   public render() {
-    const election = pathOr({}, ["state", "election", 0], this.props.election);
+    const election = pathOr({}, ["state", "election"], this.props.election);
 
     if (isEmpty(election)) {
       return <div />;

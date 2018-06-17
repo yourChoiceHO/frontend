@@ -1,6 +1,5 @@
 import { Col, Form, Radio, Row, Table } from "antd";
 import { FormComponentProps } from "antd/lib/form";
-import { Cancel } from "fluture";
 import { find, isEmpty, path, propEq, propOr } from "ramda";
 import React, { Component } from "react";
 
@@ -10,6 +9,7 @@ import { IVoteProps } from "@/types/props";
 import CandidateContainer from "@/containers/Candidate";
 import connect from "@/containers/connect";
 import PartyContainer from "@/containers/Party";
+import { noop } from "@/utils";
 
 const radioStyle = {
   display: "block",
@@ -95,6 +95,9 @@ const getPartiesDatasource = (parties: IPartyEntity[]) =>
 const FormItem = Form.Item;
 
 class Kommunalwahl extends Component<IVoteProps & FormComponentProps, {}> {
+  private cancelCandidate = noop;
+  private cancelParty = noop;
+
   public componentDidMount() {
     this.cancelCandidate = this.props.candidates.getByElection(
       this.props.election.id_election
@@ -110,8 +113,14 @@ class Kommunalwahl extends Component<IVoteProps & FormComponentProps, {}> {
   }
 
   public render() {
-    const candidates = path(["state", "candidates"], this.props.candidates);
-    const parties = path(["state", "parties"], this.props.parties);
+    const candidates = path<ICandidateEntity[]>(
+      ["state", "candidates"],
+      this.props.candidates
+    );
+    const parties = path<IPartyEntity[]>(
+      ["state", "parties"],
+      this.props.parties
+    );
 
     const { getFieldDecorator } = this.props.form;
 
@@ -156,9 +165,6 @@ class Kommunalwahl extends Component<IVoteProps & FormComponentProps, {}> {
       </Form>
     );
   }
-
-  private cancelCandidate: Cancel = () => {};
-  private cancelParty: Cancel = () => {};
 }
 
 export default connect({

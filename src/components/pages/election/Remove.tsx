@@ -1,8 +1,7 @@
 import { Button, message, Popconfirm } from "antd";
 import { Cancel } from "fluture";
 import { isEmpty, pathOr } from "ramda";
-import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
 
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
@@ -20,11 +19,8 @@ class ElectionRemove extends Component<{ election: ElectionContainer }> {
   }
 
   public confirmPop = (e: any) => {
-    // const electionId = this.props.Match.params.id;
     const electionId = this.props.computedMatch.params.id;
-
-    message.success("Wahl gelöscht: " + electionId); //electionID only for debug purposes
-    // console.log(electionId);
+    message.success("Wahl gelöscht!");
     this.props.election.remove(electionId);
   };
 
@@ -33,7 +29,7 @@ class ElectionRemove extends Component<{ election: ElectionContainer }> {
   }
 
   public render() {
-    const election = pathOr({}, ["state", "election", 0], this.props.election);
+    const election = pathOr({}, ["state", "election"], this.props.election);
     if (isEmpty(election)) {
       return <div />;
     }

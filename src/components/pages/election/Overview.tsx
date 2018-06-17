@@ -7,6 +7,7 @@ import React, { Component, Fragment } from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
 
 import Can from "@/components/atoms/Can";
+import AuthenticationContainer from "@/containers/Authentication";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
 import { IElectionEntity } from "@/types/model";
@@ -148,5 +149,6 @@ class ElectionOverview extends Component<
 }
 
 export default connect({
+  authentication: AuthenticationContainer,
   election: ElectionContainer
 })(ElectionOverview);

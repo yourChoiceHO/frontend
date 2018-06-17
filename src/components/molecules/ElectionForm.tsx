@@ -14,6 +14,7 @@ import {
 import connect from "@/containers/connect";
 
 import AuthenticationContainer from "@/containers/Authentication";
+import { ElectionTypes } from "@/types/model";
 
 import { FormComponentProps } from "antd/lib/form";
 import classNames from "classnames/bind";
@@ -36,7 +37,8 @@ interface IUserFormProps extends FormComponentProps {
   // start_date: Moment;
   state: number;
   text: string;
-  type: string;
+  typ: { value: string };
+  authentication: AuthenticationContainer;
 }
 
 const reduceWithOr = reduce<boolean, boolean>(or, false);
@@ -63,13 +65,22 @@ class ElectionForm extends Component<IUserFormProps> {
   public render() {
     const { getFieldDecorator } = this.props.form;
 
-    const isEuropawahl = this.props.type.value === "1";
-    const isBundestagswahl = this.props.type.value === "Bundestagswahl";
-    const isLandtagswahl = this.props.type.value === "3";
-    const isLandratswahl = this.props.type.value === "4";
-    const isBürgerentscheid = this.props.type.value === "5";
-    const isGemeinderatswahl = this.props.type.value === "6";
-    const isBürgermeisterwahl = this.props.type.value === "7";
+    // const isEuropawahl = this.props.typ.value === "1";
+    // const isBundestagswahl = this.props.typ.value === "Bundestagswahl";
+    // const isLandtagswahl = this.props.typ.value === "3";
+    // const isLandratswahl = this.props.typ.value === "4";
+    // const isBürgerentscheid = this.props.typ.value === "5";
+    // const isGemeinderatswahl = this.props.typ.value === "6";
+    // const isBürgermeisterwahl = this.props.typ.value === "7";
+
+    const isEuropawahl = this.props.typ.value === "Europawahl";
+    const isBundestagswahl = this.props.typ.value === "Bundestagswahl";
+    const isLandtagswahl = this.props.typ.value === "Landtagswahl";
+    const isBuergermeisterwahl = this.props.typ.value === "Buergermeisterwahl";
+    const isReferendum = this.props.typ.value === "Referendum";
+    const isKommunalwahl = this.props.typ.value === "Kommunalwahl";
+    const isLandtagswahlBW = this.props.typ.value === "LandtagswahlBW";
+    const isLandtagswahlSL = this.props.typ.value === "LandtagswahlSL";
 
     const hidePartyList = not(
       reduceWithOr([isEuropawahl, isBundestagswahl, isLandtagswahl])
@@ -79,13 +90,13 @@ class ElectionForm extends Component<IUserFormProps> {
       reduceWithOr([
         isBundestagswahl,
         isLandtagswahl,
-        isLandratswahl,
-        isGemeinderatswahl,
-        isBürgermeisterwahl
+        // isLandratswahl,
+        isKommunalwahl,
+        isBuergermeisterwahl
       ])
     );
 
-    const hideTopicList = not(reduceWithOr([isBürgerentscheid]));
+    const hideTopicList = not(reduceWithOr([isReferendum]));
 
     return (
       <Form onSubmit={this.handleSubmit} layout="horizontal">
@@ -94,7 +105,7 @@ class ElectionForm extends Component<IUserFormProps> {
             <Col span={8}>
               <FormItem>
                 <Card.Grid className={cx("grid")}>
-                  {getFieldDecorator("type", {
+                  {getFieldDecorator("typ", {
                     rules: [
                       {
                         message: "Bitte Wahltyp auswählen!",
@@ -103,26 +114,53 @@ class ElectionForm extends Component<IUserFormProps> {
                     ]
                   })(
                     <RadioGroup>
-                      <Radio className={cx("radio")} value={"1"}>
+                      <Radio
+                        className={cx("radio")}
+                        value={ElectionTypes.Europawahl}
+                      >
                         Europawahl
                       </Radio>
-                      <Radio className={cx("radio")} value={"Bundestagswahl"}>
+                      <Radio
+                        className={cx("radio")}
+                        value={ElectionTypes.Bundestagswahl}
+                      >
                         Bundestagswahl
                       </Radio>
-                      <Radio className={cx("radio")} value={"3"}>
+                      <Radio
+                        className={cx("radio")}
+                        value={ElectionTypes.Landtagswahl}
+                      >
                         Landtagswahl
                       </Radio>
-                      <Radio className={cx("radio")} value={"4"}>
-                        Landratswahl
-                      </Radio>
-                      <Radio className={cx("radio")} value={"5"}>
-                        Bürgerentscheid
-                      </Radio>
-                      <Radio className={cx("radio")} value={"6"}>
-                        Gemeinderatswahl
-                      </Radio>
-                      <Radio className={cx("radio")} value={"7"}>
+                      <Radio
+                        className={cx("radio")}
+                        value={ElectionTypes.Buergermeisterwahl}
+                      >
                         Bürgermeisterwahl
+                      </Radio>
+                      <Radio
+                        className={cx("radio")}
+                        value={ElectionTypes.Referendum}
+                      >
+                        Referendum
+                      </Radio>
+                      <Radio
+                        className={cx("radio")}
+                        value={ElectionTypes.Kommunalwahl}
+                      >
+                        Kommunalwahl
+                      </Radio>
+                      <Radio
+                        className={cx("radio")}
+                        value={ElectionTypes.LandtagswahlBW}
+                      >
+                        Landtagswahl (BW)
+                      </Radio>
+                      <Radio
+                        className={cx("radio")}
+                        value={ElectionTypes.LandtagswahlSL}
+                      >
+                        Landtagswahl (SL)
                       </Radio>
                     </RadioGroup>
                   )}
@@ -323,7 +361,7 @@ const MyComponentToInjectAuth = Form.create({
       }),
       text: Form.createFormField({ ...props.text, value: props.text.value }),
       topic: Form.createFormField({ ...props.topic, value: props.topic.value }),
-      type: Form.createFormField({ ...props.type, value: props.type.value }),
+      typ: Form.createFormField({ ...props.typ, value: props.typ.value }),
       voters: Form.createFormField({
         ...props.voters,
         value: props.voters.value

@@ -4,6 +4,7 @@ import React, { Component, Fragment } from "react";
 import ElectionCreateForm from "@/components/molecules/ElectionForm";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
+import { ElectionTypes } from "@/types/model";
 
 class ElectionCreate extends Component {
   public state = {
@@ -12,9 +13,9 @@ class ElectionCreate extends Component {
       end_date: { value: moment() },
       parties: { value: null },
       start_date: { value: moment() },
-      topic: { value: null },
-      type: { value: "Bundestagswahl" },
       text: { value: "" },
+      topic: { value: null },
+      typ: { value: ElectionTypes.Bundestagswahl },
       voters: { value: null }
     }
   };
