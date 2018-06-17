@@ -20,7 +20,7 @@ class UserLoginForm extends Component<IUserLoginFormProps, {}> {
           {getFieldDecorator("username", {
             rules: [
               {
-                message: "Bitte geben Sie Ihren Benutzernamen an.",
+                message: "Bitte geben Sie Ihren Benutzernamen an",
                 required: true
               }
             ]
@@ -34,7 +34,12 @@ class UserLoginForm extends Component<IUserLoginFormProps, {}> {
         </FormItem>
         <FormItem>
           {getFieldDecorator("password", {
-            rules: [{ required: true, message: "Please input your Password!" }]
+            rules: [
+              {
+                message: "Bitte geben Sie Ihr Passwort an",
+                required: true
+              }
+            ]
           })(
             <Input
               prefix={<Icon type="lock" />}

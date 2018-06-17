@@ -20,7 +20,7 @@ class VoterLoginForm extends Component<IVoterLoginFormProps, {}> {
           {getFieldDecorator("hash", {
             rules: [
               {
-                message: "Bitte geben Sie Ihren Hash an.",
+                message: "Bitte geben Sie Ihre Benutzerkennung an",
                 required: true
               }
             ]
@@ -28,18 +28,20 @@ class VoterLoginForm extends Component<IVoterLoginFormProps, {}> {
             <Input
               prefix={<Icon type="user" />}
               type="password"
-              placeholder="Hash"
+              placeholder="Benutzerkennung"
             />
           )}
         </FormItem>
         <FormItem>
           {getFieldDecorator("password", {
-            rules: [{ required: true, message: "Please input your Password!" }]
+            rules: [
+              { required: true, message: "Bitte geben Sie Ihr Passwort an" }
+            ]
           })(
             <Input
               prefix={<Icon type="lock" />}
               type="password"
-              placeholder="Password"
+              placeholder="Passwort"
             />
           )}
         </FormItem>

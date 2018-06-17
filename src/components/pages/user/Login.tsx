@@ -1,3 +1,5 @@
+import { Alert } from "antd";
+import { pathOr } from "ramda";
 import React, { SFC } from "react";
 import { Redirect } from "react-router";
 
@@ -23,9 +25,23 @@ const UserLoginPage: SFC<{ authentication: AuthenticationContainer }> = ({
     return <Redirect to="/wahl" />;
   }
 
+  const status = pathOr(
+    -1,
+    ["state", "error", "response", "status"],
+    authentication
+  );
+  const message = pathOr(
+    "",
+    ["state", "error", "response", "data", "message"],
+    authentication
+  );
+
   return (
     <PageTemplate header={<Header />}>
       <h2>Mitarbeiter</h2>
+      {status === 403 && (
+        <Alert message={message} type="error" showIcon={true} />
+      )}
       <LoginForm onSubmit={onSubmit} />
     </PageTemplate>
   );
