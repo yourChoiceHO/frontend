@@ -23,6 +23,11 @@ class ElectionDetail extends Component<{ election: ElectionContainer }> {
 
   public render() {
     const election = pathOr({}, ["state", "election"], this.props.election);
+    const pending = pathOr({}, ["state", "pending"], this.props.election);
+
+    if (pending) {
+      return "";
+    }
 
     if (isEmpty(election)) {
       return <div />;

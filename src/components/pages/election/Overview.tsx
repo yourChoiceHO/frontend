@@ -28,10 +28,14 @@ class ElectionOverview extends Component<
 
   public render() {
     const elections = pathOr({}, ["state", "elections"], this.props.election);
-    // const pending = pathOr({}, ["state", "pending"], this.props.election);
+    const pending = pathOr({}, ["state", "pending"], this.props.election);
+
+    if (pending) {
+      return "";
+    }
 
     if (isEmpty(elections)) {
-      return "Wahl wurde nicht gefunden";
+      return "Aktuell keine Wahlen verfügbar";
     }
 
     return (
@@ -111,9 +115,9 @@ class ElectionOverview extends Component<
         title: "ID"
       },
       {
-        dataIndex: "type",
-        key: "type",
-        title: "Art"
+        dataIndex: "typ",
+        key: "typ",
+        title: "Typ"
       },
       {
         dataIndex: "start_date",
@@ -131,11 +135,6 @@ class ElectionOverview extends Component<
         dataIndex: "state",
         key: "state",
         title: "Status"
-      },
-      {
-        dataIndex: "text",
-        key: "text",
-        title: "Beschreibung"
       },
       {
         key: "action",
