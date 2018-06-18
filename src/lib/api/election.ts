@@ -1,6 +1,6 @@
 import * as http from "@/lib/http";
 import TokenStore from "@/store/token";
-import { IElectionEntity } from "@/types/model";
+import { IElectionEntity, IElectionVote } from "@/types/model";
 
 export function create(election: Partial<IElectionEntity>) {
   const token = TokenStore.get();
@@ -33,7 +33,18 @@ export function update(id: number, updates: Partial<IElectionEntity>) {
 
 export function evaluate(id: number) {
   const token = TokenStore.get();
-  return http.get(`/election/${id}/evalute`, {
+  return http.post(
+    `/election/${id}/evalute`,
+    {},
+    {
+      params: { token }
+    }
+  );
+}
+
+export function vote(id: number, electionVote: IElectionVote) {
+  const token = TokenStore.get();
+  return http.post(`/election/${id}/vote`, electionVote, {
     params: { token }
   });
 }
