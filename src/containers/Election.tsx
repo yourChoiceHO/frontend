@@ -1,7 +1,7 @@
 import Container from "@/containers/Container";
 import api from "@/lib/api";
 import { IElectionsContext } from "@/types/context";
-import { IElectionEntity } from "@/types/model";
+import { IElectionEntity, IElectionVote } from "@/types/model";
 
 class ElectionContainer extends Container<IElectionsContext> {
   public state: IElectionsContext = {
@@ -9,7 +9,8 @@ class ElectionContainer extends Container<IElectionsContext> {
     elections: [],
     error: {},
     evaluation: {},
-    pending: false
+    pending: false,
+    result: {}
   };
 
   public getAll = () => {
@@ -59,6 +60,16 @@ class ElectionContainer extends Container<IElectionsContext> {
       .fork(
         error => this.setState({ error, pending: false }),
         evaluation => this.setState({ evaluation, pending: false, error: {} })
+      );
+  };
+
+  public vote = (id: number, electionVote: IElectionVote) => {
+    this.setState({ pending: true, result: {} });
+    return api.election
+      .vote(id, electionVote)
+      .fork(
+        error => this.setState({ error, pending: false }),
+        result => this.setState({ result, pending: false, error: {} })
       );
   };
 }
