@@ -8,6 +8,7 @@ const FormItem = Form.Item;
 interface IUserLoginFormProps extends IFormProps {
   username?: string;
   password?: string;
+  loading: boolean;
 }
 
 class UserLoginForm extends Component<IUserLoginFormProps, {}> {
@@ -49,7 +50,7 @@ class UserLoginForm extends Component<IUserLoginFormProps, {}> {
           )}
         </FormItem>
         <FormItem>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={this.props.loading}>
             Anmelden
           </Button>
         </FormItem>

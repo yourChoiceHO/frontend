@@ -25,11 +25,14 @@ const VoterLoginPage: SFC<{ authentication: AuthenticationContainer }> = ({
     return <Redirect to="/wahl" />;
   }
 
+  const pending = pathOr(false, ["state", "pending"], authentication);
+
   const status = pathOr(
     -1,
     ["state", "error", "response", "status"],
     authentication
   );
+
   const message = pathOr(
     "",
     ["state", "error", "response", "data", "message"],
@@ -42,7 +45,7 @@ const VoterLoginPage: SFC<{ authentication: AuthenticationContainer }> = ({
       {status === 403 && (
         <Alert message={message} type="error" showIcon={true} />
       )}
-      <LoginForm onSubmit={onSubmit} />
+      <LoginForm loading={pending} onSubmit={onSubmit} />
     </PageTemplate>
   );
 };
