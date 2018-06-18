@@ -34,7 +34,7 @@ export function update(id: number, updates: Partial<IElectionEntity>) {
 export function evaluate(id: number) {
   const token = TokenStore.get();
   return http.post(
-    `/election/${id}/evalute`,
+    `/election/${id}/evaluate`,
     {},
     {
       params: { token }
