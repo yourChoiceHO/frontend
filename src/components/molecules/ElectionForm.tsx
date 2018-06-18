@@ -63,6 +63,8 @@ class ElectionForm extends Component<IUserFormProps> {
   };
 
   public render() {
+    console.log(this.props);
+
     const { getFieldDecorator } = this.props.form;
     const type = this.props.typ.value;
 
@@ -75,26 +77,22 @@ class ElectionForm extends Component<IUserFormProps> {
     const isLandtagswahlBW = type === ElectionTypes.LandtagswahlBW;
     const isLandtagswahlSL = type === ElectionTypes.LandtagswahlSL;
 
-    const hidePartyList = not(
-      reduceWithOr([
-        isEuropawahl,
-        isBundestagswahl,
-        isLandtagswahl,
-        isLandtagswahlSL
-      ])
-    );
+    const showPartyList = reduceWithOr([
+      isEuropawahl,
+      isBundestagswahl,
+      isLandtagswahl,
+      isLandtagswahlSL
+    ]);
 
-    const hideCandidateList = not(
-      reduceWithOr([
-        isBundestagswahl,
-        isLandtagswahl,
-        isKommunalwahl,
-        isBuergermeisterwahl,
-        isLandtagswahlBW
-      ])
-    );
+    const showCandidateList = reduceWithOr([
+      isBundestagswahl,
+      isLandtagswahl,
+      isKommunalwahl,
+      isBuergermeisterwahl,
+      isLandtagswahlBW
+    ]);
 
-    const hideTopicList = not(reduceWithOr([isReferendum]));
+    const showTopicList = reduceWithOr([isReferendum]);
 
     return (
       <Form onSubmit={this.handleSubmit} layout="horizontal">
@@ -226,7 +224,7 @@ class ElectionForm extends Component<IUserFormProps> {
                       }
                     ]
                   })(
-                    <Upload>
+                    <Upload action={`/api/election/${1}/addVoters`}>
                       <Button>
                         <Icon type="upload" /> Wählerliste importieren
                       </Button>
@@ -236,7 +234,7 @@ class ElectionForm extends Component<IUserFormProps> {
               </FormItem>
             </Col>
             <Col span={8}>
-              {!hidePartyList && (
+              {showPartyList && (
                 <FormItem>
                   <Card.Grid className={cx("grid")}>
                     {getFieldDecorator("parties", {
@@ -247,7 +245,7 @@ class ElectionForm extends Component<IUserFormProps> {
                         }
                       ]
                     })(
-                      <Upload>
+                      <Upload action={`/api/election/${1}/addParties`}>
                         <Button>
                           <Icon type="upload" /> Parteienliste importieren
                         </Button>
@@ -258,7 +256,7 @@ class ElectionForm extends Component<IUserFormProps> {
               )}
             </Col>
             <Col span={8}>
-              {!hideCandidateList && (
+              {showCandidateList && (
                 <FormItem>
                   <Card.Grid className={cx("grid")}>
                     {getFieldDecorator("candidates", {
@@ -269,7 +267,7 @@ class ElectionForm extends Component<IUserFormProps> {
                         }
                       ]
                     })(
-                      <Upload>
+                      <Upload action={`/api/election/${1}/addCandidates`}>
                         <Button>
                           <Icon type="upload" /> Kandidatenliste importieren
                         </Button>
@@ -278,7 +276,7 @@ class ElectionForm extends Component<IUserFormProps> {
                   </Card.Grid>
                 </FormItem>
               )}
-              {!hideTopicList && (
+              {showTopicList && (
                 <FormItem>
                   <Card.Grid className={cx("grid")}>
                     {getFieldDecorator("topic", {
@@ -289,7 +287,7 @@ class ElectionForm extends Component<IUserFormProps> {
                         }
                       ]
                     })(
-                      <Upload>
+                      <Upload action={`/api/election/${1}/addTopics`}>
                         <Button>
                           <Icon type="upload" />Themenliste importieren
                         </Button>
