@@ -10,7 +10,9 @@ class ElectionContainer extends Container<IElectionsContext> {
     error: {},
     evaluation: {},
     pending: false,
-    result: {}
+    result: {},
+    uploadSuccess: false,
+    created: false
   };
 
   public getAll = () => {
@@ -44,12 +46,24 @@ class ElectionContainer extends Container<IElectionsContext> {
   };
 
   public update = (id: number, updates: Partial<IElectionEntity>) => {
-    this.setState({ pending: true });
+    this.setState({ pending: true, updated: false });
     return api.election
       .update(id, updates)
       .fork(
         error => this.setState({ error, pending: false }),
-        election => this.setState({ election, pending: false, error: {} })
+        election =>
+          this.setState({ election, pending: false, error: {}, updated: true })
+      );
+  };
+
+  public create = (updates: Partial<IElectionEntity>) => {
+    this.setState({ pending: true, election: {}, created: false });
+    return api.election
+      .create(updates)
+      .fork(
+        error => this.setState({ error, pending: false }),
+        election =>
+          this.setState({ election, pending: false, error: {}, created: true })
       );
   };
 
@@ -71,6 +85,82 @@ class ElectionContainer extends Container<IElectionsContext> {
         error => this.setState({ error, pending: false }),
         result => this.setState({ result, pending: false, error: {} })
       );
+  };
+
+  public addVoters = (id: number) => (parameters: object) => {
+    this.setState({ pending: true, uploadSuccess: false });
+
+    const cancel = api.election.addVoters(id, parameters).fork(
+      error => {
+        parameters.onError(error);
+        this.setState({ error, pending: false, uploadSuccess: false });
+      },
+      uploadSuccess => {
+        parameters.onSuccess(uploadSuccess, parameters.file);
+        this.setState({ uploadSuccess: true, pending: false, error: {} });
+      }
+    );
+
+    return {
+      abort: cancel
+    };
+  };
+
+  public addCandidates = (id: number) => (parameters: object) => {
+    this.setState({ pending: true, uploadSuccess: false });
+
+    const cancel = api.election.addCandidates(id, parameters).fork(
+      error => {
+        parameters.onError(error);
+        this.setState({ error, pending: false, uploadSuccess: false });
+      },
+      uploadSuccess => {
+        parameters.onSuccess(uploadSuccess, parameters.file);
+        this.setState({ uploadSuccess: true, pending: false, error: {} });
+      }
+    );
+
+    return {
+      abort: cancel
+    };
+  };
+
+  public addParties = (id: number) => (parameters: object) => {
+    this.setState({ pending: true, uploadSuccess: false });
+
+    const cancel = api.election.addParties(id, parameters).fork(
+      error => {
+        parameters.onError(error);
+        this.setState({ error, pending: false, uploadSuccess: false });
+      },
+      uploadSuccess => {
+        parameters.onSuccess(uploadSuccess, parameters.file);
+        this.setState({ uploadSuccess: true, pending: false, error: {} });
+      }
+    );
+
+    return {
+      abort: cancel
+    };
+  };
+
+  public addReferendums = (id: number) => (parameters: object) => {
+    this.setState({ pending: true, uploadSuccess: false });
+
+    const cancel = api.election.addReferendums(id, parameters).fork(
+      error => {
+        parameters.onError(error);
+        this.setState({ error, pending: false, uploadSuccess: false });
+      },
+      uploadSuccess => {
+        parameters.onSuccess(uploadSuccess, parameters.file);
+        this.setState({ uploadSuccess: true, pending: false, error: {} });
+      }
+    );
+
+    return {
+      abort: cancel
+    };
   };
 }
 

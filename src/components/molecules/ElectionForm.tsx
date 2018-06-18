@@ -8,21 +8,24 @@ import {
   Input,
   Radio,
   Row,
-  Upload
+  Upload,
+  message
 } from "antd";
 
 import connect from "@/containers/connect";
 
 import AuthenticationContainer from "@/containers/Authentication";
-import { ElectionTypes } from "@/types/model";
+import { ElectionStateTypes, ElectionTypes, Role } from "@/types/model";
 
 import { FormComponentProps } from "antd/lib/form";
 import classNames from "classnames/bind";
 import Moment from "moment";
-import { not, or, reduce } from "ramda";
+import { complement, not, or, reduce, pathOr, isEmpty, isNil } from "ramda";
 import React, { Component } from "react";
 
 import Styles from "@/components/pages/styles/hide.less";
+import ElectionContainer from "@/containers/Election";
+import { IElectionsContext } from "@/types/context";
 
 const cx = classNames.bind(Styles);
 const FormItem = Form.Item;
@@ -30,7 +33,12 @@ const RadioGroup = Radio.Group;
 const format = "HH:mm";
 // const Role: Role;
 
+const isUnknown = or(isNil, isEmpty);
+const isDefined = complement(isUnknown);
+
 interface IUserFormProps extends FormComponentProps {
+  election: ElectionContainer;
+  id?: number;
   client_id: number;
   // end_date: Moment;
   id_election: number;
@@ -46,27 +54,75 @@ const reduceWithOr = reduce<boolean, boolean>(or, false);
 class ElectionForm extends Component<IUserFormProps> {
   public handleSubmit = (event: any) => {
     event.preventDefault();
+
     const role = this.props.authentication.getRole();
-    if (role === 1) {
+    const isSaved = pathOr(false, ["state", "created"], this.props.election);
+    const isNew = !isSaved;
+    let state = -1;
+
+    if (role === Role.Supervisor) {
+      state = ElectionStateTypes.Freigegeben;
+    } else if (role === Role.Moderator) {
+      state = ElectionStateTypes.Pruefung;
+    }
+
+    if (state !== -1) {
       this.props.form.setFieldsValue({
-        state: 2
-      });
-    } else if (role === 2) {
-      this.props.form.setFieldsValue({
-        state: 1
+        state
       });
     }
 
-    this.props.form.validateFields((err, values) => {
-      console.log({ err, values });
+    let fields = isNew
+      ? ["typ", "start_date", "end_date", "text", "state"]
+      : ["voters", "parties", "candidates", "topic"];
+
+    if (this.isIdDefined()) {
+      fields = ["typ", "start_date", "end_date", "text", "state"];
+    }
+
+    this.props.form.validateFields(fields, {}, (err, values) => {
+      if (isDefined(err)) {
+        console.log(err);
+      } else {
+        if (this.isIdDefined()) {
+          this.props.election.update(this.props.id, values);
+          this.props.onSave();
+        } else {
+          if (isNew) {
+            this.props.election.create(values);
+            this.props.onNext();
+          }
+
+          if (isSaved) {
+            this.props.onSave();
+          }
+        }
+      }
     });
   };
 
-  public render() {
-    console.log(this.props);
+  public isIdDefined = () => isDefined(this.props.id);
 
-    const { getFieldDecorator } = this.props.form;
-    const type = this.props.typ.value;
+  public render() {
+    const {
+      election: { state },
+      form: { getFieldDecorator },
+      ...props
+    } = this.props;
+
+    const type = props.typ.value;
+
+    let isSaved = pathOr(false, ["created"], state);
+    let isNew = !isSaved;
+    let electionId = pathOr(-1, ["election", "id_election"], state);
+    let buttonLabel = isNew ? "Weiter" : "Speichern";
+
+    if (this.isIdDefined()) {
+      isSaved = false;
+      isNew = true;
+      electionId = this.props.id;
+      buttonLabel = "Änderungen speichern";
+    }
 
     const isEuropawahl = type === ElectionTypes.Europawahl;
     const isBundestagswahl = type === ElectionTypes.Bundestagswahl;
@@ -109,7 +165,7 @@ class ElectionForm extends Component<IUserFormProps> {
                       }
                     ]
                   })(
-                    <RadioGroup>
+                    <RadioGroup disabled={isSaved}>
                       <Radio
                         className={cx("radio")}
                         value={ElectionTypes.Europawahl}
@@ -176,12 +232,8 @@ class ElectionForm extends Component<IUserFormProps> {
                     ]
                   })(
                     <DatePicker
+                      disabled={isSaved}
                       format="YYYY-MM-DD HH:mm:ss"
-                      placeholder="Select Time"
-                      showTime={{
-                        defaultValue: Moment("8:00", format),
-                        format
-                      }}
                     />
                   )}
                 </Card.Grid>
@@ -200,17 +252,25 @@ class ElectionForm extends Component<IUserFormProps> {
                     ]
                   })(
                     <DatePicker
+                      disabled={isSaved}
                       format="YYYY-MM-DD HH:mm:ss"
-                      placeholder="Select Time"
-                      showTime={{
-                        defaultValue: Moment("8:00", format),
-                        format
-                      }}
                     />
                   )}
                 </Card.Grid>
               </FormItem>
             </Col>
+          </Row>
+          <Row>
+            <FormItem>
+              <Card.Grid className={cx("grid")}>
+                {getFieldDecorator("text", {})(
+                  <Input
+                    disabled={isSaved}
+                    placeholder="Weitere Informationen zur Wahl"
+                  />
+                )}
+              </Card.Grid>
+            </FormItem>
           </Row>
           <Row>
             <Col span={8}>
@@ -224,9 +284,12 @@ class ElectionForm extends Component<IUserFormProps> {
                       }
                     ]
                   })(
-                    <Upload action={`/api/election/${1}/addVoters`}>
-                      <Button>
-                        <Icon type="upload" /> Wählerliste importieren
+                    <Upload
+                      customRequest={this.props.election.addVoters(electionId)}
+                      disabled={isNew}
+                    >
+                      <Button disabled={isNew} icon="upload">
+                        Wählerliste importieren
                       </Button>
                     </Upload>
                   )}
@@ -245,9 +308,14 @@ class ElectionForm extends Component<IUserFormProps> {
                         }
                       ]
                     })(
-                      <Upload action={`/api/election/${1}/addParties`}>
-                        <Button>
-                          <Icon type="upload" /> Parteienliste importieren
+                      <Upload
+                        customRequest={this.props.election.addParties(
+                          electionId
+                        )}
+                        disabled={isNew}
+                      >
+                        <Button disabled={isNew} icon="upload">
+                          Parteienliste importieren
                         </Button>
                       </Upload>
                     )}
@@ -267,9 +335,14 @@ class ElectionForm extends Component<IUserFormProps> {
                         }
                       ]
                     })(
-                      <Upload action={`/api/election/${1}/addCandidates`}>
-                        <Button>
-                          <Icon type="upload" /> Kandidatenliste importieren
+                      <Upload
+                        customRequest={this.props.election.addCandidates(
+                          electionId
+                        )}
+                        disabled={isNew}
+                      >
+                        <Button disabled={isNew} icon="upload">
+                          Kandidatenliste importieren
                         </Button>
                       </Upload>
                     )}
@@ -287,9 +360,14 @@ class ElectionForm extends Component<IUserFormProps> {
                         }
                       ]
                     })(
-                      <Upload action={`/api/election/${1}/addTopics`}>
-                        <Button>
-                          <Icon type="upload" />Themenliste importieren
+                      <Upload
+                        customRequest={this.props.election.addReferendums(
+                          electionId
+                        )}
+                        disabled={isNew}
+                      >
+                        <Button disabled={isNew} icon="upload">
+                          Themenliste importieren
                         </Button>
                       </Upload>
                     )}
@@ -300,15 +378,6 @@ class ElectionForm extends Component<IUserFormProps> {
           </Row>
           <Row>
             <FormItem>
-              <Card.Grid className={cx("grid")}>
-                {getFieldDecorator("text", {})(
-                  <Input placeholder="Weitere Informationen zur Wahl" />
-                )}
-              </Card.Grid>
-            </FormItem>
-          </Row>
-          <Row>
-            <FormItem>
               {getFieldDecorator("state", {
                 initialValue: this.props.state,
                 rules: [
@@ -316,14 +385,11 @@ class ElectionForm extends Component<IUserFormProps> {
                     required: false
                   }
                 ]
-              })(<Input type="hidden" />)}
+              })(<Input disabled={isSaved} type="hidden" />)}
             </FormItem>
             <Col push={16} span={8}>
-              <Button type="dashed" htmlType="reset">
-                Abbrechen
-              </Button>
               <Button type="primary" htmlType="submit">
-                Speichern
+                {buttonLabel}
               </Button>
             </Col>
           </Row>
@@ -367,5 +433,6 @@ const MyComponentToInjectAuth = Form.create({
 })(ElectionForm);
 
 export default connect({
-  authentication: AuthenticationContainer
+  authentication: AuthenticationContainer,
+  election: ElectionContainer
 })(MyComponentToInjectAuth);

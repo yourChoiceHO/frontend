@@ -1,3 +1,4 @@
+import { message } from "antd";
 import moment from "moment";
 import React, { Component, Fragment } from "react";
 
@@ -26,11 +27,25 @@ class ElectionCreate extends Component {
     }));
   };
 
+  public onNext = () => {
+    message.success("Wahl wurde erfolgreich angelegt");
+  };
+
+  public onSave = () => {
+    message.success("Wahl wurde erfolgreich erstellt");
+    this.props.history.replace(this.props.match.url);
+  };
+
   public render() {
     return (
       <Fragment>
         <h2>Wahl erstellen</h2>
-        <ElectionCreateForm {...this.state.fields} onChange={this.onChange} />
+        <ElectionCreateForm
+          {...this.state.fields}
+          onChange={this.onChange}
+          onNext={this.onNext}
+          onSave={this.onSave}
+        />
       </Fragment>
     );
   }

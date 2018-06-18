@@ -1,3 +1,4 @@
+import { message } from "antd";
 import moment from "moment";
 import { isEmpty, mapObjIndexed, pathOr } from "ramda";
 import React, { Component, Fragment } from "react";
@@ -5,6 +6,7 @@ import React, { Component, Fragment } from "react";
 import ElectionEditForm from "@/components/molecules/ElectionForm";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
+import { ElectionTypes } from "@/types/model";
 import { noop } from "@/utils";
 
 class ElectionEdit extends Component {
@@ -41,7 +43,7 @@ class ElectionEdit extends Component {
       start_date: { value: null },
       text: { value: "" },
       topic: { value: null },
-      typ: { value: "Bundestagswahl" },
+      typ: { value: -1 },
       voters: { value: null }
     },
     previousId: Infinity
@@ -50,11 +52,15 @@ class ElectionEdit extends Component {
   private cancel = noop;
 
   public componentDidMount() {
-    this.cancel = this.props.election.get(this.props.computedMatch.params.id);
+    this.fetchElection();
   }
 
   public componentWillUnmount() {
     this.cancel();
+  }
+
+  public fetchElection() {
+    this.cancel = this.props.election.get(this.props.computedMatch.params.id);
   }
 
   public onChange = changedFields => {
@@ -63,7 +69,13 @@ class ElectionEdit extends Component {
     }));
   };
 
+  public onSave = () => {
+    message.success("Wahl wurde erfolgreich bearbeitet");
+    this.fetchElection();
+  };
+
   public render() {
+    const id = parseInt(this.props.computedMatch.params.id, 10);
     const election = pathOr({}, ["state", "election"], this.props.election);
     const pending = pathOr({}, ["state", "pending"], this.props.election);
 
@@ -78,7 +90,12 @@ class ElectionEdit extends Component {
     return (
       <Fragment>
         <h2>Wahl bearbeiten</h2>
-        <ElectionEditForm {...this.state.fields} onChange={this.onChange} />
+        <ElectionEditForm
+          id={id}
+          {...this.state.fields}
+          onChange={this.onChange}
+          onSave={this.onSave}
+        />
       </Fragment>
     );
   }

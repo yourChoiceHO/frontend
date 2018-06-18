@@ -1,6 +1,12 @@
 import * as http from "@/lib/http";
 import TokenStore from "@/store/token";
-import { IElectionEntity, IElectionVote } from "@/types/model";
+import {
+  IElectionEntity,
+  IElectionVote,
+  IPartyEntity,
+  ICandidateEntity,
+  IReferendumEntity
+} from "@/types/model";
 
 export function create(election: Partial<IElectionEntity>) {
   const token = TokenStore.get();
@@ -47,4 +53,56 @@ export function vote(id: number, electionVote: IElectionVote) {
   return http.post(`/election/${id}/vote`, electionVote, {
     params: { token }
   });
+}
+
+export function addVoters(id: number, parameters) {
+  const payload = new FormData();
+  const token = TokenStore.get();
+
+  payload.append("upload", parameters.file);
+
+  return http.post<IElectionEntity[]>(`/election/${id}/addVoters`, payload, {
+    params: { token }
+  });
+}
+
+export function addCandidates(id: number, parameters) {
+  const payload = new FormData();
+  const token = TokenStore.get();
+
+  payload.append("upload", parameters.file);
+
+  return http.post<ICandidateEntity[]>(
+    `/election/${id}/addCandidates`,
+    payload,
+    {
+      params: { token }
+    }
+  );
+}
+
+export function addParties(id: number, parameters) {
+  const payload = new FormData();
+  const token = TokenStore.get();
+
+  payload.append("upload", parameters.file);
+
+  return http.post<IPartyEntity[]>(`/election/${id}/addParties`, payload, {
+    params: { token }
+  });
+}
+
+export function addReferendums(id: number, parameters) {
+  const payload = new FormData();
+  const token = TokenStore.get();
+
+  payload.append("upload", parameters.file);
+
+  return http.post<IReferendumEntity[]>(
+    `/election/${id}/addReferendums`,
+    payload,
+    {
+      params: { token }
+    }
+  );
 }
