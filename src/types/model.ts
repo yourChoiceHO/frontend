@@ -18,6 +18,18 @@ export enum ElectionTypes {
   LandtagswahlSL = "LandtagswahlSL"
 }
 
+export enum ElectionStateTypes {
+  Bearbeitung = 0,
+  Pruefung = 1,
+  Freigegeben = 2
+}
+
+export enum ElectionStates {
+  Bearbeitung = "Bearbeitung",
+  Pruefung = "Prüfung",
+  Freigegeben = "Freigegeben"
+}
+
 export interface IPartyEntity {
   consituency: number;
   election_id: number;
@@ -53,7 +65,7 @@ export interface IElectionEntity {
   start_date: Moment;
   state: number;
   text: string;
-  type: string;
+  typ: string;
 }
 
 export interface IReferendumEntity {
@@ -86,8 +98,9 @@ export interface IVoterEntity {
   last_name: string;
   password: string;
 }
-export enum State {
-  Bearbeitung = 0,
-  Pruefung = 1,
-  Freigegeben = 2
+
+export interface IElectionVote {
+  first_vote: number;
+  second_vote: number;
+  valid: boolean;
 }
