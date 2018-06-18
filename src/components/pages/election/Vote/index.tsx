@@ -77,7 +77,7 @@ class ElectionVote extends Component<
 
   public componentDidUpdate() {
     const result = pathOr({}, ["state", "result"], this.props.election);
-    const pending = pathOr({}, ["state", "pending"], this.props.election);
+    const pending = pathOr(false, ["state", "pending"], this.props.election);
 
     if (!pending && !isEmpty(result)) {
       message.success("Stimme wurde erfolgreich abgegeben!");
