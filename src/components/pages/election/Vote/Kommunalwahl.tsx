@@ -130,11 +130,10 @@ class Kommunalwahl extends Component<IVoteProps & FormComponentProps, {}> {
 
     return (
       <Form>
-        <h2>Kommunalwahl</h2>
         <Row>
           <Col span={12}>
             <FormItem>
-              {getFieldDecorator("first-vote")(
+              {getFieldDecorator("candidate_id")(
                 <Radio.Group>
                   <Table
                     bordered={true}
@@ -149,7 +148,7 @@ class Kommunalwahl extends Component<IVoteProps & FormComponentProps, {}> {
 
           <Col span={12}>
             <FormItem>
-              {getFieldDecorator("second-vote")(
+              {getFieldDecorator("party_id")(
                 <Radio.Group>
                   <Table
                     bordered={true}

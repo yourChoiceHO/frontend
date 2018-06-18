@@ -122,11 +122,10 @@ class Bundestagswahl extends Component<
 
     return (
       <Form>
-        <h2>Bundestagswahl</h2>
         <Row>
           <Col span={12}>
             <FormItem>
-              {getFieldDecorator("first-vote")(
+              {getFieldDecorator("candidate_id")(
                 <Radio.Group id="radioFirstVote">
                   <Table
                     bordered={true}
@@ -138,10 +137,9 @@ class Bundestagswahl extends Component<
               )}
             </FormItem>
           </Col>
-
           <Col span={12}>
             <FormItem>
-              {getFieldDecorator("second-vote")(
+              {getFieldDecorator("party_id")(
                 <Radio.Group id="radioSecondVote">
                   <Table
                     bordered={true}

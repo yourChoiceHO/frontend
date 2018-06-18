@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Modal } from "antd";
+import { Button, Checkbox, Form, message, Modal } from "antd";
 import { Cancel } from "fluture";
 import { isEmpty, pathOr } from "ramda";
 import React, { Component, forwardRef, Fragment } from "react";
@@ -11,6 +11,8 @@ import Bundestagswahl from "@/components/pages/election/Vote/Bundestagswahl";
 import Europawahl from "@/components/pages/election/Vote/Europawahl";
 import Kommunalwahl from "@/components/pages/election/Vote/Kommunalwahl";
 import Landtagswahl from "@/components/pages/election/Vote/Landtagswahl";
+import LandtagswahlBW from "@/components/pages/election/Vote/LandtagswahlBW";
+import LandtagswahlSL from "@/components/pages/election/Vote/LandtagswahlSL";
 import Referendum from "@/components/pages/election/Vote/Referendum";
 import { FormComponentProps } from "antd/lib/form";
 
@@ -41,6 +43,14 @@ const Vote = forwardRef(({ election }, ref) => {
       VoteComponent = Landtagswahl;
       break;
 
+    case ElectionTypes.LandtagswahlBW:
+      VoteComponent = LandtagswahlBW;
+      break;
+
+    case ElectionTypes.LandtagswahlSL:
+      VoteComponent = LandtagswahlSL;
+      break;
+
     case ElectionTypes.Referendum:
       VoteComponent = Referendum;
       break;
@@ -65,19 +75,40 @@ class ElectionVote extends Component<
     this.formRef = React.createRef();
   }
 
+  public componentDidUpdate() {
+    const result = pathOr({}, ["state", "result"], this.props.election);
+    const pending = pathOr({}, ["state", "pending"], this.props.election);
+
+    if (!pending && !isEmpty(result)) {
+      message.success("Stimme wurde erfolgreich abgegeben!");
+      this.props.history.replace(this.props.match.url);
+    }
+  }
+
   public componentWillUnmount() {
     this.cancel();
   }
 
-  public onVote({ error, values }) {
-    // const election = pathOr<IElectionEntity>(
-    //   {},
-    //   ["state", "election"],
-    //   this.props.election
-    // );
+  public onVote({ error, values: { invalid, ...fields } }) {
+    let payload = {
+      first_vote: true,
+      second_vote: true,
+      voter_id: null,
+      candidate_id: null,
+      party_id: null,
+      referendum: null,
+      valid: false
+    };
+
+    const valid = !invalid;
 
     if (isEmpty(error)) {
-      console.log(values);
+      this.props.election.vote(this.props.computedMatch.params.id, {
+        ...payload,
+        valid,
+        voter_id: this.props.authentication.getId(),
+        ...fields
+      });
     } else {
       console.log(error);
     }
@@ -121,7 +152,7 @@ class ElectionVote extends Component<
             Abstimmen
           </Button>
           <FormItem>
-            {getFieldDecorator("valid", { initialValue: true })(
+            {getFieldDecorator("invalid", { initialValue: false })(
               <Checkbox>Stimme ungültig machen</Checkbox>
             )}
           </FormItem>

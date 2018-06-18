@@ -98,9 +98,8 @@ class Europawahl extends Component<
 
     return (
       <Form>
-        <h2>Europawahl</h2>
         <FormItem>
-          {getFieldDecorator("first-vote")(
+          {getFieldDecorator("party_id")(
             <Radio.Group>
               <Table
                 bordered={true}

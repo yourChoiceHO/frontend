@@ -37,12 +37,10 @@ class Referendum extends Component<IVoteProps, {}> {
 
     return (
       <Form>
-        <h2>Referendum</h2>
-        <h3>{referendum.text}</h3>
-        {/* <h4>{election.text}</h4> */}
+        <h4>{referendum.text}</h4>
         <Row>
-          {getFieldDecorator("first-vote")(
-            <Radio.Group id="radiovote">
+          {getFieldDecorator("referendum")(
+            <Radio.Group>
               <Radio value={true}>Ja</Radio>
               <Radio value={false}>Nein</Radio>
             </Radio.Group>

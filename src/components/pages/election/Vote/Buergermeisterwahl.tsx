@@ -1,148 +1,84 @@
-import React, { SFC } from "react";
+import { Form, Radio, Row, Table } from "antd";
+import { isEmpty, pathOr } from "ramda";
+import React, { Component } from "react";
 
+import CandidateContainer from "@/containers/Candidate";
+import connect from "@/containers/connect";
+import { ICandidateEntity } from "@/types/model";
 import { IVoteProps } from "@/types/props";
+import { noop } from "@/utils";
 
-import { ICandidateEntity, IElectionEntity, IPartyEntity } from "@/types/model";
-import { Button, Checkbox, Col, Radio, Row, Table } from 'antd';
-import moment from 'moment';
-
-const election: IElectionEntity = {
-  client_id: 1,
-  end_date: moment("2014-05-25"),
-  id_election: 1,
-  start_date: moment("2014-05-20"),
-  state: 2,
-  text: "Stadt Offenburg",
-  type: "Buergermeisterwahl"
-};
-
-const candidates: ICandidateEntity[] = [{
-  consituency: 2,
-  election_id: 1,
-  first_name: "Tarik",
-  id_candidate: 1,
-  last_name: "Bozdemir",
-  party_id: 1,
-  vote: 0,
-}, {
-  consituency: 4,
-  election_id: 1,
-  first_name: "Jonas",
-  id_candidate: 2,
-  last_name: "Hauss",
-  party_id: 2,
-  vote: 1,
-}, {
-  consituency: 2,
-  election_id: 1,
-  first_name: "Matthias",
-  id_candidate: 3,
-  last_name: "Kaiser",
-  party_id: 3,
-  vote: 0,
-}, {
-  consituency: 2,
-  election_id: 1,
-  first_name: "Jonas",
-  id_candidate: 4,
-  last_name: "Kirchhofer",
-  party_id: 4,
-  vote: 0,
-}
-];
-
-const parties: IPartyEntity[] = [
+const columns = [
   {
-    consituency: 2,
-    election_id: 1,
-    id_party: 1,
-    name: "AFD",
-    text: "Alternative für Deutschland",
-    vote: 1,
+    dataIndex: "candidate",
+    key: "candidate",
+    title: "Kandidat"
   },
   {
-    consituency: 4,
-    election_id: 1,
-    id_party: 2,
-    name: "CDU",
-    text: "Christlich Demokratische Union Deutschlands",
-    vote: 0,
-  },
-  {
-    consituency: 4,
-    election_id: 1,
-    id_party: 3,
-    name: "SPD",
-    text: "Sozialdemokratische Partei Deutschlands",
-    vote: 0,
-  },
-  {
-    consituency: 4,
-    election_id: 1,
-    id_party: 4,
-    name: "FDP",
-    text: "Freie Demokratische Partei",
-    vote: 0,
-  }];
-
-const columnsParties = [
-  {
-    dataIndex: 'candidatess',
-    key: 'candidatess',
-    title: 'Kandidaten',
-  },
-  {
-    dataIndex: 'partyName',
-    key: 'partyName',
-    title: 'Partei',
-  },
-  {
-    dataIndex: 'vote',
-    key: 'vote',
-    title: 'Stimme',
+    dataIndex: "firstVote",
+    key: "firstVote",
+    title: "Stimme"
   }
 ];
 
-const Buergermeisterwahl: SFC<IVoteProps> = () => {
+const getCandidatesDatasource = (candidates: ICandidateEntity[]) =>
+  candidates.map(({ last_name, first_name, id_candidate }) => {
+    return {
+      candidate: (
+        <span>
+          {last_name}, {first_name}
+        </span>
+      ),
+      firstVote: <Radio value={id_candidate} />,
+      key: id_candidate
+    };
+  });
 
-  return (
-    <div>
-      <h2>Interaktiver Stimmzettel
-          für die Wahl der / des Bürgermeisterin / Bürgermeisters
-          am {election.end_date.format("DD.MM.YYYY")} der {election.text}
-      </h2 >
-      <div>
-        <Row >
-          <Radio.Group id="radiovote">
-            <Table bordered={true} pagination={false} columns={columnsParties}
-              dataSource={parties.map(partiesData => {
-                return {
-                  candidatess: candidates.map(candidatesData => {
-                    if (partiesData.id_party === candidatesData.party_id) {
-                      return [
-                        candidatesData.last_name + " " + candidatesData.first_name + "; "
-                      ]
-                    }
-                  }),
-                  key: partiesData.id_party,
-                  partyName: partiesData.name + " (" + partiesData.text + ")",
-                  vote: <Radio value={partiesData.id_party} />,
-                }
-              })} />
-          </Radio.Group>
-        </Row>
+class Buergermeisterwahl extends Component<IVoteProps, {}> {
+  private cancelCandidate = noop;
+
+  public componentDidMount() {
+    this.cancelCandidate = this.props.candidates.getByElection(
+      this.props.election.id_election
+    );
+  }
+
+  public componentWillUnmount() {
+    this.cancelCandidate();
+  }
+
+  public render() {
+    const candidates = pathOr<ICandidateEntity[]>(
+      [],
+      ["state", "candidates"],
+      this.props.candidates
+    );
+
+    const { getFieldDecorator } = this.props.form;
+
+    if (isEmpty(candidates)) {
+      return <div />;
+    }
+
+    return (
+      <Form>
         <Row>
-          <Checkbox>Stimme ungültig machen.</Checkbox>
+          {getFieldDecorator("candidate_id")(
+            <Radio.Group id="radiovote">
+              <Table
+                bordered={true}
+                pagination={false}
+                columns={columns}
+                dataSource={getCandidatesDatasource(candidates)}
+              />
+            </Radio.Group>
+          )}
         </Row>
-        <Row>
-          <Col>
-            <Button type="primary" >Stimme abgeben!</Button>
-          </Col>
-        </Row>
-      </div>
+      </Form>
+    );
+  }
+}
 
-    </div >
-  );
-};
-
-export default Buergermeisterwahl;
+export default connect({
+  candidates: CandidateContainer
+})(Form.create()(Buergermeisterwahl));

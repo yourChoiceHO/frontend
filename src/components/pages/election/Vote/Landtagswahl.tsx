@@ -64,13 +64,7 @@ const getCandidatesDatasource = (
 const getPartiesDatasource = (parties: IPartyEntity[]) =>
   parties.map(({ id_party, name, text }) => ({
     key: id_party,
-    partyName: (
-      <span>
-        {name}
-        <br />
-        <small> ({text})</small>
-      </span>
-    ),
+    partyName: <span>{name}</span>,
     secondVote: <Radio value={id_party} />
   }));
 
@@ -112,11 +106,10 @@ class Landtagswahl extends Component<IVoteProps & FormComponentProps, {}> {
 
     return (
       <Form>
-        <h2>Landtagswahl</h2>
         <Row>
           <Col span={12}>
             <FormItem>
-              {getFieldDecorator("first-vote")(
+              {getFieldDecorator("candidate_id")(
                 <Radio.Group id="radioFirstVote">
                   <Table
                     bordered={true}
@@ -128,10 +121,9 @@ class Landtagswahl extends Component<IVoteProps & FormComponentProps, {}> {
               )}
             </FormItem>
           </Col>
-
           <Col span={12}>
             <FormItem>
-              {getFieldDecorator("second-vote")(
+              {getFieldDecorator("party_id")(
                 <Radio.Group id="radioSecondVote">
                   <Table
                     bordered={true}
