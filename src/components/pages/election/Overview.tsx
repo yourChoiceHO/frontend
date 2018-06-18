@@ -10,7 +10,11 @@ import Can from "@/components/atoms/Can";
 import AuthenticationContainer from "@/containers/Authentication";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
-import { IElectionEntity } from "@/types/model";
+import {
+  IElectionEntity,
+  ElectionStates,
+  ElectionStateTypes
+} from "@/types/model";
 import { noop } from "@/utils";
 
 class ElectionOverview extends Component<
@@ -55,6 +59,9 @@ class ElectionOverview extends Component<
       </Fragment>
     );
   }
+
+  private renderElectionState = (typ: number, record: IElectionEntity) =>
+    ElectionStateTypes[typ];
 
   private renderDateRow = (text: string, record: IElectionEntity) =>
     moment(text).format("MMMM Do YYYY, h:mm:ss a");
@@ -134,6 +141,7 @@ class ElectionOverview extends Component<
       {
         dataIndex: "state",
         key: "state",
+        render: this.renderElectionState,
         title: "Status"
       },
       {
