@@ -12,12 +12,18 @@ class AuthenticationContainer extends Container<IAuthenticationContext> {
     error: {},
     pending: false,
     token: "",
-    user: {}
+    user: {},
+    id: -1
   };
 
   public getRole = (): Role => {
     const role = pathOr(Role.Unauthorized, ["user", "role"], this.state);
     return parseInt(role, 10);
+  };
+
+  public getId = (): number => {
+    const id = pathOr(-1, ["id"], this.state);
+    return id;
   };
 
   public isLoggedIn = () => {
@@ -42,12 +48,13 @@ class AuthenticationContainer extends Container<IAuthenticationContext> {
     this.setState({ pending: true });
     return api.authentication
       .loginVoter(credentials)
-      .fork(this.setError, ({ token, role }) => {
+      .fork(this.setError, ({ id, token, role }) => {
         this.setState({
           error: {},
           pending: false,
           user: { role },
-          token
+          token,
+          id
         });
         TokenStore.set(token);
       });
