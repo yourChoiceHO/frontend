@@ -168,7 +168,7 @@ class ElectionForm extends Component<IUserFormProps> {
                     }
                   ]
                 })(
-                  <RadioGroup disabled={isSaved}>
+                  <RadioGroup disabled={isSaved || this.isIdDefined()}>
                     <Radio
                       className={cx("radio")}
                       value={ElectionTypes.Europawahl}

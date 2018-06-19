@@ -6,7 +6,6 @@ import React, { Component, Fragment } from "react";
 import ElectionEditForm from "@/components/molecules/ElectionForm";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
-import { ElectionTypes } from "@/types/model";
 import { noop } from "@/utils";
 
 class ElectionEdit extends Component {

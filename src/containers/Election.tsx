@@ -1,5 +1,3 @@
-import { head } from "ramda";
-
 import Container from "@/containers/Container";
 import api from "@/lib/api";
 import { IElectionsContext } from "@/types/context";
@@ -31,6 +29,19 @@ class ElectionContainer extends Container<IElectionsContext> {
 
   public createElection = election =>
     this.setState({ election, pending: false, created: true });
+
+  public reset = () =>
+    this.setState({
+      election: {},
+      elections: [],
+      error: {},
+      evaluation: {},
+      pending: false,
+      result: {},
+      uploadSuccess: false,
+      created: false,
+      deleted: false
+    });
 
   public setElections = elections =>
     this.setState({
@@ -99,11 +110,12 @@ class ElectionContainer extends Container<IElectionsContext> {
 
     const cancel = api.election.addVoters(id, parameters).fork(
       error => {
-        parameters.onError(error);
+        console.error(error);
+        parameters.onError(new Error(error));
         this.setState({ error, pending: false, uploadSuccess: false });
       },
-      uploadSuccess => {
-        parameters.onSuccess(uploadSuccess, parameters.file);
+      upload => {
+        parameters.onSuccess(upload, parameters.file);
         this.setState({ uploadSuccess: true, pending: false, error: {} });
       }
     );
@@ -121,8 +133,8 @@ class ElectionContainer extends Container<IElectionsContext> {
         parameters.onError(error);
         this.setState({ error, pending: false, uploadSuccess: false });
       },
-      uploadSuccess => {
-        parameters.onSuccess(uploadSuccess, parameters.file);
+      upload => {
+        parameters.onSuccess(upload, parameters.file);
         this.setState({ uploadSuccess: true, pending: false, error: {} });
       }
     );
@@ -140,8 +152,8 @@ class ElectionContainer extends Container<IElectionsContext> {
         parameters.onError(error);
         this.setState({ error, pending: false, uploadSuccess: false });
       },
-      uploadSuccess => {
-        parameters.onSuccess(uploadSuccess, parameters.file);
+      upload => {
+        parameters.onSuccess(upload, parameters.file);
         this.setState({ uploadSuccess: true, pending: false, error: {} });
       }
     );
@@ -159,8 +171,8 @@ class ElectionContainer extends Container<IElectionsContext> {
         parameters.onError(error);
         this.setState({ error, pending: false, uploadSuccess: false });
       },
-      uploadSuccess => {
-        parameters.onSuccess(uploadSuccess, parameters.file);
+      upload => {
+        parameters.onSuccess(upload, parameters.file);
         this.setState({ uploadSuccess: true, pending: false, error: {} });
       }
     );
