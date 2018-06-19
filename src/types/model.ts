@@ -21,13 +21,17 @@ export enum ElectionTypes {
 export enum ElectionStateTypes {
   Bearbeitung = 0,
   Pruefung = 1,
-  Freigegeben = 2
+  Freigegeben = 2,
+  ImGange = 3,
+  Abgeschlossen = 4
 }
 
 export enum ElectionStates {
   Bearbeitung = "Bearbeitung",
   Pruefung = "Prüfung",
-  Freigegeben = "Freigegeben"
+  Freigegeben = "Freigegeben",
+  ImGange = "Im Gange",
+  Abgeschlossen = "Abgeschlossen"
 }
 
 export interface IPartyEntity {
