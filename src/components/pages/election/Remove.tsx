@@ -6,6 +6,7 @@ import React, { Component } from "react";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
 import { noop } from "@/utils";
+import { Redirect } from "react-router";
 
 class ElectionRemove extends Component<{ election: ElectionContainer }> {
   private cancel: Cancel = noop;
@@ -29,15 +30,15 @@ class ElectionRemove extends Component<{ election: ElectionContainer }> {
   }
 
   public render() {
-    const election = pathOr({}, ["state", "election"], this.props.election);
     const pending = pathOr({}, ["state", "pending"], this.props.election);
+    const deleted = pathOr({}, ["state", "deleted"], this.props.election);
 
     if (pending) {
       return "";
     }
 
-    if (isEmpty(election)) {
-      return <div />;
+    if (deleted) {
+      return <Redirect to={this.props.match.url} />;
     }
 
     return (
