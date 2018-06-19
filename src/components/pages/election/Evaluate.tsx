@@ -1,5 +1,18 @@
+import { Button } from "antd";
 import { Cancel } from "fluture";
-import { compose, filter, is, isEmpty, map, pathOr, range, unary } from "ramda";
+import moment from "moment";
+import {
+  concat,
+  compose,
+  filter,
+  is,
+  isEmpty,
+  map,
+  pathOr,
+  range,
+  unary,
+  join
+} from "ramda";
 import React, { Component, Fragment } from "react";
 import { Bar, Doughnut } from "react-chartjs-2";
 
@@ -22,12 +35,49 @@ const options = {
   }
 };
 
+const getRandomColor = () => `#${(~~(Math.random() * (1 << 24))).toString(16)}`;
+
 const listifyResultEntities = compose(
   filter(is(Object)),
   unary(Object.values)
 );
 
-const getRandomColor = () => `#${(~~(Math.random() * (1 << 24))).toString(16)}`;
+const createFilename = ({ client_id, id_election, typ, end_date }) => {
+  const date = moment(end_date).format("X");
+  const name = join("_", [date, id_election, client_id, typ]);
+  const filename = concat(name, ".json");
+
+  return filename;
+};
+
+const objToJsonBlob = data => {
+  const parts = JSON.stringify(data);
+  const type = "application/json;charset=utf-8";
+  const blob = new Blob([parts], { type });
+
+  return blob;
+};
+
+const createDownloadLink = (filename, blob) => {
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+
+  link.setAttribute("href", url);
+  link.setAttribute("download", filename);
+  link.style.visibility = "hidden";
+
+  return link;
+};
+
+const exportAsJson = (evaluation, election) => () => {
+  const filename = createFilename(election);
+  const blob = objToJsonBlob(evaluation);
+  const link = createDownloadLink(filename, blob);
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
 class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
   private cancel: Cancel = noop;
@@ -139,6 +189,9 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
       <Fragment>
         <h2>Ergebnisse der {election.typ}</h2>
         <h3>{election.start_date}</h3>
+        <Button type="primary" onClick={exportAsJson(evaluation, election)}>
+          Ergebnisse exportieren
+        </Button>
         {(type => {
           if (
             type === ElectionTypes.Bundestagswahl ||
