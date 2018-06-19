@@ -1,4 +1,4 @@
-import { any, equals } from "ramda";
+import { any, equals, isEmpty } from "ramda";
 import React, { ComponentType, SFC } from "react";
 import {
   Redirect,
@@ -31,6 +31,15 @@ const ProtectedRoute: SFC<RouteComponentProps<{}> & IProtectedRouteProps> = ({
   ...rest
 }) => {
   const role = authentication.getRole();
+  const referrer = authentication.state.referrer;
+
+  if (!isEmpty(referrer)) {
+    redirectProps = {
+      ...redirectProps,
+      to: referrer
+    };
+  }
+
   const renderRoute = (props: RouteComponentProps<{}>) =>
     any<Role>(equals(role), roles) ? (
       <Component {...rest} {...props} authentication={authentication} />

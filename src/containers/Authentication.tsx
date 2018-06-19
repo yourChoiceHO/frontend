@@ -1,4 +1,4 @@
-import { complement, equals, pathOr } from "ramda";
+import { complement, equals, pathOr, prop } from "ramda";
 
 import Container from "@/containers/Container";
 import api from "@/lib/api";
@@ -13,7 +13,8 @@ class AuthenticationContainer extends Container<IAuthenticationContext> {
     pending: false,
     token: "",
     user: {},
-    id: -1
+    id: -1,
+    referrer: ""
   };
 
   public getRole = (): Role => {
@@ -61,13 +62,22 @@ class AuthenticationContainer extends Container<IAuthenticationContext> {
   };
 
   public logout = () => {
-    this.setState({ pending: true });
+    const referrers = {
+      [Role.Moderator]: "/mitarbeiter/anmelden",
+      [Role.Supervisor]: "/mitarbeiter/anmelden",
+      [Role.Voter]: "/wähler/anmelden",
+      [Role.Unauthorized]: "/wähler/anmelden"
+    };
+
+    const referrer = prop(this.getRole(), referrers);
+
+    this.setState({ pending: true, referrer: "" });
     return api.authentication.logout().fork(
       error => {
         this.setState({ error, pending: false });
       },
       user => {
-        this.setState({ user, error: {}, pending: false });
+        this.setState({ user, error: {}, pending: false, referrer });
         TokenStore.set("");
       }
     );
