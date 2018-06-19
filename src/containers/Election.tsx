@@ -1,3 +1,5 @@
+import { head } from "ramda";
+
 import Container from "@/containers/Container";
 import api from "@/lib/api";
 import { IElectionsContext } from "@/types/context";
@@ -12,59 +14,64 @@ class ElectionContainer extends Container<IElectionsContext> {
     pending: false,
     result: {},
     uploadSuccess: false,
-    created: false
+    created: false,
+    deleted: false
   };
 
+  public requestStart = () =>
+    this.setState({ pending: true, elections: [], election: {}, error: {} });
+
+  public setError = error => this.setState({ error, pending: false });
+
+  public setElection = election =>
+    this.setState({ election, pending: false, updated: false, created: false });
+
+  public updateElection = election =>
+    this.setState({ election, pending: false, updated: true });
+
+  public createElection = election =>
+    this.setState({ election, pending: false, created: true });
+
+  public setElections = elections =>
+    this.setState({
+      elections,
+      election: {},
+      pending: false,
+      created: false,
+      updated: false,
+      deleted: false
+    });
+
+  public deleteElection = deleted =>
+    this.setState({ election: {}, pending: false, deleted });
+
   public getAll = () => {
-    this.setState({ pending: true, elections: [] });
-    return api.election
-      .getAll()
-      .fork(
-        error => this.setState({ error, pending: false }),
-        elections => this.setState({ elections, pending: false, error: {} })
-      );
+    this.requestStart();
+    return api.election.getAll().fork(this.setError, this.setElections);
   };
 
   public get = (id: number) => {
-    this.setState({ pending: true, election: {} });
-    return api.election
-      .get(id)
-      .fork(
-        error => this.setState({ error, pending: false }),
-        election => this.setState({ election, pending: false, error: {} })
-      );
+    this.requestStart();
+    return api.election.get(id).fork(this.setError, this.setElection);
   };
 
   public remove = (id: number) => {
-    this.setState({ pending: true });
-    return api.election
-      .remove(id)
-      .fork(
-        error => this.setState({ error, pending: false }),
-        election => this.setState({ election, pending: false, error: {} })
-      );
+    this.requestStart();
+    return api.election.remove(id).fork(this.setError, this.deleteElection);
   };
 
   public update = (id: number, updates: Partial<IElectionEntity>) => {
-    this.setState({ pending: true, updated: false });
+    this.requestStart();
     return api.election
       .update(id, updates)
-      .fork(
-        error => this.setState({ error, pending: false }),
-        election =>
-          this.setState({ election, pending: false, error: {}, updated: true })
-      );
+      .fork(this.setError, this.updateElection);
   };
 
   public create = (updates: Partial<IElectionEntity>) => {
     this.setState({ pending: true, election: {}, created: false });
     return api.election
       .create(updates)
-      .fork(
-        error => this.setState({ error, pending: false }),
-        election =>
-          this.setState({ election, pending: false, error: {}, created: true })
-      );
+      .fork(this.setError, this.createElection);
   };
 
   public evaluate = (id: number) => {
