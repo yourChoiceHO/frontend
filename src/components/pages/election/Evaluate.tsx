@@ -1,40 +1,12 @@
-import { Radio } from "antd";
-import { RadioChangeEvent } from "antd/lib/radio";
 import { Cancel } from "fluture";
-import { isEmpty, pathOr } from "ramda";
+import { compose, filter, is, isEmpty, map, pathOr, range, unary } from "ramda";
 import React, { Component, Fragment } from "react";
 import { Bar, Doughnut } from "react-chartjs-2";
 
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
+import { ElectionTypes, IElectionEntity, IEvaluation } from "@/types/model";
 import { noop } from "@/utils";
-
-const data = {
-  datasets: [
-    {
-      backgroundColor: [
-        "rgba(255,0,0, 0.4)",
-        "rgba(208,32,144, 0.4)",
-        "rgba(238, 180, 34, 0.4)",
-        "rgba(0, 205, 255, 0.4)",
-        "rgba(255,99,71, 0.4)",
-        "rgba(34, 139, 34, 0.4)"
-      ],
-      borderColor: [
-        "rgba(255,0,0,1)",
-        "rgba(208,32,144, 1)",
-        "rgba(238, 180, 34, 1)",
-        "rgba(0, 205, 255, 1)",
-        "rgba(255,99,71, 1)",
-        "rgba(34, 139, 34, 1)"
-      ],
-      borderWidth: 2,
-      data: [20.5, 26.8, 10.7, 12.6, 9.2, 8.9],
-      label: "Prozentualer Anteil der Stimmen pro Partei"
-    }
-  ],
-  labels: ["SPD", "CDU / CSU", "FDP", "AfD", "Die Linke", "Die Grünen"]
-};
 
 const options = {
   scales: {
@@ -50,14 +22,14 @@ const options = {
   }
 };
 
-const doughnut = <Doughnut data={data} options={options} />;
-const bar = <Bar data={data} options={options} />;
+const listifyResultEntities = compose(
+  filter(is(Object)),
+  unary(Object.values)
+);
+
+const getRandomColor = () => `#${(~~(Math.random() * (1 << 24))).toString(16)}`;
 
 class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
-  public state = {
-    diagram: doughnut
-  };
-
   private cancel: Cancel = noop;
 
   public componentDidMount() {
@@ -70,32 +42,132 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
     this.cancel();
   }
 
-  public handleDiagramChange = (event: RadioChangeEvent) => {
-    this.setState({ diagram: event.target.value });
-  };
+  public renderParties(parties) {
+    console.log({ parties });
+
+    const filtered = listifyResultEntities(parties);
+    const length = filtered.length;
+
+    const partiesData = map(
+      ({ vote_percent }) => parseFloat(vote_percent),
+      filtered
+    );
+
+    const partiesLabel = map(({ name }) => name, filtered);
+
+    const data = {
+      datasets: [
+        {
+          backgroundColor: range(1, length).map(() => getRandomColor()),
+          data: partiesData
+        }
+      ],
+      labels: partiesLabel
+    };
+
+    return <Doughnut key="parties_chart" data={data} options={options} />;
+  }
+
+  public renderCandidates(candidates) {
+    console.log({ candidates });
+
+    const filtered = listifyResultEntities(candidates);
+    const length = filtered.length;
+
+    const candidatesData = map(
+      ({ vote_percent }) => parseFloat(vote_percent),
+      filtered
+    );
+
+    const candidatesLabel = map(
+      ({ first_name, last_name }) => `${last_name}, ${first_name}`,
+      filtered
+    );
+
+    const data = {
+      datasets: [
+        {
+          backgroundColor: range(1, length).map(() => getRandomColor()),
+          data: candidatesData
+        }
+      ],
+      labels: candidatesLabel
+    };
+
+    return <Bar key="candidates_chart" data={data} options={options} />;
+  }
+
+  public renderText(text) {
+    console.log(text);
+    return "";
+  }
+
+  public renderYesNo({ yes, no }) {
+    console.log({ yes, no });
+    return "";
+  }
 
   public render() {
-    const election = pathOr({}, ["state", "election"], this.props.election);
-    const pending = pathOr({}, ["state", "pending"], this.props.election);
+    const state = this.props.election.state;
+
+    const pending = pathOr({}, ["pending"], state);
+    const evaluation = pathOr<IEvaluation>({}, ["evaluation"], state);
+
+    const constituency = pathOr({}, ["constituency", 1], evaluation);
+    const general = pathOr({}, ["general"], evaluation);
+
+    const election = pathOr<IElectionEntity>({}, ["election"], general);
+
+    const parties = pathOr([], ["parties"], constituency);
+    const candidates = pathOr([], ["candidate"], constituency);
+
+    const text = pathOr("", ["text"], general);
+    const yesCount = pathOr(0, ["yes", "vote_number"], general);
+    const yesPercent = pathOr(0, ["yes", "vote_percent"], general);
+    const noCount = pathOr(0, ["no", "vote_number"], general);
+    const noPercent = pathOr(0, ["no", "vote_percent"], general);
 
     if (pending) {
       return "";
     }
 
-    console.log(this.props.election);
-
-    if (isEmpty(election)) {
-      return <div />;
+    if (isEmpty(evaluation)) {
+      return <p>Keine Ergebnisse vorhanden.</p>;
     }
 
     return (
       <Fragment>
-        <div>Wahl Auswertung</div>
-        <Radio.Group onChange={this.handleDiagramChange}>
-          <Radio.Button value={doughnut}> Kuchen-Diagramm </Radio.Button>
-          <Radio.Button value={bar}>Balken-Diagramm</Radio.Button>
-        </Radio.Group>
-        <div>{this.state.diagram}</div>
+        <h2>Ergebnisse der {election.typ}</h2>
+        <h3>{election.start_date}</h3>
+        {(type => {
+          if (
+            type === ElectionTypes.Bundestagswahl ||
+            type === ElectionTypes.Landtagswahl
+          ) {
+            return [
+              this.renderParties(parties),
+              this.renderCandidates(candidates)
+            ];
+          } else if (
+            type === ElectionTypes.Buergermeisterwahl ||
+            type === ElectionTypes.Europawahl ||
+            type === ElectionTypes.LandtagswahlBW
+          ) {
+            return [this.renderCandidates(candidates)];
+          } else if (type === ElectionTypes.LandtagswahlSL) {
+            return [this.renderParties(parties)];
+          } else if (type === ElectionTypes.Referendum) {
+            return [
+              this.renderText(text),
+              this.renderYesNo({
+                no: { count: noCount, percent: noPercent },
+                yes: { count: yesCount, percent: yesPercent }
+              })
+            ];
+          } else {
+            return <div />;
+          }
+        })(election.typ)}
       </Fragment>
     );
   }
