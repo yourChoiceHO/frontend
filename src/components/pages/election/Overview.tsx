@@ -38,10 +38,6 @@ class ElectionOverview extends Component<
       return "";
     }
 
-    if (isEmpty(elections)) {
-      return "Aktuell keine Wahlen verfügbar";
-    }
-
     return (
       <Fragment>
         <Can do="create" on="Election">
@@ -51,11 +47,15 @@ class ElectionOverview extends Component<
             </Link>
           )}
         </Can>
-        <Table
-          rowKey="id_election"
-          dataSource={elections}
-          columns={this.getColumns()}
-        />
+        {isEmpty(elections) ? (
+          "Aktuell keine Wahlen verfügbar"
+        ) : (
+          <Table
+            rowKey="id_election"
+            dataSource={elections}
+            columns={this.getColumns()}
+          />
+        )}
       </Fragment>
     );
   }
