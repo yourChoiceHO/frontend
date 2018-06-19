@@ -104,3 +104,20 @@ export interface IElectionVote {
   second_vote: number;
   valid: boolean;
 }
+
+export interface IEvaluation {
+  general?: {
+    text?: string;
+    yes?: {
+      vote_number: number;
+      vote_percent: number;
+    };
+    no?: {
+      vote_number: number;
+      vote_percent: number;
+    };
+    parties?: IPartyEntity[];
+    candidates?: ICandidateEntity[];
+  };
+  consituency?: ICandidateEntity[];
+}
