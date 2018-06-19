@@ -10,11 +10,7 @@ import Can from "@/components/atoms/Can";
 import AuthenticationContainer from "@/containers/Authentication";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
-import {
-  ElectionStates,
-  ElectionStateTypes,
-  IElectionEntity
-} from "@/types/model";
+import { ElectionStateTypes, IElectionEntity } from "@/types/model";
 import { noop } from "@/utils";
 
 class ElectionOverview extends Component<
@@ -68,7 +64,7 @@ class ElectionOverview extends Component<
 
   private renderActionsRow = (text: string, record: IElectionEntity) => {
     const uri = `${this.props.match.path}/${record.id_election}`;
-    const type = record.typ;
+    const state = record.state;
 
     return (
       <Fragment>
@@ -82,7 +78,7 @@ class ElectionOverview extends Component<
 
         <Can do="edit" on="Election">
           {() =>
-            type !== ElectionStates.ImGange && (
+            state !== ElectionStateTypes.ImGange && (
               <Link to={`${uri}/bearbeiten`}>
                 <Icon type="edit" />
               </Link>
@@ -92,7 +88,7 @@ class ElectionOverview extends Component<
 
         <Can do="delete" on="Election">
           {() =>
-            type !== ElectionStates.ImGange && (
+            state !== ElectionStateTypes.ImGange && (
               <Link to={`${uri}/entfernen`}>
                 <Icon type="delete" />
               </Link>
@@ -102,7 +98,7 @@ class ElectionOverview extends Component<
 
         <Can do="evaluate" on="Election">
           {() =>
-            type === ElectionStates.Abgeschlossen && (
+            state === ElectionStateTypes.Abgeschlossen && (
               <Link to={`${uri}/auswerten`}>
                 <Icon type="area-chart" />
               </Link>
@@ -112,7 +108,7 @@ class ElectionOverview extends Component<
 
         <Can do="vote" on="Election">
           {() =>
-            type === ElectionStates.ImGange && (
+            state === ElectionStateTypes.ImGange && (
               <Link to={`${uri}/wählen`}>
                 <Icon type="form" />
               </Link>
