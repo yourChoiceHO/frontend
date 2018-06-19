@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import Can from "@/components/atoms/Can";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
+import { ElectionStates } from "@/types/model";
 import { noop } from "@/utils";
 
 class ElectionDetail extends Component<{ election: ElectionContainer }> {
@@ -24,6 +25,7 @@ class ElectionDetail extends Component<{ election: ElectionContainer }> {
   public render() {
     const election = pathOr({}, ["state", "election"], this.props.election);
     const pending = pathOr({}, ["state", "pending"], this.props.election);
+    const type = election.typ;
 
     if (pending) {
       return "";
@@ -36,7 +38,7 @@ class ElectionDetail extends Component<{ election: ElectionContainer }> {
     return (
       <Fragment>
         <div style={{ background: "#ECECEC", padding: "30px" }}>
-          <Card title={election.type} bordered={true}>
+          <Card title={election.typ} bordered={true}>
             <p>{election.text}</p>
             <p>Wahl ID: {election.id_election}</p>
             <p>Client ID: {election.client_id}</p>
@@ -47,23 +49,27 @@ class ElectionDetail extends Component<{ election: ElectionContainer }> {
         </div>
         <div>
           <Can do="edit" on="Election">
-            {() => (
-              <Link to={`/wahl/${election.id_election}/bearbeiten`}>
-                <Button icon="edit" type="primary">
-                  Bearbeiten
-                </Button>
-              </Link>
-            )}
+            {() =>
+              type !== ElectionStates.ImGange && (
+                <Link to={`/wahl/${election.id_election}/bearbeiten`}>
+                  <Button icon="edit" type="primary">
+                    Bearbeiten
+                  </Button>
+                </Link>
+              )
+            }
           </Can>
 
           <Can do="delete" on="Election">
-            {() => (
-              <Link to={`/wahl/${election.id_election}/entfernen`}>
-                <Button icon="delete" type="primary">
-                  Löschen
-                </Button>
-              </Link>
-            )}
+            {() =>
+              type !== ElectionStates.ImGange && (
+                <Link to={`/wahl/${election.id_election}/entfernen`}>
+                  <Button icon="delete" type="primary">
+                    Löschen
+                  </Button>
+                </Link>
+              )
+            }
           </Can>
         </div>
       </Fragment>

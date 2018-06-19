@@ -11,9 +11,9 @@ import AuthenticationContainer from "@/containers/Authentication";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
 import {
-  IElectionEntity,
   ElectionStates,
-  ElectionStateTypes
+  ElectionStateTypes,
+  IElectionEntity
 } from "@/types/model";
 import { noop } from "@/utils";
 
@@ -68,6 +68,7 @@ class ElectionOverview extends Component<
 
   private renderActionsRow = (text: string, record: IElectionEntity) => {
     const uri = `${this.props.match.path}/${record.id_election}`;
+    const type = record.typ;
 
     return (
       <Fragment>
@@ -80,35 +81,43 @@ class ElectionOverview extends Component<
         </Can>
 
         <Can do="edit" on="Election">
-          {() => (
-            <Link to={`${uri}/bearbeiten`}>
-              <Icon type="edit" />
-            </Link>
-          )}
+          {() =>
+            type !== ElectionStates.ImGange && (
+              <Link to={`${uri}/bearbeiten`}>
+                <Icon type="edit" />
+              </Link>
+            )
+          }
         </Can>
 
         <Can do="delete" on="Election">
-          {() => (
-            <Link to={`${uri}/entfernen`}>
-              <Icon type="delete" />
-            </Link>
-          )}
+          {() =>
+            type !== ElectionStates.ImGange && (
+              <Link to={`${uri}/entfernen`}>
+                <Icon type="delete" />
+              </Link>
+            )
+          }
         </Can>
 
         <Can do="evaluate" on="Election">
-          {() => (
-            <Link to={`${uri}/auswerten`}>
-              <Icon type="area-chart" />
-            </Link>
-          )}
+          {() =>
+            type === ElectionStates.Abgeschlossen && (
+              <Link to={`${uri}/auswerten`}>
+                <Icon type="area-chart" />
+              </Link>
+            )
+          }
         </Can>
 
         <Can do="vote" on="Election">
-          {() => (
-            <Link to={`${uri}/wählen`}>
-              <Icon type="form" />
-            </Link>
-          )}
+          {() =>
+            type === ElectionStates.ImGange && (
+              <Link to={`${uri}/wählen`}>
+                <Icon type="form" />
+              </Link>
+            )
+          }
         </Can>
       </Fragment>
     );
