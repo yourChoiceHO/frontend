@@ -14,7 +14,7 @@ import {
 
 import locale from "antd/lib/date-picker/locale/de_DE";
 
-import moment from "moment";
+import moment from "@/utils/date";
 
 import connect from "@/containers/connect";
 
@@ -23,19 +23,15 @@ import { ElectionStateTypes, ElectionTypes, Role } from "@/types/model";
 
 import { FormComponentProps } from "antd/lib/form";
 import classNames from "classnames/bind";
-import Moment from "moment";
 import { complement, not, or, reduce, pathOr, isEmpty, isNil } from "ramda";
 import React, { Component } from "react";
 
 import Styles from "@/components/pages/styles/hide.less";
 import ElectionContainer from "@/containers/Election";
-import { IElectionsContext } from "@/types/context";
 
 const cx = classNames.bind(Styles);
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
-const format = "HH:mm";
-// const Role: Role;
 
 const isUnknown = or(isNil, isEmpty);
 const isDefined = complement(isUnknown);

@@ -1,6 +1,5 @@
 import { Button, Card } from "antd";
 import { Cancel } from "fluture";
-import moment from "moment";
 import { isEmpty, pathOr } from "ramda";
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
@@ -10,6 +9,8 @@ import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
 import { ElectionStateTypes } from "@/types/model";
 import { noop } from "@/utils";
+
+import moment from "@/utils/date";
 
 class ElectionDetail extends Component<{ election: ElectionContainer }> {
   private cancel: Cancel = noop;

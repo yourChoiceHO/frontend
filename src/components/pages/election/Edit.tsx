@@ -1,12 +1,13 @@
 import { message } from "antd";
-import moment from "moment";
 import { isEmpty, mapObjIndexed, pathOr } from "ramda";
 import React, { Component, Fragment } from "react";
 
 import ElectionEditForm from "@/components/molecules/ElectionForm";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
+
 import { noop } from "@/utils";
+import moment from "@/utils/date";
 
 class ElectionEdit extends Component {
   public static getDerivedStateFromProps(props, state) {

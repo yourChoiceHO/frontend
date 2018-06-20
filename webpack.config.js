@@ -132,7 +132,7 @@ module.exports = {
     new DotenvPlugin({
       systemvars: true
     }),
-    new ContextReplacementPlugin(/moment[/\\]locale$/, /de|en/),
+    new ContextReplacementPlugin(/moment[/\\]locale$/, /de/),
     new MiniCssExtractPlugin({
       filename: "[name].css",
       chunkFilename: "[name].css"

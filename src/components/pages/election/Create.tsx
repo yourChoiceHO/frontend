@@ -1,11 +1,12 @@
 import { message } from "antd";
-import moment from "moment";
 import React, { Component, Fragment } from "react";
 
 import ElectionCreateForm from "@/components/molecules/ElectionForm";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
 import { ElectionTypes } from "@/types/model";
+
+import moment from "@/utils/date";
 
 class ElectionCreate extends Component {
   public state = {

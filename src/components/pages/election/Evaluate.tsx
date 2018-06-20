@@ -1,6 +1,5 @@
 import { Button } from "antd";
 import { Cancel } from "fluture";
-import moment from "moment";
 import {
   concat,
   compose,
@@ -19,20 +18,26 @@ import { Bar, Doughnut } from "react-chartjs-2";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
 import { ElectionTypes, IElectionEntity, IEvaluation } from "@/types/model";
+
 import { noop } from "@/utils";
+import moment from "@/utils/date";
+
+// const options = {
+//   scales: {
+//     yAxes: [
+//       {
+//         ticks: {
+//           autoSkip: false,
+//           beginAtZero: true,
+//           stepSize: 1
+//         }
+//       }
+//     ]
+//   }
+// };
 
 const options = {
-  scales: {
-    yAxes: [
-      {
-        ticks: {
-          autoSkip: false,
-          beginAtZero: true,
-          stepSize: 1
-        }
-      }
-    ]
-  }
+  // maintainAspectRatio: false
 };
 
 const getRandomColor = () => `#${(~~(Math.random() * (1 << 24))).toString(16)}`;
@@ -93,7 +98,7 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
   }
 
   public renderParties(parties) {
-    console.log({ parties });
+    console.log("parties", { parties });
 
     const filtered = listifyResultEntities(parties);
     const length = filtered.length;
@@ -115,11 +120,19 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
       labels: partiesLabel
     };
 
-    return <Doughnut key="parties_chart" data={data} options={options} />;
+    return (
+      <Doughnut
+        width={100}
+        height={50}
+        key="parties_chart"
+        data={data}
+        options={options}
+      />
+    );
   }
 
   public renderCandidates(candidates) {
-    console.log({ candidates });
+    console.log("candidates", { candidates });
 
     const filtered = listifyResultEntities(candidates);
     const length = filtered.length;
@@ -144,7 +157,15 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
       labels: candidatesLabel
     };
 
-    return <Bar key="candidates_chart" data={data} options={options} />;
+    return (
+      <Bar
+        width={100}
+        height={50}
+        key="candidates_chart"
+        data={data}
+        options={options}
+      />
+    );
   }
 
   public renderText(text) {
@@ -168,8 +189,8 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
 
     const election = pathOr<IElectionEntity>({}, ["election"], general);
 
-    const parties = pathOr([], ["parties"], constituency);
-    const candidates = pathOr([], ["candidate"], constituency);
+    const parties = pathOr([], ["parties"], general);
+    const candidates = pathOr([], ["candidates"], general);
 
     const text = pathOr("", ["text"], general);
     const yesCount = pathOr(0, ["yes", "vote_number"], general);
@@ -184,6 +205,8 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
     if (isEmpty(evaluation)) {
       return <p>Keine Ergebnisse vorhanden.</p>;
     }
+
+    console.log("evaluation", { evaluation });
 
     return (
       <Fragment>
