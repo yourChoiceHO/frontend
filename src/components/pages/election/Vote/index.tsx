@@ -1,73 +1,18 @@
 import { Button, Checkbox, Form, message, Modal } from "antd";
+import { FormComponentProps } from "antd/lib/form";
 import { Cancel } from "fluture";
-import { isEmpty, isNil, pathOr } from "ramda";
+import { pathOr } from "ramda";
 import React, { Component, forwardRef, Fragment } from "react";
 
-import ElectionContainer from "@/containers/Election";
-import { ElectionTypes, IElectionEntity } from "@/types/model";
-
+import Vote from "@/components/atoms/Vote";
 import VoterHashForm from "@/components/molecules/VoterHashForm";
-import Buergermeisterwahl from "@/components/pages/election/Vote/Buergermeisterwahl";
-import Bundestagswahl from "@/components/pages/election/Vote/Bundestagswahl";
-import Europawahl from "@/components/pages/election/Vote/Europawahl";
-import Kommunalwahl from "@/components/pages/election/Vote/Kommunalwahl";
-import Landtagswahl from "@/components/pages/election/Vote/Landtagswahl";
-import LandtagswahlBW from "@/components/pages/election/Vote/LandtagswahlBW";
-import LandtagswahlSL from "@/components/pages/election/Vote/LandtagswahlSL";
-import Referendum from "@/components/pages/election/Vote/Referendum";
-import { FormComponentProps } from "antd/lib/form";
-
 import connect from "@/containers/connect";
-import { isUnknown, noop } from "@/utils";
-
-const Vote = forwardRef(({ election }: { election: IElectionEntity }, ref) => {
-  let VoteComponent;
-
-  switch (election.typ) {
-    case ElectionTypes.Buergermeisterwahl:
-      VoteComponent = Buergermeisterwahl;
-      break;
-
-    case ElectionTypes.Bundestagswahl:
-      VoteComponent = Bundestagswahl;
-      break;
-
-    case ElectionTypes.Europawahl:
-      VoteComponent = Europawahl;
-      break;
-
-    case ElectionTypes.Kommunalwahl:
-      VoteComponent = Kommunalwahl;
-      break;
-
-    case ElectionTypes.Landtagswahl:
-      VoteComponent = Landtagswahl;
-      break;
-
-    case ElectionTypes.LandtagswahlBW:
-      VoteComponent = LandtagswahlBW;
-      break;
-
-    case ElectionTypes.LandtagswahlSL:
-      VoteComponent = LandtagswahlSL;
-      break;
-
-    case ElectionTypes.Referendum:
-      VoteComponent = Referendum;
-      break;
-
-    default:
-      return null;
-  }
-
-  return <VoteComponent election={election} ref={ref} />;
-});
+import ElectionContainer from "@/containers/Election";
+import { isDefined, isUnknown, noop } from "@/utils";
 
 const HashForm = forwardRef(({ onSubmit }, ref) => {
   return <VoterHashForm onSubmit={onSubmit} ref={ref} />;
 });
-
-const FormItem = Form.Item;
 
 class ElectionVote extends Component<
   { election: ElectionContainer } & FormComponentProps
@@ -99,7 +44,7 @@ class ElectionVote extends Component<
       message.error("Ungültige Benutzerkennung!");
       this.hashFormRef.current.resetFields();
       this.hashFormRef.current.validateFields();
-    } else if (!pending && !isEmpty(result)) {
+    } else if (!pending && isDefined(result)) {
       message.success("Stimme wurde erfolgreich abgegeben!");
       this.props.election.reset();
       this.props.history.replace(this.props.match.url);
@@ -111,18 +56,18 @@ class ElectionVote extends Component<
   }
 
   public onVote({ invalid, ...payload }) {
-    let defaultPayload = {
-      first_vote: true,
-      second_vote: true,
-      voter_id: null,
-      candidate_id: null,
-      party_id: null,
-      referendum: null,
-      valid: false
-    };
-
     const valid = !invalid;
     const electionId = this.props.computedMatch.params.id;
+
+    const defaultPayload = {
+      candidate_id: null,
+      first_vote: true,
+      party_id: null,
+      referendum: null,
+      second_vote: true,
+      valid: false,
+      voter_id: null
+    };
 
     this.props.election.vote(electionId, {
       ...defaultPayload,
@@ -182,7 +127,7 @@ class ElectionVote extends Component<
     const election = pathOr({}, ["state", "election"], this.props.election);
     const pending = pathOr(false, ["state", "pending"], this.props.election);
 
-    if (isEmpty(election)) {
+    if (isUnknown(election)) {
       return null;
     }
 
@@ -196,11 +141,11 @@ class ElectionVote extends Component<
           <Button type="primary" htmlType="submit">
             Abstimmen
           </Button>
-          <FormItem>
+          <Form.Item>
             {getFieldDecorator("invalid", { initialValue: false })(
               <Checkbox>Stimme ungültig machen</Checkbox>
             )}
-          </FormItem>
+          </Form.Item>
         </Form>
 
         <Modal
