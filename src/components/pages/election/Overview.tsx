@@ -24,20 +24,20 @@ class ElectionOverview extends Component<
   private cancel: Cancel = noop;
 
   public componentDidMount() {
-    this.cancel = this.props.election.getAll();
+    this.fetchElections();
   }
 
   public componentWillUnmount() {
     this.cancel();
   }
 
+  public fetchElections = () => {
+    this.cancel = this.props.election.getAll();
+  };
+
   public render() {
     const elections = pathOr({}, ["state", "elections"], this.props.election);
     const pending = pathOr({}, ["state", "pending"], this.props.election);
-
-    if (pending) {
-      return "";
-    }
 
     return (
       <Fragment>
@@ -48,7 +48,14 @@ class ElectionOverview extends Component<
             </Link>
           )}
         </Can>
-        {isEmpty(elections) ? (
+
+        <Button type="primary" onClick={this.fetchElections} loading={pending}>
+          Aktualisieren
+        </Button>
+
+        {pending ? (
+          "Laden..."
+        ) : isEmpty(elections) ? (
           "Aktuell keine Wahlen verfügbar"
         ) : (
           <Table
