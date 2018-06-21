@@ -13,8 +13,14 @@ class ElectionContainer extends Container<IElectionsContext> {
     result: {},
     uploadSuccess: false,
     created: false,
-    deleted: false
+    deleted: false,
+    votersAdded: false,
+    candidatesAdded: false,
+    partiesAdded: false,
+    referendumsAdded: false
   };
+
+  public resetError = () => this.setState({ error: {} });
 
   public requestStart = () =>
     this.setState({ pending: true, elections: [], election: {}, error: {} });
@@ -52,6 +58,14 @@ class ElectionContainer extends Container<IElectionsContext> {
       updated: false,
       deleted: false
     });
+
+  public abortElection = () => {
+    if (this.state.created) {
+      api.election
+        .remove(this.state.election.id)
+        .fork(this.setError, this.deleteElection);
+    }
+  };
 
   public deleteElection = deleted =>
     this.setState({ election: {}, pending: false, deleted });
@@ -112,11 +126,21 @@ class ElectionContainer extends Container<IElectionsContext> {
       error => {
         console.error(error);
         parameters.onError(new Error(error));
-        this.setState({ error, pending: false, uploadSuccess: false });
+        this.setState({
+          error,
+          pending: false,
+          uploadSuccess: false,
+          votersAdded: false
+        });
       },
       upload => {
         parameters.onSuccess(upload, parameters.file);
-        this.setState({ uploadSuccess: true, pending: false, error: {} });
+        this.setState({
+          votersAdded: true,
+          uploadSuccess: true,
+          pending: false,
+          error: {}
+        });
       }
     );
 
@@ -126,7 +150,11 @@ class ElectionContainer extends Container<IElectionsContext> {
   };
 
   public addCandidates = (id: number) => (parameters: object) => {
-    this.setState({ pending: true, uploadSuccess: false });
+    this.setState({
+      pending: true,
+      uploadSuccess: false,
+      candidatesAdded: false
+    });
 
     const cancel = api.election.addCandidates(id, parameters).fork(
       error => {
@@ -135,7 +163,12 @@ class ElectionContainer extends Container<IElectionsContext> {
       },
       upload => {
         parameters.onSuccess(upload, parameters.file);
-        this.setState({ uploadSuccess: true, pending: false, error: {} });
+        this.setState({
+          candidatesAdded: true,
+          uploadSuccess: true,
+          pending: false,
+          error: {}
+        });
       }
     );
 
@@ -145,7 +178,7 @@ class ElectionContainer extends Container<IElectionsContext> {
   };
 
   public addParties = (id: number) => (parameters: object) => {
-    this.setState({ pending: true, uploadSuccess: false });
+    this.setState({ pending: true, uploadSuccess: false, partiesAdded: false });
 
     const cancel = api.election.addParties(id, parameters).fork(
       error => {
@@ -154,7 +187,12 @@ class ElectionContainer extends Container<IElectionsContext> {
       },
       upload => {
         parameters.onSuccess(upload, parameters.file);
-        this.setState({ uploadSuccess: true, pending: false, error: {} });
+        this.setState({
+          partiesAdded: true,
+          uploadSuccess: true,
+          pending: false,
+          error: {}
+        });
       }
     );
 
@@ -164,7 +202,11 @@ class ElectionContainer extends Container<IElectionsContext> {
   };
 
   public addReferendums = (id: number) => (parameters: object) => {
-    this.setState({ pending: true, uploadSuccess: false });
+    this.setState({
+      pending: true,
+      uploadSuccess: false,
+      referendumsAdded: false
+    });
 
     const cancel = api.election.addReferendums(id, parameters).fork(
       error => {
@@ -173,7 +215,12 @@ class ElectionContainer extends Container<IElectionsContext> {
       },
       upload => {
         parameters.onSuccess(upload, parameters.file);
-        this.setState({ uploadSuccess: true, pending: false, error: {} });
+        this.setState({
+          referendumsAdded: true,
+          uploadSuccess: true,
+          pending: false,
+          error: {}
+        });
       }
     );
 

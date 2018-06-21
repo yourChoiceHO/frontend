@@ -1,11 +1,12 @@
 import { Button, Checkbox, Form, message, Modal } from "antd";
 import { Cancel } from "fluture";
-import { isEmpty, pathOr } from "ramda";
+import { isEmpty, isNil, pathOr } from "ramda";
 import React, { Component, forwardRef, Fragment } from "react";
 
 import ElectionContainer from "@/containers/Election";
 import { ElectionTypes, IElectionEntity } from "@/types/model";
 
+import VoterHashForm from "@/components/molecules/VoterHashForm";
 import Buergermeisterwahl from "@/components/pages/election/Vote/Buergermeisterwahl";
 import Bundestagswahl from "@/components/pages/election/Vote/Bundestagswahl";
 import Europawahl from "@/components/pages/election/Vote/Europawahl";
@@ -17,9 +18,9 @@ import Referendum from "@/components/pages/election/Vote/Referendum";
 import { FormComponentProps } from "antd/lib/form";
 
 import connect from "@/containers/connect";
-import { noop } from "@/utils";
+import { isUnknown, noop } from "@/utils";
 
-const Vote = forwardRef(({ election }, ref) => {
+const Vote = forwardRef(({ election }: { election: IElectionEntity }, ref) => {
   let VoteComponent;
 
   switch (election.typ) {
@@ -62,25 +63,45 @@ const Vote = forwardRef(({ election }, ref) => {
   return <VoteComponent election={election} ref={ref} />;
 });
 
+const HashForm = forwardRef(({ onSubmit }, ref) => {
+  return <VoterHashForm onSubmit={onSubmit} ref={ref} />;
+});
+
 const FormItem = Form.Item;
 
 class ElectionVote extends Component<
   { election: ElectionContainer } & FormComponentProps
 > {
+  public state = {
+    isVisible: false
+  };
+
   private formRef;
+  private hashFormRef;
   private cancel: Cancel = noop;
 
   public componentDidMount() {
     this.cancel = this.props.election.get(this.props.computedMatch.params.id);
     this.formRef = React.createRef();
+    this.hashFormRef = React.createRef();
   }
 
   public componentDidUpdate() {
     const result = pathOr({}, ["state", "result"], this.props.election);
     const pending = pathOr(false, ["state", "pending"], this.props.election);
+    const status = pathOr(
+      -1,
+      ["state", "error", "response", "status"],
+      this.props.election
+    );
 
-    if (!pending && !isEmpty(result)) {
+    if (!pending && status === 403) {
+      message.error("Ungültige Benutzerkennung!");
+      this.hashFormRef.current.resetFields();
+      this.hashFormRef.current.validateFields();
+    } else if (!pending && !isEmpty(result)) {
       message.success("Stimme wurde erfolgreich abgegeben!");
+      this.props.election.reset();
       this.props.history.replace(this.props.match.url);
     }
   }
@@ -89,8 +110,8 @@ class ElectionVote extends Component<
     this.cancel();
   }
 
-  public onVote({ error, values: { invalid, ...fields } }) {
-    let payload = {
+  public onVote({ invalid, ...payload }) {
+    let defaultPayload = {
       first_vote: true,
       second_vote: true,
       voter_id: null,
@@ -101,42 +122,65 @@ class ElectionVote extends Component<
     };
 
     const valid = !invalid;
+    const electionId = this.props.computedMatch.params.id;
 
-    if (isEmpty(error)) {
-      this.props.election.vote(this.props.computedMatch.params.id, {
-        ...payload,
-        valid,
-        voter_id: this.props.authentication.getId(),
-        ...fields
-      });
-    } else {
-      console.log(error);
-    }
+    this.props.election.vote(electionId, {
+      ...defaultPayload,
+      ...payload,
+      valid,
+      voter_id: this.props.authentication.getId()
+    });
   }
 
   public onSubmit = event => {
     event.preventDefault();
+    this.handleOnOk();
+  };
 
-    this.showWarning()
-      .then(() => {
-        this.formRef.current.validateFields((baseErrors, baseValues) =>
-          this.props.form.validateFields((errors, values) =>
-            this.onVote({
-              error: { ...baseErrors, ...errors },
-              values: { ...baseValues, ...values }
-            })
-          )
-        );
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  public handleOnOk = () => {
+    this.props.election.resetError();
+
+    this.formRef.current.validateFields((baseFormErrors, baseFormValues) =>
+      this.props.form.validateFields(
+        (electionFormErrors, electionFormValues) => {
+          if (isUnknown(baseFormErrors) && isUnknown(electionFormErrors)) {
+            this.setState(
+              () => ({
+                isVisible: true
+              }),
+              () => {
+                setTimeout(() => {
+                  this.hashFormRef.current.validateFields(
+                    (hashFormErrors, hashFormValues) => {
+                      if (isUnknown(hashFormErrors)) {
+                        const payload = {
+                          ...baseFormValues,
+                          ...electionFormValues,
+                          ...hashFormValues
+                        };
+
+                        this.onVote(payload);
+                      }
+                    }
+                  );
+                }, 0);
+              }
+            );
+          }
+        }
+      )
+    );
+  };
+
+  public handleOnCancel = () => {
+    this.setState({ isVisible: false });
   };
 
   public render() {
     const { getFieldDecorator } = this.props.form;
 
     const election = pathOr({}, ["state", "election"], this.props.election);
+    const pending = pathOr(false, ["state", "pending"], this.props.election);
 
     if (isEmpty(election)) {
       return null;
@@ -147,6 +191,7 @@ class ElectionVote extends Component<
         <h2>{election.typ}</h2>
         <h3>{election.text}</h3>
         <Vote ref={this.formRef} election={election} onSubmit={this.onVote} />
+
         <Form onSubmit={this.onSubmit}>
           <Button type="primary" htmlType="submit">
             Abstimmen
@@ -157,27 +202,24 @@ class ElectionVote extends Component<
             )}
           </FormItem>
         </Form>
+
+        <Modal
+          confirmLoading={pending}
+          title="Wahl bestätigen"
+          visible={this.state.isVisible}
+          onOk={this.handleOnOk}
+          onCancel={this.handleOnCancel}
+          cancelText="Nein"
+          okText="Ja"
+        >
+          <p>
+            Bitte bestätigen Sie die Abgabe Ihrer Stimme. Hierzu wird Ihre
+            Benutzerkennung benötigt
+          </p>
+          <HashForm ref={this.hashFormRef} />
+        </Modal>
       </Fragment>
     );
-  }
-
-  private showWarning() {
-    return new Promise((resolve, reject) => {
-      const modal = Modal.confirm({
-        cancelText: "Nein",
-        content: "Bitte bestätigen Sie die Abgabe Ihrer Stimme",
-        okText: "Ja",
-        onCancel: () => {
-          reject();
-          return modal.destroy();
-        },
-        onOk: () => {
-          resolve();
-          return modal.destroy();
-        },
-        title: "Wahl bestätigen"
-      });
-    });
   }
 }
 
