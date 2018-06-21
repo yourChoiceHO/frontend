@@ -41,8 +41,8 @@ class Referendum extends Component<IVoteProps, {}> {
         <Row>
           {getFieldDecorator("referendum")(
             <Radio.Group>
-              <Radio value={true}>Ja</Radio>
-              <Radio value={false}>Nein</Radio>
+              <Radio value={"yes"}>Ja</Radio>
+              <Radio value={"no"}>Nein</Radio>
             </Radio.Group>
           )}
         </Row>
