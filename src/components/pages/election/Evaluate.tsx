@@ -1,17 +1,6 @@
 import { Button } from "antd";
 import { Cancel } from "fluture";
-import {
-  concat,
-  compose,
-  filter,
-  is,
-  isEmpty,
-  map,
-  pathOr,
-  range,
-  unary,
-  join
-} from "ramda";
+import { concat, isEmpty, join, pathOr, pluck, prop } from "ramda";
 import React, { Component, Fragment } from "react";
 import { Bar, Doughnut } from "react-chartjs-2";
 
@@ -19,33 +8,10 @@ import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
 import { ElectionTypes, IElectionEntity, IEvaluation } from "@/types/model";
 
-import { noop } from "@/utils";
+import { getRandomColor, noop } from "@/utils";
 import moment from "@/utils/date";
 
-// const options = {
-//   scales: {
-//     yAxes: [
-//       {
-//         ticks: {
-//           autoSkip: false,
-//           beginAtZero: true,
-//           stepSize: 1
-//         }
-//       }
-//     ]
-//   }
-// };
-
-const options = {
-  // maintainAspectRatio: false
-};
-
-const getRandomColor = () => `#${(~~(Math.random() * (1 << 24))).toString(16)}`;
-
-const listifyResultEntities = compose(
-  filter(is(Object)),
-  unary(Object.values)
-);
+const options = {};
 
 const createFilename = ({ client_id, id_election, typ, end_date }) => {
   const date = moment(end_date).format("X");
@@ -56,7 +22,12 @@ const createFilename = ({ client_id, id_election, typ, end_date }) => {
 };
 
 const objToJsonBlob = data => {
-  const parts = JSON.stringify(data);
+  const parts = JSON.stringify(
+    data,
+    null,
+    process.env.DEBUG === "yes" ? "\t" : ""
+  );
+
   const type = "application/json;charset=utf-8";
   const blob = new Blob([parts], { type });
 
@@ -88,9 +59,8 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
   private cancel: Cancel = noop;
 
   public componentDidMount() {
-    this.cancel = this.props.election.evaluate(
-      this.props.computedMatch.params.id
-    );
+    const id = this.props.computedMatch.params.id;
+    this.cancel = this.props.election.evaluate(id);
   }
 
   public componentWillUnmount() {
@@ -98,26 +68,13 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
   }
 
   public renderParties(parties) {
-    console.log("parties", { parties });
+    const data = pluck<string, number>("vote_percent", parties);
+    const labels = pluck<string, string>("name", parties);
+    const backgroundColor = data.map(() => getRandomColor());
 
-    const filtered = listifyResultEntities(parties);
-    const length = filtered.length;
-
-    const partiesData = map(
-      ({ vote_percent }) => parseFloat(vote_percent),
-      filtered
-    );
-
-    const partiesLabel = map(({ name }) => name, filtered);
-
-    const data = {
-      datasets: [
-        {
-          backgroundColor: range(1, length).map(() => getRandomColor()),
-          data: partiesData
-        }
-      ],
-      labels: partiesLabel
+    const chartData = {
+      datasets: [{ backgroundColor, data }],
+      labels
     };
 
     return (
@@ -125,36 +82,20 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
         width={100}
         height={50}
         key="parties_chart"
-        data={data}
+        data={chartData}
         options={options}
       />
     );
   }
 
   public renderCandidates(candidates) {
-    console.log("candidates", { candidates });
+    const data = pluck<string, number>("vote_percent", candidates);
+    const labels = pluck<string, string>("name", candidates);
+    const backgroundColor = data.map(() => getRandomColor());
 
-    const filtered = listifyResultEntities(candidates);
-    const length = filtered.length;
-
-    const candidatesData = map(
-      ({ vote_percent }) => parseFloat(vote_percent),
-      filtered
-    );
-
-    const candidatesLabel = map(
-      ({ first_name, last_name }) => `${last_name}, ${first_name}`,
-      filtered
-    );
-
-    const data = {
-      datasets: [
-        {
-          backgroundColor: range(1, length).map(() => getRandomColor()),
-          data: candidatesData
-        }
-      ],
-      labels: candidatesLabel
+    const chartData = {
+      datasets: [{ backgroundColor, data }],
+      labels
     };
 
     return (
@@ -162,20 +103,35 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
         width={100}
         height={50}
         key="candidates_chart"
-        data={data}
+        data={chartData}
         options={options}
       />
     );
   }
 
   public renderText(text) {
-    console.log(text);
-    return "";
+    return <h3 key="question">{text}</h3>;
   }
 
   public renderYesNo({ yes, no }) {
-    console.log({ yes, no });
-    return "";
+    const data = [prop("percent", yes), prop("percent", no)];
+    const labels = ["Ja", "Nein"];
+    const backgroundColor = data.map(() => getRandomColor());
+
+    const chartData = {
+      datasets: [{ backgroundColor, data }],
+      labels
+    };
+
+    return (
+      <Doughnut
+        width={100}
+        height={50}
+        key="yes_no_chart"
+        data={chartData}
+        options={options}
+      />
+    );
   }
 
   public render() {
@@ -205,8 +161,6 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
     if (isEmpty(evaluation)) {
       return <p>Keine Ergebnisse vorhanden.</p>;
     }
-
-    console.log("evaluation", { evaluation });
 
     return (
       <Fragment>
