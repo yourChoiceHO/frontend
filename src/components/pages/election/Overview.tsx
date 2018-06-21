@@ -1,7 +1,7 @@
 import { Button, Icon, Table } from "antd";
 import { ColumnProps } from "antd/lib/table";
 import { Cancel } from "fluture";
-import { isEmpty, pathOr } from "ramda";
+import { equals, find, isEmpty, pathOr, values } from "ramda";
 import React, { Component, Fragment } from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
 
@@ -9,7 +9,11 @@ import Can from "@/components/atoms/Can";
 import AuthenticationContainer from "@/containers/Authentication";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
-import { ElectionStateTypes, IElectionEntity } from "@/types/model";
+import {
+  ElectionStates,
+  ElectionStateTypes,
+  IElectionEntity
+} from "@/types/model";
 
 import { noop } from "@/utils";
 import moment from "@/utils/date";
@@ -57,8 +61,9 @@ class ElectionOverview extends Component<
     );
   }
 
-  private renderElectionState = (typ: number, record: IElectionEntity) =>
-    ElectionStateTypes[typ];
+  private renderElectionState = (typ: number, record: IElectionEntity) => {
+    return ElectionStates[typ];
+  };
 
   private renderDateRow = (text: string, record: IElectionEntity) =>
     moment(text).format("MMMM Do YYYY, h:mm:ss a");

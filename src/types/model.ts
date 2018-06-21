@@ -26,13 +26,13 @@ export enum ElectionStateTypes {
   Abgeschlossen = 4
 }
 
-export enum ElectionStates {
-  Bearbeitung = "Bearbeitung",
-  Pruefung = "Prüfung",
-  Freigegeben = "Freigegeben",
-  ImGange = "Im Gange",
-  Abgeschlossen = "Abgeschlossen"
-}
+export const ElectionStates = {
+  [ElectionStateTypes.Bearbeitung]: "Bearbeitung",
+  [ElectionStateTypes.Pruefung]: "Prüfung",
+  [ElectionStateTypes.Freigegeben]: "Freigegeben",
+  [ElectionStateTypes.ImGange]: "Im Gange",
+  [ElectionStateTypes.Abgeschlossen]: "Abgeschlossen"
+};
 
 export interface IPartyEntity {
   consituency: number;
