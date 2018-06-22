@@ -17,13 +17,29 @@ class ElectionContainer extends Container<IElectionsContext> {
     votersAdded: false,
     candidatesAdded: false,
     partiesAdded: false,
-    referendumsAdded: false
+    referendumsAdded: false,
+    metadata: {}
+  };
+
+  public getByConstituencies = id => {
+    this.setState({ pending: true, metadata: {}, error: {} });
+    return api.election
+      .byConstituency(id)
+      .fork(this.setError, this.setMetadata);
   };
 
   public resetError = () => this.setState({ error: {} });
 
   public requestStart = () =>
-    this.setState({ pending: true, elections: [], election: {}, error: {} });
+    this.setState({
+      pending: true,
+      elections: [],
+      election: {},
+      error: {},
+      metadata: {}
+    });
+
+  public setMetadata = metadata => this.setState({ metadata, pending: false });
 
   public setError = error => this.setState({ error, pending: false });
 
@@ -46,7 +62,8 @@ class ElectionContainer extends Container<IElectionsContext> {
       result: {},
       uploadSuccess: false,
       created: false,
-      deleted: false
+      deleted: false,
+      metadata: {}
     });
 
   public setElections = elections =>
