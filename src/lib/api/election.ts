@@ -55,22 +55,29 @@ export function vote(id: number, electionVote: IElectionVote) {
   });
 }
 
-export function addVoters(id: number, parameters) {
-  const payload = new FormData();
+export function byConstituency(id: number) {
   const token = TokenStore.get();
-
-  payload.append("upload", parameters.file);
-
-  return http.post<IElectionEntity[]>(`/election/${id}/addVoters`, payload, {
+  return http.get(`/election/${id}/constituency`, {
     params: { token }
   });
 }
 
-export function addCandidates(id: number, parameters) {
+export const addVoters = id => file => {
   const payload = new FormData();
   const token = TokenStore.get();
 
-  payload.append("upload", parameters.file);
+  payload.append("upload", file);
+
+  return http.post<IElectionEntity[]>(`/election/${id}/addVoters`, payload, {
+    params: { token }
+  });
+};
+
+export const addCandidates = id => file => {
+  const payload = new FormData();
+  const token = TokenStore.get();
+
+  payload.append("upload", file);
 
   return http.post<ICandidateEntity[]>(
     `/election/${id}/addCandidates`,
@@ -79,24 +86,24 @@ export function addCandidates(id: number, parameters) {
       params: { token }
     }
   );
-}
+};
 
-export function addParties(id: number, parameters) {
+export const addParties = id => file => {
   const payload = new FormData();
   const token = TokenStore.get();
 
-  payload.append("upload", parameters.file);
+  payload.append("upload", file);
 
   return http.post<IPartyEntity[]>(`/election/${id}/addParties`, payload, {
     params: { token }
   });
-}
+};
 
-export function addReferendums(id: number, parameters) {
+export const addReferendums = id => file => {
   const payload = new FormData();
   const token = TokenStore.get();
 
-  payload.append("upload", parameters.file);
+  payload.append("upload", file);
 
   return http.post<IReferendumEntity[]>(
     `/election/${id}/addReferendums`,
@@ -105,4 +112,32 @@ export function addReferendums(id: number, parameters) {
       params: { token }
     }
   );
+};
+
+export function removeVoters(id: number, cid: number) {
+  const token = TokenStore.get();
+  return http.del(`/election/${id}/removeVoters/${cid}`, {
+    params: { token }
+  });
+}
+
+export function removeCandidates(id: number, cid: number) {
+  const token = TokenStore.get();
+  return http.del(`/election/${id}/removeCandidates/${cid}`, {
+    params: { token }
+  });
+}
+
+export function removeParties(id: number, cid: number) {
+  const token = TokenStore.get();
+  return http.del(`/election/${id}/removeParties/${cid}`, {
+    params: { token }
+  });
+}
+
+export function removeReferendums(id: number, cid: number) {
+  const token = TokenStore.get();
+  return http.del(`/election/${id}/removeReferendums/${cid}`, {
+    params: { token }
+  });
 }
