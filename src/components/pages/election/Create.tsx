@@ -1,25 +1,34 @@
-import { message } from "antd";
 import React, { Component, Fragment } from "react";
 
 import ElectionCreateForm from "@/components/molecules/ElectionForm";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
+import api from "@/lib/api";
 import { ElectionTypes } from "@/types/model";
-
 import moment from "@/utils/date";
+
+const getInitialStartDate = () => moment().set({ h: 8, m: 0, s: 0 });
+const getInitialEndDate = () =>
+  moment()
+    .set({ h: 18, m: 0, s: 0 })
+    .add(14, "d");
 
 class ElectionCreate extends Component {
   public state = {
     fields: {
       candidates: { value: null },
-      end_date: { value: moment() },
+      end_date: { value: getInitialEndDate() },
       parties: { value: null },
-      start_date: { value: moment() },
+      start_date: { value: getInitialStartDate() },
       text: { value: "" },
       topic: { value: null },
       typ: { value: ElectionTypes.Bundestagswahl },
       voters: { value: null }
     }
+  };
+
+  public onSubmit = values => {
+    return api.election.create(values);
   };
 
   public onChange = changedFields => {
@@ -28,24 +37,15 @@ class ElectionCreate extends Component {
     }));
   };
 
-  public onNext = () => {
-    message.success("Wahl wurde erfolgreich angelegt");
-  };
-
-  public onSave = () => {
-    message.success("Wahl wurde erfolgreich erstellt");
-    this.props.history.replace(this.props.match.url);
-  };
-
   public render() {
     return (
       <Fragment>
         <h2>Wahl erstellen</h2>
         <ElectionCreateForm
-          {...this.state.fields}
+          fields={this.state.fields}
+          edit={false}
+          onSubmit={this.onSubmit}
           onChange={this.onChange}
-          onNext={this.onNext}
-          onSave={this.onSave}
         />
       </Fragment>
     );

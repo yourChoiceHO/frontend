@@ -1,23 +1,31 @@
-import { message } from "antd";
+import Future from "fluture";
 import { isEmpty, mapObjIndexed, pathOr } from "ramda";
 import React, { Component, Fragment } from "react";
 
 import ElectionEditForm from "@/components/molecules/ElectionForm";
+import CandidateContainer from "@/containers/Candidate";
 import connect from "@/containers/connect";
 import ElectionContainer from "@/containers/Election";
-
+import PartyContainer from "@/containers/Party";
+import ReferendumContainer from "@/containers/Referendum";
+import api from "@/lib/api";
 import { noop } from "@/utils";
 import moment from "@/utils/date";
 
-class ElectionEdit extends Component {
+class ElectionEdit extends Component<{
+  candidate: CandidateContainer;
+  election: ElectionContainer;
+  party: PartyContainer;
+  referendum: ReferendumContainer;
+}> {
   public static getDerivedStateFromProps(props, state) {
-    const election = pathOr({}, ["state", "election"], props.election);
+    const election = state.election;
     const id = pathOr(Infinity, ["id_election"], election);
 
     if (!isEmpty(election) && state.previousId !== id) {
       return {
         fields: mapObjIndexed((field, name) => {
-          let value = props.election.state.election[name];
+          let value = election[name];
 
           if (name === "start_date" || name === "end_date") {
             value = moment(value);
@@ -46,21 +54,38 @@ class ElectionEdit extends Component {
       typ: { value: -1 },
       voters: { value: null }
     },
-    previousId: Infinity
+    previousId: Infinity,
+    pending: false,
+    election: {},
+    constituencies: {}
   };
 
   private cancel = noop;
 
+  public onSubmit = values => {
+    const id = parseInt(this.props.computedMatch.params.id, 10);
+    return api.election.update(id, values);
+  };
+
   public componentDidMount() {
-    this.fetchElection();
+    this.fetchData();
+  }
+
+  public fetchData() {
+    const id = parseInt(this.props.computedMatch.params.id, 10);
+    const electionTask = api.election.get(id);
+    const constituenciesTask = api.election.byConstituency(id);
+
+    this.setState({ pending: true });
+    this.cancel = Future.both(electionTask, constituenciesTask).fork(
+      console.error,
+      ([election, constituencies]) =>
+        this.setState({ election, constituencies, pending: false })
+    );
   }
 
   public componentWillUnmount() {
     this.cancel();
-  }
-
-  public fetchElection() {
-    this.cancel = this.props.election.get(this.props.computedMatch.params.id);
   }
 
   public onChange = changedFields => {
@@ -69,15 +94,9 @@ class ElectionEdit extends Component {
     }));
   };
 
-  public onSave = () => {
-    message.success("Wahl wurde erfolgreich bearbeitet");
-    this.fetchElection();
-  };
-
   public render() {
+    const { constituencies, election, pending } = this.state;
     const id = parseInt(this.props.computedMatch.params.id, 10);
-    const election = pathOr({}, ["state", "election"], this.props.election);
-    const pending = pathOr({}, ["state", "pending"], this.props.election);
 
     if (pending) {
       return "";
@@ -91,10 +110,12 @@ class ElectionEdit extends Component {
       <Fragment>
         <h2>Wahl bearbeiten</h2>
         <ElectionEditForm
+          fields={this.state.fields}
+          constituencies={constituencies}
           id={id}
-          {...this.state.fields}
+          edit={true}
+          onSubmit={this.onSubmit}
           onChange={this.onChange}
-          onSave={this.onSave}
         />
       </Fragment>
     );
@@ -102,5 +123,8 @@ class ElectionEdit extends Component {
 }
 
 export default connect({
-  election: ElectionContainer
+  candidate: CandidateContainer,
+  election: ElectionContainer,
+  party: PartyContainer,
+  referendum: ReferendumContainer
 })(ElectionEdit);
