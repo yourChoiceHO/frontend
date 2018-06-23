@@ -91,7 +91,8 @@ class ElectionOverview extends Component<
 
         <Can do="edit" on="Election">
           {() =>
-            state !== ElectionStateTypes.ImGange && (
+            state !== ElectionStateTypes.ImGange &&
+            state !== ElectionStateTypes.Abgeschlossen && (
               <Link to={`${uri}/bearbeiten`}>
                 <Icon type="edit" />
               </Link>
@@ -101,7 +102,8 @@ class ElectionOverview extends Component<
 
         <Can do="delete" on="Election">
           {() =>
-            state !== ElectionStateTypes.ImGange && (
+            state !== ElectionStateTypes.ImGange &&
+            state !== ElectionStateTypes.Abgeschlossen && (
               <Link to={`${uri}/entfernen`}>
                 <Icon type="delete" />
               </Link>
