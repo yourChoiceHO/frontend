@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { Cancel } from "fluture";
-import { concat, isEmpty, join, pathOr, pluck, prop } from "ramda";
+import { concat, isEmpty, join, map, pathOr, pluck, prop } from "ramda";
 import React, { Component, Fragment } from "react";
 import { Bar, Doughnut } from "react-chartjs-2";
 
@@ -90,7 +90,7 @@ class ElectionEvaluate extends Component<{ election: ElectionContainer }> {
 
   public renderCandidates(candidates) {
     const data = pluck<string, number>("vote_percent", candidates);
-    const labels = pluck<string, string>("name", candidates);
+    const labels = map(({ first_name, last_name }) => `${last_name}, ${first_name}`, candidates);
     const backgroundColor = data.map(() => getRandomColor());
 
     const chartData = {
